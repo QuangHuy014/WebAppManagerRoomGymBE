@@ -1,6 +1,7 @@
-package com.codecrafter.WebAppManagerRoomGymBE.configsecurity.security;
+package com.codecrafter.WebAppManagerRoomGymBE.configsecurity.jwt;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.security.UserPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,7 @@ public class JwtToPrincipalConverter {
                 .toList();
         return UserPrincipal.builder()
                 .userId(Long.valueOf(jwt.getSubject()))
-                .username(jwt.getClaim("username").asString())
+                .userName(jwt.getClaim("username").asString())
                 .authorities(authorityList)
                 .build();
     }

@@ -1,4 +1,4 @@
-package com.codecrafter.WebAppManagerRoomGymBE.security.jwt;
+package com.codecrafter.WebAppManagerRoomGymBE.configsecurity.jwt;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,9 +9,10 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
+@ConfigurationProperties("security.jwt")
 public class JwtProperties {
 
-    @Value("${security.jwt.secret-key}")
+//    @Value("${security.jwt.secret-key}")
     private String secretKey;
 
     @Value("${security.jwt.expiration}")

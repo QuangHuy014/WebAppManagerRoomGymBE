@@ -1,13 +1,12 @@
-package com.codecrafter.WebAppManagerRoomGymBE.security.model;
+package com.codecrafter.WebAppManagerRoomGymBE.configsecurity.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Builder
+@AllArgsConstructor
 public class LoginRequest {
 
-    private String userName;
-    private String passWord;
+    private String username;
+    private String password;
 }

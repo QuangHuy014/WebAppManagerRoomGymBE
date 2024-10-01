@@ -1,4 +1,4 @@
-package com.codecrafter.WebAppManagerRoomGymBE.security.model;
+package com.codecrafter.WebAppManagerRoomGymBE.configsecurity.model;
 
 import lombok.Builder;
 import lombok.Getter;

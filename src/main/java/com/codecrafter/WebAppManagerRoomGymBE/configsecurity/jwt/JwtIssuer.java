@@ -1,4 +1,4 @@
-package com.codecrafter.WebAppManagerRoomGymBE.security.jwt;
+package com.codecrafter.WebAppManagerRoomGymBE.configsecurity.jwt;
 
 
 import com.auth0.jwt.JWT;
@@ -23,7 +23,7 @@ public class JwtIssuer {
         return JWT.create()
                 .withSubject(String.valueOf(request.getUserId()))
                 .withExpiresAt(Instant.now().plus(Duration.of(1, ChronoUnit.DAYS)))
-                .withClaim("username", request.getUserName())
+                .withClaim("username", request.getUsername())
                 .withClaim("au", request.getRoles())
                 .sign(Algorithm.HMAC256(jwtProperties.getSecretKey()));
 
@@ -33,7 +33,7 @@ public class JwtIssuer {
     @Builder
     public static class Request{
         private final Long userId;
-        private final String userName;
+        private final String username;
         private final List<String> roles;
     }
 }

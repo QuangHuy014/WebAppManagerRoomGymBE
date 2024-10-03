@@ -22,7 +22,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain appSecurityFilterChain(HttpSecurity http) throws Exception {
 
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http
                 .cors().disable()
@@ -36,6 +36,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
                 );
+         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
 }

@@ -39,14 +39,6 @@ public class UserSV {
 
         return userRepository.save(userEntity);
     }
-
-//    public Optional<NguoiDungE> authenticateUser(LoginRequest loginRequest) {
-//        NguoiDungE user = userRepository.findByTenNguoiDung(loginRequest.getUsername());
-//        if (user != null && user.getMatKhauNguoiDung().equals(loginRequest.getPassword())) {
-//            return Optional.of(user);
-//        }
-//        return Optional.empty(); // Trả về Optional rỗng nếu không xác thực thành công
-//    }
    public Optional<NguoiDungE> authenticateUser(LoginRequest loginRequest) {
     System.out.println("LoginRequest: " + loginRequest.getUsername() + ", " + loginRequest.getPassword());
     NguoiDungE user = userRepository.findByTenNguoiDung(loginRequest.getUsername());

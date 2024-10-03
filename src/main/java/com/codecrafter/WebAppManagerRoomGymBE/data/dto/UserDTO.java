@@ -1,15 +1,9 @@
-package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
+package com.codecrafter.WebAppManagerRoomGymBE.data.dto;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
-@Entity
-@Table(name = "NguoiDung")
-public class NguoiDungE {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserDTO {
     private int maNguoiDung;
     private String tenNguoiDung;
     private String matKhauNguoiDung;

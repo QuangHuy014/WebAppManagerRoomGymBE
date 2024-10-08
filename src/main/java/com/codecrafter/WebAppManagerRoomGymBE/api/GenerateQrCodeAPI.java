@@ -1,6 +1,4 @@
 package com.codecrafter.WebAppManagerRoomGymBE.api;
-
-
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.BasicApiConstant;
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.ThanhVienDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.mgt.ResponseObject;

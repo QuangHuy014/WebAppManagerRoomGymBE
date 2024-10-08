@@ -1,6 +1,7 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.model;
 
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.NguoiDungE;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.util.List;
@@ -12,8 +13,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class UserM {
-     private int maNguoiDung;
+    private int maNguoiDung;
     private String tenNguoiDung;
+    @JsonIgnore
     private String matKhauNguoiDung;
     private boolean gioiTinhNguoiDung;
     private String soDienThoaiNguoiDung;
@@ -23,7 +25,7 @@ public class UserM {
     private boolean hoatDongNguoiDung;
     private byte[] duLieuKhuonMatThanhVien;
 
-public static UserM convertNguoiDungEToNguoiDungM(NguoiDungE nguoidungE) {
+public static UserM convertUserEToUserM(NguoiDungE nguoidungE) {
         return UserM.builder()
                 .maNguoiDung(nguoidungE.getMaNguoiDung())
                 .tenNguoiDung(nguoidungE.getTenNguoiDung())
@@ -37,10 +39,8 @@ public static UserM convertNguoiDungEToNguoiDungM(NguoiDungE nguoidungE) {
                 .duLieuKhuonMatThanhVien(nguoidungE.getDuLieuKhuonMatThanhVien())
                 .build();
 }
- public static List<UserM> convertListNguoiDungEToNguoiDungM(List<NguoiDungE> nguoiDungEList) {
-        return nguoiDungEList.stream()
-                .map(nguoiDungE -> convertNguoiDungEToNguoiDungM(nguoiDungE))
-                .collect(Collectors.toList());
+ public static List<UserM> convertListUserEToUserM(List<NguoiDungE> userEList) {
+       return userEList.stream().map(userE -> convertUserEToUserM(userE)).collect(Collectors.toList());
     }
 
 }

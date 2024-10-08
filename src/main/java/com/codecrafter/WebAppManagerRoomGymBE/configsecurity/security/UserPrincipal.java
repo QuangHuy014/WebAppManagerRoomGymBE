@@ -19,6 +19,7 @@ public class UserPrincipal implements UserDetails {
     private final String passWord;
     private final Collection<? extends GrantedAuthority> authorities;
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();

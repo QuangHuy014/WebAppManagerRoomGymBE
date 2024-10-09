@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserM {
+public class NguoiDungM {
     private int maNguoiDung;
     private String tenNguoiDung;
     @JsonIgnore
@@ -25,8 +25,8 @@ public class UserM {
     private boolean hoatDongNguoiDung;
     private byte[] duLieuKhuonMatThanhVien;
 
-public static UserM convertUserEToUserM(NguoiDungE nguoidungE) {
-        return UserM.builder()
+public static NguoiDungM convertUserEToUserM(NguoiDungE nguoidungE) {
+        return NguoiDungM.builder()
                 .maNguoiDung(nguoidungE.getMaNguoiDung())
                 .tenNguoiDung(nguoidungE.getTenNguoiDung())
                 .matKhauNguoiDung(nguoidungE.getMatKhauNguoiDung())
@@ -39,7 +39,7 @@ public static UserM convertUserEToUserM(NguoiDungE nguoidungE) {
                 .duLieuKhuonMatThanhVien(nguoidungE.getDuLieuKhuonMatThanhVien())
                 .build();
 }
- public static List<UserM> convertListUserEToUserM(List<NguoiDungE> userEList) {
+ public static List<NguoiDungM> convertListUserEToUserM(List<NguoiDungE> userEList) {
        return userEList.stream().map(userE -> convertUserEToUserM(userE)).collect(Collectors.toList());
     }
 

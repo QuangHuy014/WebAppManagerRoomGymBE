@@ -23,7 +23,7 @@ public class UserM {
     private String anhNguoiDung;
     private int maVaiTro;
     private boolean hoatDongNguoiDung;
-    private byte[] duLieuKhuonMatThanhVien;
+    private String duLieuQrDinhDanh;
 
 public static UserM convertUserEToUserM(NguoiDungE nguoidungE) {
         return UserM.builder()
@@ -36,7 +36,7 @@ public static UserM convertUserEToUserM(NguoiDungE nguoidungE) {
                 .anhNguoiDung(nguoidungE.getAnhNguoiDung())
                 .maVaiTro(nguoidungE.getMaVaiTro())
                 .hoatDongNguoiDung(nguoidungE.isHoatDongNguoiDung())
-                .duLieuKhuonMatThanhVien(nguoidungE.getDuLieuKhuonMatThanhVien())
+                .duLieuQrDinhDanh(nguoidungE.getDuLieuQrDinhDanh())
                 .build();
 }
  public static List<UserM> convertListUserEToUserM(List<NguoiDungE> userEList) {

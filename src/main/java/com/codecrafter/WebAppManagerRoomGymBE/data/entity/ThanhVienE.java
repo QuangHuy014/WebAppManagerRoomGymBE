@@ -9,8 +9,9 @@ public class ThanhVienE {
     private int maThanhVien;
     private String tenThanhVien;
     private String emailThanhVien;
+    private String matKhauNguoiDung;
     private String soDienThoaiThanhVien;
     private Date ngaySinhThanhVien;
-    private byte[] duLieuKhuonMatThanhVien;
+    private String duLieuQrDinhDanh;
     private int maNguoiDung;
 }

@@ -18,5 +18,5 @@ public class NguoiDungE {
     private String anhNguoiDung;
     private int maVaiTro;
     private boolean hoatDongNguoiDung;
-    private byte[] duLieuKhuonMatThanhVien;
+    private String duLieuQrDinhDanh;
 }

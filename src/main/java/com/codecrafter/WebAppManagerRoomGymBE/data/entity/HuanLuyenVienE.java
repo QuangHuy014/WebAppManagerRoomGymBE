@@ -14,5 +14,5 @@ public class HuanLuyenVienE {
     private String chuyenMonHuanLuyenVien;
     private Date lichLamViecHuanLuyenVien;
     private int maLopHoc;
-    private byte[] duLieuKhuonMatHuanLuyenVien;
+    private String duLieuQrDinhDanh;
 }

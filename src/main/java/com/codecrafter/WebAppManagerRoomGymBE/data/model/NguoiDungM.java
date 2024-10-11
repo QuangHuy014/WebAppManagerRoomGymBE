@@ -34,7 +34,7 @@ public static NguoiDungM convertUserEToUserM(NguoiDungE nguoidungE) {
                 .soDienThoaiNguoiDung(nguoidungE.getSoDienThoaiNguoiDung())
                 .moTaNguoiDung(nguoidungE.getMoTaNguoiDung())
                 .anhNguoiDung(nguoidungE.getAnhNguoiDung())
-                .maVaiTro(nguoidungE.getMaVaiTro())
+                .maVaiTro(nguoidungE.getVaiTro().getMaVaiTro())
                 .hoatDongNguoiDung(nguoidungE.isHoatDongNguoiDung())
                 .duLieuQrDinhDanh(nguoidungE.getDuLieuQrDinhDanh())
                 .build();

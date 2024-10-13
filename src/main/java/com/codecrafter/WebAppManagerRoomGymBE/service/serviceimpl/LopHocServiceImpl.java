@@ -1,4 +1,4 @@
-package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
-
-public class LopHocServiceImpl {
-}
+//package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
+//
+//public class LopHocServiceImpl {
+//}

@@ -34,6 +34,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/login").permitAll()
+                         .requestMatchers("/api-public/register").permitAll()
                         .requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
                 );

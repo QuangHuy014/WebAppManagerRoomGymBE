@@ -12,7 +12,6 @@ public class NguoiDungE {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int maNguoiDung;
     private String tenNguoiDung;
-    @JsonIgnore
     private String matKhauNguoiDung;
     private boolean gioiTinhNguoiDung;
     private String soDienThoaiNguoiDung;

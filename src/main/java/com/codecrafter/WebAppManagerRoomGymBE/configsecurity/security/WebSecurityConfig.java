@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -18,6 +19,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+     @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public SecurityFilterChain appSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -32,9 +38,9 @@ public class WebSecurityConfig {
                 .formLogin().disable()
                 .securityMatcher("/**")
                 .authorizeHttpRequests(registry -> registry
+                         .requestMatchers("/api-public/user/register").permitAll()
+                        .requestMatchers("/api-public/user/login").permitAll()
                         .requestMatchers("/auth/login").permitAll()
-                        .requestMatchers("/login").permitAll()
-                         .requestMatchers("/api-public/register").permitAll()
                         .requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
                 );

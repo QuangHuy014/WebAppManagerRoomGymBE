@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/api-public/user")
+@RequestMapping("/user")
 public class NguoiDungAPI {
 
     @Autowired

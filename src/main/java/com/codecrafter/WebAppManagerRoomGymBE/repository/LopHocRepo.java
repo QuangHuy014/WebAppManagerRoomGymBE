@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface LopHocRepo extends JpaRepository<LopHocE, Integer> {
 
-    List<LopHocE> findByMaThanhVien(int maThanhVien);
-//    @Query("SELECT lh FROM LopHocE lh JOIN DangKyE dk ON lh.maLopHoc = dk.maLopHoc WHERE dk.maThanhVien = :maThanhVien")
-//    List<LopHocE> findLopHocByThanhVienId(@Param("maThanhVien") int maThanhVien);
+//    List<LopHocE> findByMaThanhVien(int maThanhVien);
+    @Query("SELECT lh FROM LopHocE lh JOIN DangKyE dk ON lh.maLopHoc = dk.lopHoc.maLopHoc WHERE dk.thanhVien.maThanhVien = :maThanhVien")
+    List<LopHocE> findByMaThanhVien(@Param("maThanhVien") int maThanhVien);
 
 }

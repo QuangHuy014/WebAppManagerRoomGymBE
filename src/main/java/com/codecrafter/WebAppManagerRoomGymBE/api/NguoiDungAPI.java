@@ -50,7 +50,7 @@ public class NguoiDungAPI {
                         .description(LoginStatus.FAILED_PASSWORD.getStatusDescription())
                         .build());
             }
-            int maVaiTro = nguoiDung.getMaVaiTro();
+            int maVaiTro = nguoiDung.getVaiTro().getMaVaiTro();
             String role = maVaiTro == 1 ? "ADMIN" : "MEMBER";
             var requestBuilder = JwtIssuer.Request.builder()
                     .userId((long) nguoiDung.getMaNguoiDung())

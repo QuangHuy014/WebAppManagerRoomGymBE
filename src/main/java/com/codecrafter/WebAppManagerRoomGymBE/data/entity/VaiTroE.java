@@ -15,6 +15,6 @@ public class VaiTroE {
     private String tenVaiTro;
     private String moTa;
 
-    @OneToMany(mappedBy = "vaiTro")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "vaiTro")
     private List<NguoiDungE> nguoiDungs;
 }

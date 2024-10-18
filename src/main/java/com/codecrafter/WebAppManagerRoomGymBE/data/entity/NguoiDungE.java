@@ -18,7 +18,7 @@ public class NguoiDungE {
     private String moTaNguoiDung;
     private String anhNguoiDung;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ma_vai_tro")
     private VaiTroE vaiTro;
 

@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface NguoiDungRepository extends JpaRepository<NguoiDungE, Integer> {
      Optional<NguoiDungE> findByTenNguoiDung(String tenNguoiDung);
+     boolean existsByTenNguoiDung(String tenNguoiDung);
 }

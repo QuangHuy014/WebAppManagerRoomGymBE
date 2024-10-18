@@ -2,6 +2,7 @@ package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.NguoiDungDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.NguoiDungE;
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.VaiTroE;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.NguoiDungRepository;
 
 import com.codecrafter.WebAppManagerRoomGymBE.service.NguoiDungService;
@@ -27,21 +28,28 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     public Optional<NguoiDungE> register(NguoiDungDTO userDTO) {
         // Kiểm tra vai trò
         if (nguoiDungRepository.existsByTenNguoiDung(userDTO.getTenNguoiDung())) {
-            return Optional.empty();
+            return Optional.empty(); // Nếu tồn tại thì trả về Optional rỗng
         }
 
-//        // Mã hóa mật khẩu
+        // Mã hóa mật khẩu
 //        String encodedPassword = passwordEncoder.encode(userDTO.getMatKhauNguoiDung());
 
         // Tạo người dùng mới
         NguoiDungE nguoiDungE = new NguoiDungE();
         nguoiDungE.setTenNguoiDung(userDTO.getTenNguoiDung());
-//        nguoiDungE.setMatKhauNguoiDung(encodedPassword); // Ghi mật khẩu đã mã hóa
+//         nguoiDungE.setMatKhauNguoiDung(encodedPassword); // Ghi mật khẩu đã mã hóa
           nguoiDungE.setMatKhauNguoiDung(userDTO.getMatKhauNguoiDung());
         nguoiDungE.setGioiTinhNguoiDung(userDTO.isGioiTinhNguoiDung());
         nguoiDungE.setMoTaNguoiDung(userDTO.getMoTaNguoiDung());
         nguoiDungE.setAnhNguoiDung(userDTO.getAnhNguoiDung());
-        nguoiDungE.setVaiTro(userDTO.getVaiTro());
+//        nguoiDungE.setVaiTro(userDTO.getVaiTro());
+
+         VaiTroE vaiTro = new VaiTroE();
+        vaiTro.setMaVaiTro(userDTO.getVaiTro().getMaVaiTro()); // Lấy mã vai trò từ DTO
+        vaiTro.setTenVaiTro(userDTO.getVaiTro().getTenVaiTro());
+        vaiTro.setMoTa(userDTO.getVaiTro().getMoTa());
+        nguoiDungE.setVaiTro(vaiTro);
+
         nguoiDungE.setHoatDongNguoiDung(true);
         nguoiDungE.setDuLieuQrDinhDanh(userDTO.getDuLieuQrDinhDanh());
 

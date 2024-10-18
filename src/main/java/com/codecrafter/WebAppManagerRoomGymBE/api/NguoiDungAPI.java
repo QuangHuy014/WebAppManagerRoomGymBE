@@ -7,8 +7,13 @@ import com.codecrafter.WebAppManagerRoomGymBE.constant.common.BasicApiConstant;
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.LoginStatus;
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.RegisterStatus;
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.NguoiDungDTO;
+import com.codecrafter.WebAppManagerRoomGymBE.data.dto.ThanhVienDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.NguoiDungE;
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.VaiTroE;
 import com.codecrafter.WebAppManagerRoomGymBE.service.NguoiDungService;
+import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
+import com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl.ThanhVienServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,43 +31,48 @@ public class NguoiDungAPI {
     private NguoiDungService nguoiDungService;
     @Autowired
     private final JwtIssuer jwtIssuer;
+    @Autowired
+    private ThanhVienService thanhVienService;
+    @Autowired
+    private ThanhVienServiceImpl thanhVienServiceImpl;
+
     public NguoiDungAPI(JwtIssuer jwtIssuer) {
         this.jwtIssuer = jwtIssuer;
     }
 
-   @PostMapping("/register")
-public ResponseEntity<RegisterResponse> register(@RequestBody NguoiDungDTO userDTO) {
-    // Kiểm tra xem tên người dùng có rỗng không
-    if (userDTO.getTenNguoiDung() == null || userDTO.getTenNguoiDung().isEmpty()) {
-        return ResponseEntity.status(400).body(RegisterResponse.builder()
-                .status(BasicApiConstant.FAILED.getStatus())
-                .description("Tên người dùng không được để trống.")
+   @PostMapping("/register") // Endpoint cho đăng ký khách hàng
+    public ResponseEntity<RegisterResponse> register(@RequestBody ThanhVienDTO thanhVienDTO) {
+        // Kiểm tra xem tên khách hàng có rỗng không
+        if (thanhVienDTO.getTenThanhVien() == null || thanhVienDTO.getTenThanhVien().isEmpty()) {
+            return ResponseEntity.status(400).body(RegisterResponse.builder()
+                    .status(BasicApiConstant.FAILED.getStatus())
+                    .description("Tên khách hàng không được để trống.")
+                    .build());
+        }
+
+        // Kiểm tra xem mật khẩu có rỗng không
+        if (thanhVienDTO.getMatKhauNguoiDung() == null || thanhVienDTO.getMatKhauNguoiDung().isEmpty()) {
+            return ResponseEntity.status(400).body(RegisterResponse.builder()
+                    .status(BasicApiConstant.FAILED.getStatus())
+                    .description("Mật khẩu không được để trống.")
+                    .build());
+        }
+
+        // Đăng ký khách hàng
+        Optional<ThanhVienE> registeredMember = thanhVienService.register(thanhVienDTO);
+        if (registeredMember.isEmpty()) {
+            return ResponseEntity.status(400).body(RegisterResponse.builder()
+                    .status(BasicApiConstant.FAILED.getStatus())
+                    .description(RegisterStatus.ACCOUNT_EXISTED.getStateDescription())
+                    .build());
+        }
+
+        // Nếu đăng ký thành công
+        return ResponseEntity.ok(RegisterResponse.builder()
+                .status(BasicApiConstant.SUCCEED.getStatus())
+                .description(RegisterStatus.SUCCEED.getStateDescription())
                 .build());
     }
-
-    // Kiểm tra xem mật khẩu có rỗng không
-    if (userDTO.getMatKhauNguoiDung() == null || userDTO.getMatKhauNguoiDung().isEmpty()) {
-        return ResponseEntity.status(400).body(RegisterResponse.builder()
-                .status(BasicApiConstant.FAILED.getStatus())
-                .description("Mật khẩu không được để trống.")
-                .build());
-    }
-
-    // Đăng ký người dùng
-    Optional<NguoiDungE> registeredUser = nguoiDungService.register(userDTO);
-    if (registeredUser.isEmpty()) {
-        return ResponseEntity.status(400).body(RegisterResponse.builder()
-                .status(BasicApiConstant.FAILED.getStatus())
-                .description(RegisterStatus.ACCOUNT_EXISTED.getStateDescription())
-                .build());
-    }
-
-    // Nếu đăng ký thành công
-    return ResponseEntity.ok(RegisterResponse.builder()
-            .status(BasicApiConstant.SUCCEED.getStatus())
-            .description(RegisterStatus.SUCCEED.getStateDescription())
-            .build());
-}
 
 
     @PostMapping("/login")
@@ -92,8 +102,8 @@ public ResponseEntity<RegisterResponse> register(@RequestBody NguoiDungDTO userD
                         .description(LoginStatus.FAILED_PASSWORD.getStatusDescription())
                         .build());
             }
-            int maVaiTro = nguoiDung.getVaiTro().getMaVaiTro();
-            String role = maVaiTro == 2 ? "Nhân viên" : "Khách hàng"; // Điều chỉnh ở đây
+            VaiTroE vaiTro = nguoiDung.getVaiTro();
+            String role = vaiTro.getTenVaiTro();// Điều chỉnh ở đây
             var requestBuilder = JwtIssuer.Request.builder()
                     .userId((long) nguoiDung.getMaNguoiDung())
                     .username(nguoiDung.getTenNguoiDung())
@@ -115,3 +125,4 @@ public ResponseEntity<RegisterResponse> register(@RequestBody NguoiDungDTO userD
         }
     }
 }
+

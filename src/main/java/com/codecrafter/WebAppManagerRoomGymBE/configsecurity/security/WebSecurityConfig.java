@@ -38,9 +38,11 @@ public class WebSecurityConfig {
                 .formLogin().disable()
                 .securityMatcher("/**")
                 .authorizeHttpRequests(registry -> registry
-                         .requestMatchers("/api-public/user/register").permitAll()
-                        .requestMatchers("/api-public/user/login").permitAll()
+                         .requestMatchers("/user/register").permitAll()
+                        .requestMatchers("/user/login").permitAll()
+                        .requestMatchers("/user/registerThanhVien").permitAll()
                         .requestMatchers("/auth/login").permitAll()
+
                         .requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
                 );

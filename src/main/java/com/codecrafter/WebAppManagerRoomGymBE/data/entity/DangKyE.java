@@ -28,4 +28,6 @@ public class DangKyE {
     @ManyToOne
     @JoinColumn(name = "ma_lop_hoc")
     private LopHocE lopHoc;
+
+
 }

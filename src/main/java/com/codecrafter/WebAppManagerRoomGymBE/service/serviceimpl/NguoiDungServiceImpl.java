@@ -21,7 +21,13 @@ import java.util.Optional;
         return user;
     }
 
-    public boolean checkPassword(String rawPassword, String encodedPassword) {
+        @Override
+        public Optional<NguoiDungE> findByUserName(String userName) {
+            Optional<NguoiDungE> user = nguoiDungRepository.findByTenNguoiDung(userName);
+            return user;
+        }
+
+        public boolean checkPassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
 

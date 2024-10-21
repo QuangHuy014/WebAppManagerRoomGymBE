@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface NguoiDungService {
   Optional<NguoiDungE> login(NguoiDungDTO userDTO);
+  Optional<NguoiDungE> findByUserName(String userName);
 }

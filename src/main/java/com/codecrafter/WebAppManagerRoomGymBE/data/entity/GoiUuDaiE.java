@@ -1,7 +1,11 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -13,10 +17,17 @@ public class GoiUuDaiE {
      @Column(name = "ma_goi_uu_dai")
      private int maGoiUuDai;
 
-     @Column(name = "ma_goi_tap", nullable = false)
-     private int maGoiTap;
+     @ManyToOne
+     @JoinColumn(name = "ma_goi_tap", nullable = false)
 
-     @Column(name = "ma_uu_dai", nullable = false)
-     private int maUuDai;
+     private GoiTapE goiTap;
 
+     @ManyToOne
+     @JoinColumn(name = "ma_uu_dai", nullable = false)
+
+     private UuDaiE uuDai;
+
+     @OneToMany(fetch = FetchType.EAGER, mappedBy = "goiUuDai")
+     @JsonBackReference
+     private List<DangKyE> dangKy;
 }

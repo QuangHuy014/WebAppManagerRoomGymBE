@@ -13,6 +13,7 @@ import java.util.List;
 public class ThanhVienE {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ma_thanh_vien")
     private int maThanhVien;
 
     private String tenThanhVien;

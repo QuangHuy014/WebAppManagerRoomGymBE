@@ -1,0 +1,62 @@
+package com.codecrafter.WebAppManagerRoomGymBE.api;
+
+
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.UuDaiE;
+import com.codecrafter.WebAppManagerRoomGymBE.service.UuDaiService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api-public/uu-dais")
+public class UuDaiAPI {
+
+    @Autowired
+    private UuDaiService uuDaiService;
+
+    // Create a new discount
+    @PostMapping
+    public ResponseEntity<UuDaiE> createUuDai(@RequestBody UuDaiE uuDai) {
+        UuDaiE createdUuDai = uuDaiService.createUuDai(uuDai);
+        return ResponseEntity.ok(createdUuDai);
+    }
+
+    // Get a discount by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<UuDaiE> getUuDaiById(@PathVariable int id) {
+        UuDaiE uuDai = uuDaiService.getUuDaiById(id);
+        return ResponseEntity.ok(uuDai);
+    }
+
+    // Get all discounts
+    @GetMapping
+    public ResponseEntity<List<UuDaiE>> getAllUuDais() {
+        List<UuDaiE> uuDais = uuDaiService.getAllUuDais();
+        return ResponseEntity.ok(uuDais);
+    }
+
+    // Get all active discounts
+    @GetMapping("/active")
+    public ResponseEntity<List<UuDaiE>> getActiveUuDais() {
+        List<UuDaiE> activeUuDais = uuDaiService.getActiveUuDais();
+        return ResponseEntity.ok(activeUuDais);
+    }
+
+    // Update a discount by ID
+    @PutMapping("/{id}")
+    public ResponseEntity<UuDaiE> updateUuDai(
+            @PathVariable int id, @RequestBody UuDaiE uuDai) {
+        UuDaiE updatedUuDai = uuDaiService.updateUuDai(id, uuDai);
+        return ResponseEntity.ok(updatedUuDai);
+    }
+
+    // Delete a discount by ID
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUuDai(@PathVariable int id) {
+        uuDaiService.deleteUuDai(id);
+        return ResponseEntity.noContent().build();
+    }
+}
+

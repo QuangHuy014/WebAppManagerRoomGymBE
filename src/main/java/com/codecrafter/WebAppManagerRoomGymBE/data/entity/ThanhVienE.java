@@ -19,7 +19,7 @@ public class ThanhVienE {
     private String tenThanhVien;
     private String emailThanhVien;
     private String matKhauNguoiDung;
-    private String soDienThoaiThanhVien;
+    private long soDienThoaiThanhVien;
     private Date ngaySinhThanhVien;
     private String duLieuQrDinhDanh;
 

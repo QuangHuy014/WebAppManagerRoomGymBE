@@ -13,9 +13,8 @@ import java.util.List;
 @Builder
 public class UserPrincipal implements UserDetails {
 
-    private final Long userId;
+     private final int userId;
     private final String userName;
-    @JsonIgnore
     private final String passWord;
     private final Collection<? extends GrantedAuthority> authorities;
 
@@ -23,6 +22,7 @@ public class UserPrincipal implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
+
     }
 
     @Override
@@ -34,6 +34,7 @@ public class UserPrincipal implements UserDetails {
     public String getUsername() {
         return "";
     }
+
 
 
 }

@@ -9,4 +9,5 @@ public class RegisterRequest {
     private String tenNguoiDung;
     private String matKhauNguoiDung;
     private String role;
+
 }

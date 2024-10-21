@@ -13,27 +13,25 @@ import java.util.List;
 @Builder
 public class UserPrincipal implements UserDetails {
 
-    private final Long userId;
+     private final int userId;
     private final String userName;
-    @JsonIgnore
     private final String passWord;
     private final Collection<? extends GrantedAuthority> authorities;
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
-
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return "";
+        return passWord;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return userName;
     }
 
 

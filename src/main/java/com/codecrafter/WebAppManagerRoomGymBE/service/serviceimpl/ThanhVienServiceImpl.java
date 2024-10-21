@@ -2,6 +2,7 @@ package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.ThanhVienDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
+import com.codecrafter.WebAppManagerRoomGymBE.data.model.ThanhVienM;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepository;
 import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,28 +12,32 @@ import java.util.Optional;
 
 @Service
 public class ThanhVienServiceImpl implements ThanhVienService {
-  @Autowired
+    @Autowired
     private ThanhVienRepository thanhVienRepository;
 
     @Override
-    public Optional<ThanhVienE> register(ThanhVienDTO userDTO) {
+    public Optional<ThanhVienM> register(ThanhVienDTO userDTO) {
+        // Kiểm tra xem email hoặc tên thành viên đã tồn tại hay chưa
         if (thanhVienRepository.existsByEmailThanhVien(userDTO.getEmailThanhVien()) ||
-            thanhVienRepository.existsByTenThanhVien(userDTO.getTenThanhVien())) {
-            return Optional.empty();
+                thanhVienRepository.existsByTenThanhVien(userDTO.getTenThanhVien())) {
+            return Optional.empty(); // Nếu tồn tại thì trả về Optional rỗng
         }
 
-        ThanhVienE thanhVien = new ThanhVienE();
-        thanhVien.setTenThanhVien(userDTO.getTenThanhVien());
-        thanhVien.setEmailThanhVien(userDTO.getEmailThanhVien());
-        thanhVien.setMatKhauNguoiDung(userDTO.getMatKhauNguoiDung());
-        thanhVien.setSoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
-        thanhVien.setNgaySinhThanhVien(java.sql.Date.valueOf(userDTO.getNgaySinhThanhVien()));
+        // Tạo đối tượng ThanhVienE từ thông tin trong userDTO
+        ThanhVienE thanhVienE = new ThanhVienE();
+        thanhVienE.setTenThanhVien(userDTO.getTenThanhVien());
+        thanhVienE.setEmailThanhVien(userDTO.getEmailThanhVien());
+        thanhVienE.setMatKhauNguoiDung(userDTO.getMatKhauNguoiDung());
+        thanhVienE.setSoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
+        thanhVienE.setNgaySinhThanhVien(java.sql.Date.valueOf(userDTO.getNgaySinhThanhVien()));
+        thanhVienE.setDuLieuQrDinhDanh(userDTO.getDuLieuQrDinhDanh());
 
-         thanhVien.setDuLieuQrDinhDanh(userDTO.getDuLieuQrDinhDanh());
+        // Lưu đối tượng ThanhVienE vào cơ sở dữ liệu
+        thanhVienRepository.save(thanhVienE);
 
-        // Lưu vào cơ sở dữ liệu
-        thanhVienRepository.save(thanhVien);
-
-        return Optional.of(thanhVien);
+        // Chuyển đổi ThanhVienE thành ThanhVienM và trả về
+        ThanhVienM thanhVienM = ThanhVienM.convertMemberEToMemberM(thanhVienE);
+        return Optional.of(thanhVienM);
     }
+
 }

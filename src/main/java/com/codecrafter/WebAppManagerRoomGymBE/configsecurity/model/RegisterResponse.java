@@ -8,4 +8,6 @@ import lombok.Data;
 public class RegisterResponse {
     private String status;
     private String description;
+    // Đảm bảo rằng constructor này là public
+
 }

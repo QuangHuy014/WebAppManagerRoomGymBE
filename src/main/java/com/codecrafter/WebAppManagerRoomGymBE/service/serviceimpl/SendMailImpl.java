@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SendMailImpl implements SendMailService {
-     @Autowired
+    @Autowired
     private JavaMailSender mailSender;
 
     @Override
@@ -20,9 +20,17 @@ public class SendMailImpl implements SendMailService {
                 thanhVienDTO.getSoDienThoaiThanhVien(),
                 thanhVienDTO.getNgaySinhThanhVien(),
                 thanhVienDTO.getMatKhauNguoiDung());
-                thanhVienDTO.getNgaySinhThanhVien();
-                thanhVienDTO.getDuLieuQrDinhDanh();
 
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(thanhVienDTO.getEmailThanhVien());
+        mailMessage.setSubject(subject);
+        mailMessage.setText(message);
+
+        mailSender.send(mailMessage);
+    }
+
+    @Override
+    public void sendEmail(ThanhVienDTO thanhVienDTO, String subject, String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(thanhVienDTO.getEmailThanhVien());
         mailMessage.setSubject(subject);

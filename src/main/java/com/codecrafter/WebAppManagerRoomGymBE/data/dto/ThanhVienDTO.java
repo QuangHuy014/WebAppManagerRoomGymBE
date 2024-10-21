@@ -15,5 +15,8 @@ public class ThanhVienDTO {
     private LocalDate ngaySinhThanhVien;
     private String duLieuQrDinhDanh;
 
+      private int maGoiTap; // Thêm trường này
+
+
 
 }

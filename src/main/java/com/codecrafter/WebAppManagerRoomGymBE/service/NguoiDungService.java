@@ -1,12 +1,8 @@
 package com.codecrafter.WebAppManagerRoomGymBE.service;
-
-
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.NguoiDungDTO;
-import com.codecrafter.WebAppManagerRoomGymBE.data.model.NguoiDungM;
-
-
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.NguoiDungE;
 import java.util.Optional;
 
 public interface NguoiDungService {
-  Optional<NguoiDungM> login(NguoiDungDTO userDTO);
+  Optional<NguoiDungE> login(NguoiDungDTO userDTO);
 }

@@ -21,17 +21,18 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return List.of();
+
     }
 
     @Override
     public String getPassword() {
-        return passWord;
+        return "";
     }
 
     @Override
     public String getUsername() {
-        return userName;
+        return "";
     }
 
 

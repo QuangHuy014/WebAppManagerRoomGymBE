@@ -1,9 +1,11 @@
 package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.ThanhVienDTO;
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.GoiTapE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
-import com.codecrafter.WebAppManagerRoomGymBE.data.model.ThanhVienM;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepository;
+import com.codecrafter.WebAppManagerRoomGymBE.service.GoiTapService;
+import com.codecrafter.WebAppManagerRoomGymBE.service.SendMailService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,29 +17,62 @@ public class ThanhVienServiceImpl implements ThanhVienService {
     @Autowired
     private ThanhVienRepository thanhVienRepository;
 
+    @Autowired
+    private GoiTapService goiTapService;
+    @Autowired
+    private SendMailService sendMailService;
+
     @Override
-    public Optional<ThanhVienM> register(ThanhVienDTO userDTO) {
-        // Kiểm tra xem email hoặc tên thành viên đã tồn tại hay chưa
+    public Optional<ThanhVienE> register(ThanhVienDTO userDTO, int maGoiTap) {
+         // Kiểm tra xem email hoặc tên thành viên có tồn tại hay không
         if (thanhVienRepository.existsByEmailThanhVien(userDTO.getEmailThanhVien()) ||
-                thanhVienRepository.existsByTenThanhVien(userDTO.getTenThanhVien())) {
-            return Optional.empty(); // Nếu tồn tại thì trả về Optional rỗng
+            thanhVienRepository.existsByTenThanhVien(userDTO.getTenThanhVien())) {
+            return Optional.empty();
         }
 
-        // Tạo đối tượng ThanhVienE từ thông tin trong userDTO
-        ThanhVienE thanhVienE = new ThanhVienE();
-        thanhVienE.setTenThanhVien(userDTO.getTenThanhVien());
-        thanhVienE.setEmailThanhVien(userDTO.getEmailThanhVien());
-        thanhVienE.setMatKhauNguoiDung(userDTO.getMatKhauNguoiDung());
-        thanhVienE.setSoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
-        thanhVienE.setNgaySinhThanhVien(java.sql.Date.valueOf(userDTO.getNgaySinhThanhVien()));
-        thanhVienE.setDuLieuQrDinhDanh(userDTO.getDuLieuQrDinhDanh());
+        // Tạo một đối tượng ThanhVienE mới
+        ThanhVienE thanhVien = new ThanhVienE();
+        thanhVien.setTenThanhVien(userDTO.getTenThanhVien());
+        thanhVien.setEmailThanhVien(userDTO.getEmailThanhVien());
+        thanhVien.setMatKhauNguoiDung(userDTO.getMatKhauNguoiDung());
+        thanhVien.setSoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
+        thanhVien.setNgaySinhThanhVien(java.sql.Date.valueOf(userDTO.getNgaySinhThanhVien()));
+        thanhVien.setDuLieuQrDinhDanh(userDTO.getDuLieuQrDinhDanh());
 
-        // Lưu đối tượng ThanhVienE vào cơ sở dữ liệu
-        thanhVienRepository.save(thanhVienE);
+        // Lưu vào cơ sở dữ liệu
+        thanhVienRepository.save(thanhVien);
 
-        // Chuyển đổi ThanhVienE thành ThanhVienM và trả về
-        ThanhVienM thanhVienM = ThanhVienM.convertMemberEToMemberM(thanhVienE);
-        return Optional.of(thanhVienM);
+        // Lấy thông tin gói tập theo maGoiTap
+        Optional<GoiTapE> goiTap = goiTapService.getGoiTapById(maGoiTap);
+        if (goiTap.isPresent()) {
+            // Chuẩn bị thông tin email
+            String subject = "Thông tin đăng ký gói tập";
+            String message = String.format("Chào %s,\n\nBạn đã đăng ký thành công gói tập: %s.\nMô tả: %s\nGiá: %.2f\n\n" +
+                            "Thông tin thành viên:\n" +
+                            "- Tên thành viên: %s\n" +
+                            "- Email: %s\n" +
+                            "- Số điện thoại: %s\n" +
+                            "- Ngày sinh: %s\n" +
+                            "- Mật khẩu: %s\n" +
+                            "- Dữ liệu QR định danh: %s\n\n" +
+                            "Cảm ơn bạn đã tham gia!",
+                    thanhVien.getTenThanhVien(),
+                    goiTap.get().getTenGoiTap(),
+                    goiTap.get().getMoTaGoiTap(),
+                    goiTap.get().getGiaGoiTap(),
+                    thanhVien.getTenThanhVien(),
+                    thanhVien.getEmailThanhVien(),
+                    thanhVien.getSoDienThoaiThanhVien(),
+                    thanhVien.getNgaySinhThanhVien(),
+                    thanhVien.getMatKhauNguoiDung(),
+                    thanhVien.getDuLieuQrDinhDanh());
+
+            // Gửi thông tin đến email
+            sendMailService.sendEmail(userDTO, subject, message);
+        }
+
+        return Optional.of(thanhVien);
     }
+
 
 }

@@ -39,8 +39,6 @@ public class WebSecurityConfig {
                 .securityMatcher("/**")
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/user/login").permitAll()
-                        .requestMatchers("/user/register").permitAll()
-                        .requestMatchers("/send-email").permitAll()
                         .requestMatchers("/auth/login").permitAll()
 
                         .requestMatchers("/").permitAll()

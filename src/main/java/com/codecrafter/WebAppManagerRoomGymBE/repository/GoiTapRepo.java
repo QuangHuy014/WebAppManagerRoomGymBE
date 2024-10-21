@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface GoiTapRepository extends JpaRepository<GoiTapE, Integer> {
+public interface GoiTapRepo extends JpaRepository<GoiTapE, Integer> {
      Optional<GoiTapE> findById(int id);
 }

@@ -5,7 +5,6 @@ import com.codecrafter.WebAppManagerRoomGymBE.data.entity.LopHocE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.model.LopHocM;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.LopHocRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.service.LopHocService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -6,7 +6,7 @@ import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
 
 import com.codecrafter.WebAppManagerRoomGymBE.repository.DangKyRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.GoiUuDaiRepo;
-import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepo;
+import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepository;
 import com.codecrafter.WebAppManagerRoomGymBE.service.DangKyService;
 import com.codecrafter.WebAppManagerRoomGymBE.utils.ConvertDay;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class DangKyServiceImpl implements DangKyService {
 
     private final DangKyRepo dangKyRepository;
 
-    private final ThanhVienRepo thanhVienRepository;
+    private final ThanhVienRepository thanhVienRepository;
 
     private final GoiUuDaiRepo goiUuDaiRepository;
 

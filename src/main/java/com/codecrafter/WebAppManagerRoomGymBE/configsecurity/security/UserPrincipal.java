@@ -13,7 +13,7 @@ import java.util.List;
 @Builder
 public class UserPrincipal implements UserDetails {
 
-     private final int userId;
+     private final long userId;
     private final String userName;
     private final String passWord;
     private final Collection<? extends GrantedAuthority> authorities;

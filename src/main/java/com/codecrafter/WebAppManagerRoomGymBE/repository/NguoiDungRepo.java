@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface NguoiDungRepository extends JpaRepository<NguoiDungE, Integer> {
+public interface NguoiDungRepo extends JpaRepository<NguoiDungE, Integer> {
      Optional<NguoiDungE> findByTenNguoiDung(String tenNguoiDung);
 
 }

@@ -37,8 +37,6 @@ public class NguoiDungAPI {
     @Autowired
     private ThanhVienService thanhVienService;
     @Autowired
-    private ThanhVienServiceImpl thanhVienServiceImpl;
-    @Autowired
     private GoiTapService goiTapService;
     @Autowired
     private SendMailService sendMailService;
@@ -46,6 +44,9 @@ public class NguoiDungAPI {
     public NguoiDungAPI(JwtIssuer jwtIssuer) {
         this.jwtIssuer = jwtIssuer;
     }
+
+
+
      @PostMapping("/register") // Endpoint cho đăng ký khách hàng
     public ResponseEntity<RegisterResponse> register(@RequestBody ThanhVienDTO thanhVienDTO, @RequestParam int maGoiTap) {
         // Kiểm tra xem tên khách hàng có rỗng không
@@ -73,20 +74,6 @@ public class NguoiDungAPI {
                     .build());
         }
 
-        // Lấy thông tin gói tập
-        Optional<GoiTapE> goiTap = goiTapService.getGoiTapById(maGoiTap);
-        if (goiTap.isPresent()) {
-            // Chuẩn bị thông tin email
-            String subject = "Thông tin đăng ký thành viên";
-            String message = String.format("Chào %s,\n\nBạn đã đăng ký thành công với gói tập: %s.\nMô tả: %s\nGiá: %.2f\n\nCảm ơn bạn đã tham gia!",
-                    registeredMember.get().getTenThanhVien(),
-                    goiTap.get().getTenGoiTap(),
-                    goiTap.get().getMoTaGoiTap(),
-                    goiTap.get().getGiaGoiTap());
-
-            // Gửi thông tin đến email
-            sendMailService.sendEmail(thanhVienDTO, subject, message);
-        }
 
         // Nếu đăng ký thành công
         return ResponseEntity.ok(RegisterResponse.builder()

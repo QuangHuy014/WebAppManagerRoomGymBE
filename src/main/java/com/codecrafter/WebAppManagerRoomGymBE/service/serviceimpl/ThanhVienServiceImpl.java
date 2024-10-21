@@ -3,7 +3,7 @@ package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.ThanhVienDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.GoiTapE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
-import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepository;
+import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.service.GoiTapService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.SendMailService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 public class ThanhVienServiceImpl implements ThanhVienService {
     @Autowired
-    private ThanhVienRepository thanhVienRepository;
+    private ThanhVienRepo thanhVienRepository;
 
     @Autowired
     private GoiTapService goiTapService;

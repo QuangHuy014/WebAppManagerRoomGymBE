@@ -40,7 +40,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/user/login").permitAll()
                         .requestMatchers("/auth/login").permitAll()
-
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
                 );

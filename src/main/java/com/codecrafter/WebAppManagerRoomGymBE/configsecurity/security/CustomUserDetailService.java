@@ -20,7 +20,7 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var user = nguoiDungService.findByUserName(username);
         return UserPrincipal.builder()
-                .userId((long) user.get().getMaNguoiDung())
+                .userId((int) user.get().getMaNguoiDung())
                 .userName(user.get().getTenNguoiDung())
                 .passWord(user.get().getMatKhauNguoiDung())
                 .authorities(List.of(new SimpleGrantedAuthority(user.get().getVaiTro().getTenVaiTro())))

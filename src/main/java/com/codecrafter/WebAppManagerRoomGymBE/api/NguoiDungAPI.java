@@ -3,6 +3,7 @@ package com.codecrafter.WebAppManagerRoomGymBE.api;
 import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.jwt.JwtIssuer;
 import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.model.LoginResponse;
 import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.model.RegisterResponse;
+import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.security.UserPrincipal;
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.BasicApiConstant;
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.LoginStatus;
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.RegisterStatus;
@@ -16,12 +17,10 @@ import com.codecrafter.WebAppManagerRoomGymBE.service.GoiTapService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.NguoiDungService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.SendMailService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
-import com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl.ThanhVienServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -46,8 +45,7 @@ public class NguoiDungAPI {
     }
 
 
-
-     @PostMapping("/register") // Endpoint cho đăng ký khách hàng
+    @PostMapping("/register") // Endpoint cho đăng ký khách hàng
     public ResponseEntity<RegisterResponse> register(@RequestBody ThanhVienDTO thanhVienDTO, @RequestParam int maGoiTap) {
         // Kiểm tra xem tên khách hàng có rỗng không
         if (thanhVienDTO.getTenThanhVien() == null || thanhVienDTO.getTenThanhVien().isEmpty()) {
@@ -110,19 +108,28 @@ public class NguoiDungAPI {
                         .description(LoginStatus.FAILED_PASSWORD.getStatusDescription())
                         .build());
             }
+
+            // Lấy thông tin vai trò
             VaiTroE vaiTro = nguoiDung.getVaiTro();
-            String role = vaiTro.getTenVaiTro();// Điều chỉnh ở đây
+            String role = vaiTro != null ? vaiTro.getTenVaiTro() : null; // Kiểm tra nếu vai trò không null
+
             var requestBuilder = JwtIssuer.Request.builder()
                     .userId((long) nguoiDung.getMaNguoiDung())
                     .username(nguoiDung.getTenNguoiDung())
                     .roles(List.of(role))
                     .build();
+
             var token = jwtIssuer.issue(requestBuilder);
+
+            // Tạo LoginResponse với tenNguoiDung và vai trò
             LoginResponse response = LoginResponse.builder()
                     .accessToken(token)
+                    .tenNguoiDung(nguoiDung.getTenNguoiDung()) // Thêm tenNguoiDung
+                    .role(role) // Thêm vai trò
                     .status(BasicApiConstant.SUCCEED.getStatus())
                     .description(LoginStatus.SUCCEDD.getStatusDescription())
                     .build();
+
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(401).body(LoginResponse.builder()
@@ -132,6 +139,9 @@ public class NguoiDungAPI {
                     .build());
         }
     }
+
+
+
 
 }
 

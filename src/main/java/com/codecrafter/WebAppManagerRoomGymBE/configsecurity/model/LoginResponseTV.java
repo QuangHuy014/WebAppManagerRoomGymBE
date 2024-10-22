@@ -7,10 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class LoginResponse {
-    private final String accessToken;
-    private String tenNguoiDung;
+public class LoginResponseTV {
+      private final String accessToken;
+    private String tenThanhVien;
      private String status;
     private String description;
-    private String role;
+
 }

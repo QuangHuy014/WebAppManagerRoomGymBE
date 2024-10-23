@@ -8,6 +8,7 @@ import com.codecrafter.WebAppManagerRoomGymBE.service.GoiTapService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.SendMailService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,6 +23,9 @@ public class ThanhVienServiceImpl implements ThanhVienService {
     @Autowired
     private SendMailService sendMailService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public Optional<ThanhVienE> register(ThanhVienDTO userDTO, int maGoiTap) {
          // Kiểm tra xem email hoặc tên thành viên có tồn tại hay không
@@ -34,7 +38,7 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         ThanhVienE thanhVien = new ThanhVienE();
         thanhVien.setTenThanhVien(userDTO.getTenThanhVien());
         thanhVien.setEmailThanhVien(userDTO.getEmailThanhVien());
-        thanhVien.setMatKhauNguoiDung(userDTO.getMatKhauNguoiDung());
+        thanhVien.setMatKhauNguoiDung(passwordEncoder.encode(userDTO.getMatKhauNguoiDung()));
         thanhVien.setSoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
         thanhVien.setNgaySinhThanhVien(java.sql.Date.valueOf(userDTO.getNgaySinhThanhVien()));
         thanhVien.setDuLieuQrDinhDanh(userDTO.getDuLieuQrDinhDanh());

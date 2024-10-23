@@ -20,6 +20,7 @@ import com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl.ThanhVienServi
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,8 @@ public class NguoiDungAPI {
     private GoiTapService goiTapService;
     @Autowired
     private SendMailService sendMailService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public NguoiDungAPI(JwtIssuer jwtIssuer) {
         this.jwtIssuer = jwtIssuer;
@@ -103,7 +106,7 @@ public class NguoiDungAPI {
         Optional<NguoiDungE> user = nguoiDungService.login(userDTO);
         if (user.isPresent()) {
             NguoiDungE nguoiDung = user.get();
-            if (!nguoiDung.getMatKhauNguoiDung().equals(userDTO.getMatKhauNguoiDung())) {
+            if (!passwordEncoder.matches(userDTO.getMatKhauNguoiDung(), nguoiDung.getMatKhauNguoiDung())) {
                 return ResponseEntity.status(401).body(LoginResponse.builder()
                         .accessToken(null)
                         .status(BasicApiConstant.FAILED.getStatus())

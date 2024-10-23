@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface ThanhVienService {
      Optional<ThanhVienE> register(ThanhVienDTO userDTO, int maGoiTap);
+      Optional<ThanhVienE> login(ThanhVienDTO memberDTO);
 
 }

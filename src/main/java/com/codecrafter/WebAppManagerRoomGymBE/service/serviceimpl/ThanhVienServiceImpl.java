@@ -77,6 +77,13 @@ public class ThanhVienServiceImpl implements ThanhVienService {
 
         return Optional.of(thanhVien);
     }
-
+    @Override
+    public Optional<ThanhVienE> login(ThanhVienDTO memberDTO) {
+        Optional<ThanhVienE> member = thanhVienRepository.findByTenThanhVien(memberDTO.getTenThanhVien());
+        if (member.isPresent() && member.get().getMatKhauNguoiDung().equals(memberDTO.getMatKhauNguoiDung())) {
+            return member; // Nếu thành viên tồn tại và mật khẩu khớp, trả về đối tượng thành viên
+        }
+        return Optional.empty(); // Nếu không, trả về Optional.empty()
+    }
 
 }

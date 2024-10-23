@@ -22,4 +22,17 @@ public class HoaDonE {
     @Column(name = "so_tien_thanh_toan")
     private float soTienThanhToan;
 
+    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL)
+    private List<ThanhToanE> thanhToans;
+
+    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL)
+    private List<ChiTietHoaDonE> chiTietHoaDons;
+
+    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL)
+    private List<DangKyE> dangKys;
+
+    @ManyToOne
+    @JoinColumn(name = "ma_doanh_thu")
+    private DoanhThuE doanhThu;
+
 }

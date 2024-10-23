@@ -38,8 +38,10 @@ public class WebSecurityConfig {
                 .formLogin().disable()
                 .securityMatcher("/**")
                 .authorizeHttpRequests(registry -> registry
+                        .requestMatchers("/api-public/hoa-don/count/**").permitAll()
                         .requestMatchers("/user/login").permitAll()
                         .requestMatchers("/auth/login").permitAll()
+
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .anyRequest().authenticated()

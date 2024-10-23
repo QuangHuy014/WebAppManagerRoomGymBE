@@ -1,14 +1,32 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
+@Entity
+@Table(name = "gym_doanh_thu")
 public class DoanhThuE {
+
+     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ma_doanh_thu")
     private int maDoanhThu;
+
+    @Column
     private String loaiThoiGianDoanhThu;
-    private int maThanhToan;
-    private double soTienDoanhThu;  // Sử dụng double cho giá trị tiền
+
+    @Column(name = "so_tien_doanh_thu")
+    private double soTienDoanhThu;
+
+    @Column(name = "ngay_tao_doanh_thu")
     private Date ngayTaoDoanhThu;
+
+
+    @OneToMany(mappedBy = "doanhThu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<HoaDonE> hoaDonS;
+
 }

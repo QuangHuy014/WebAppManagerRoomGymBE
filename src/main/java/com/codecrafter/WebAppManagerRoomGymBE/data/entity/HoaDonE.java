@@ -30,4 +30,7 @@ public class HoaDonE {
     @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<ThanhToanE> thanhToans;
+
+    @Transient
+    private int tongHoaDon;
 }

@@ -1,6 +1,7 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,4 +44,11 @@ public class UuDaiE {
     @OneToMany(mappedBy = "uuDai", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<GoiUuDaiE> goiUuDais;
+
+    @Transient
+    private int tongUuDai;
+
+//    public int tongUuDai(int tongUuDai){
+//        return this.tongUuDai +=tongUuDai;
+//    }
 }

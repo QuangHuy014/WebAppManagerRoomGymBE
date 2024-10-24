@@ -1,6 +1,7 @@
 package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.UuDaiDTO;
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.HoaDonE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.UuDaiE;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.UuDaiRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.service.UuDaiService;
@@ -36,6 +37,11 @@ public class UuDaiServiceImpl implements UuDaiService {
 
     @Override
     public List<UuDaiE> getAllUuDais() {
+        List<UuDaiE> listUuDai = uuDaiRepository.findAll();
+        for (UuDaiE uuDai :listUuDai)
+        {
+            uuDai.setTongUuDai(listUuDai.size());
+        }
         return uuDaiRepository.findAll();
     }
 

@@ -1,5 +1,6 @@
 package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 
+import com.codecrafter.WebAppManagerRoomGymBE.data.dto.UuDaiDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.UuDaiE;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.UuDaiRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.service.UuDaiService;
@@ -16,8 +17,15 @@ public class UuDaiServiceImpl implements UuDaiService {
     private UuDaiRepo uuDaiRepository;
 
     @Override
-    public UuDaiE createUuDai(UuDaiE uuDai) {
-        return uuDaiRepository.save(uuDai);
+    public UuDaiE createUuDai(UuDaiDTO uuDai) {
+        UuDaiE uuDaiE = UuDaiE.builder()
+                .moTaUuDai(uuDai.getMoTaUuDai())
+                .giaTriUuDai(uuDai.getGiaTriUuDai())
+                .ngayBatDauUuDai(uuDai.getNgayBatDauUuDai())
+                .ngayKetThucUuDai(uuDai.getNgayKetThucUuDai())
+                .trangThaiUuDai(uuDai.isTrangThaiUuDai())
+                .build();
+        return uuDaiRepository.save(uuDaiE);
     }
 
     @Override
@@ -37,7 +45,7 @@ public class UuDaiServiceImpl implements UuDaiService {
     }
 
     @Override
-    public UuDaiE updateUuDai(int id, UuDaiE uuDai) {
+    public UuDaiE updateUuDai(int id, UuDaiDTO uuDai) {
         UuDaiE existingUuDai = getUuDaiById(id);
         existingUuDai.setMoTaUuDai(uuDai.getMoTaUuDai());
         existingUuDai.setNgayBatDauUuDai(uuDai.getNgayBatDauUuDai());

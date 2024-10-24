@@ -6,12 +6,14 @@ import java.util.Date;
 
 @Data
 public class DangKyDTO {
+
     private int maDangKy;
     private int maThanhVien;
     private int maGoiUuDai;
     private Date ngayDangKy;
     private Date ngayKichHoat;
     private boolean trangThaiDangKy;
-    private int maChiNhanh;
-    private int maLopHoc;
+//    private int maLopHoc;
+//    private int maHoaDon;
+
 }

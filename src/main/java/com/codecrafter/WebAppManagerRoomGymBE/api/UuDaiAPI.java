@@ -1,6 +1,7 @@
 package com.codecrafter.WebAppManagerRoomGymBE.api;
 
 
+import com.codecrafter.WebAppManagerRoomGymBE.data.dto.UuDaiDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.UuDaiE;
 import com.codecrafter.WebAppManagerRoomGymBE.service.UuDaiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class UuDaiAPI {
 
     // Create a new discount
     @PostMapping
-    public ResponseEntity<UuDaiE> createUuDai(@RequestBody UuDaiE uuDai) {
+    public ResponseEntity<UuDaiE> createUuDai(@RequestBody UuDaiDTO uuDai) {
         UuDaiE createdUuDai = uuDaiService.createUuDai(uuDai);
         return ResponseEntity.ok(createdUuDai);
     }
@@ -47,8 +48,8 @@ public class UuDaiAPI {
     // Update a discount by ID
     @PutMapping("/{id}")
     public ResponseEntity<UuDaiE> updateUuDai(
-            @PathVariable int id, @RequestBody UuDaiE uuDai) {
-        UuDaiE updatedUuDai = uuDaiService.updateUuDai(id, uuDai);
+            @PathVariable int id, @RequestBody UuDaiDTO uuDaiDTO) {
+        UuDaiE updatedUuDai = uuDaiService.updateUuDai(id, uuDaiDTO);
         return ResponseEntity.ok(updatedUuDai);
     }
 

@@ -10,6 +10,7 @@ import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,8 @@ public class ThanhVienAPI {
 
     @Autowired
     private final JwtIssuer jwtIssuer;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     public ThanhVienAPI(JwtIssuer jwtIssuer) {
         this.jwtIssuer = jwtIssuer;
@@ -56,14 +59,15 @@ public class ThanhVienAPI {
         if (member.isPresent()) {
             ThanhVienE thanhVien = member.get();
 
-            // Kiểm tra mật khẩu
-            if (!thanhVien.getMatKhauNguoiDung().equals(memberDTO.getMatKhauNguoiDung())) {
-                return ResponseEntity.status(401).body(LoginResponseTV.builder()
-                        .accessToken(null)
-                        .status(BasicApiConstant.FAILED.getStatus())
-                        .description(LoginStatus.FAILED_PASSWORD.getStatusDescription())
-                        .build());
-            }
+            if (!passwordEncoder.matches(memberDTO.getMatKhauNguoiDung(), thanhVien.getMatKhauNguoiDung())) {
+            return ResponseEntity.status(401).body(LoginResponseTV.builder()
+                    .accessToken(null)
+                    .status(BasicApiConstant.FAILED.getStatus())
+                    .description(LoginStatus.FAILED_PASSWORD.getStatusDescription())
+                    .build());
+        }
+
+
 
             // Tạo yêu cầu để phát hành JWT
             var requestBuilder = JwtIssuer.Request.builder()

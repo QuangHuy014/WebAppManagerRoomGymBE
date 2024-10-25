@@ -28,9 +28,9 @@ public class ThanhVienServiceImpl implements ThanhVienService {
 
     @Override
     public Optional<ThanhVienE> register(ThanhVienDTO userDTO, int maGoiTap) {
-         // Kiểm tra xem email hoặc tên thành viên có tồn tại hay không
+        // Kiểm tra xem email hoặc tên thành viên có tồn tại hay không
         if (thanhVienRepository.existsByEmailThanhVien(userDTO.getEmailThanhVien()) ||
-            thanhVienRepository.existsByTenThanhVien(userDTO.getTenThanhVien())) {
+                thanhVienRepository.existsByTenThanhVien(userDTO.getTenThanhVien())) {
             return Optional.empty();
         }
 
@@ -77,13 +77,15 @@ public class ThanhVienServiceImpl implements ThanhVienService {
 
         return Optional.of(thanhVien);
     }
+
     @Override
     public Optional<ThanhVienE> login(ThanhVienDTO memberDTO) {
         Optional<ThanhVienE> member = thanhVienRepository.findByTenThanhVien(memberDTO.getTenThanhVien());
-        if (member.isPresent() && member.get().getMatKhauNguoiDung().equals(memberDTO.getMatKhauNguoiDung())) {
+        if (member.isPresent() && passwordEncoder.matches(memberDTO.getMatKhauNguoiDung(), member.get().getMatKhauNguoiDung())) {
             return member; // Nếu thành viên tồn tại và mật khẩu khớp, trả về đối tượng thành viên
         }
         return Optional.empty(); // Nếu không, trả về Optional.empty()
     }
+
 
 }

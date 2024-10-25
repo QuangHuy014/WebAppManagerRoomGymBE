@@ -1,15 +1,19 @@
 package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.UuDaiDTO;
-import com.codecrafter.WebAppManagerRoomGymBE.data.entity.HoaDonE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.UuDaiE;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.UuDaiRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.service.UuDaiService;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UuDaiServiceImpl implements UuDaiService {
@@ -65,4 +69,30 @@ public class UuDaiServiceImpl implements UuDaiService {
     public void deleteUuDai(int id) {
         uuDaiRepository.deleteById(id);
     }
+
+
+    @Override
+    public List<UuDaiE> getUuDaiByIdAndOtherParam(Integer maUuDai, Date ngayBatDau, Date ngayKetThuc, Boolean trangThaiUuDai) {
+        return uuDaiRepository.findAll((Root<UuDaiE> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            // Kiểm tra từng tham số và thêm điều kiện tương ứng nếu tham số không null
+            if (maUuDai != null) {
+                predicates.add(cb.equal(root.get("maUuDai"), maUuDai));
+            }
+            if (ngayBatDau != null) {
+                predicates.add(cb.greaterThanOrEqualTo(root.get("ngayBatDauUuDai"), ngayBatDau));
+            }
+            if (ngayKetThuc != null) {
+                predicates.add(cb.lessThanOrEqualTo(root.get("ngayKetThucUuDai"), ngayKetThuc));
+            }
+            if (trangThaiUuDai != null) {
+                predicates.add(cb.equal(root.get("trangThaiUuDai"), trangThaiUuDai));
+            }
+
+            // Kết hợp các điều kiện với AND và trả về
+            return cb.and(predicates.toArray(new Predicate[0]));
+        });
+    }
+
 }

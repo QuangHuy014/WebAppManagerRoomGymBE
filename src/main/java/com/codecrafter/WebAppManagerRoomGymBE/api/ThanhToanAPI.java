@@ -1,40 +1,43 @@
 package com.codecrafter.WebAppManagerRoomGymBE.api;
 
-import com.codecrafter.WebAppManagerRoomGymBE.constant.common.BasicApiConstant;
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.ThanhToanDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhToanE;
-import com.codecrafter.WebAppManagerRoomGymBE.data.mgt.ResponseObject;
 import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhToanService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @RestController
-@RequestMapping("/api-public/thanhToan")
-@RequiredArgsConstructor
+@RequestMapping("/api-public/thanh-toan")
 public class ThanhToanAPI {
 
-    private final ThanhToanService thanhToanService;
+    @Autowired
+    private ThanhToanService thanhToanService;
 
-    @PostMapping
-    public ResponseObject<?> createThanhToan(@RequestBody ThanhToanDTO thanhToanDTO){
-        var result = new ResponseObject<>();
-        try {
-            Optional<ThanhToanE> thanhToanE = thanhToanService.saveThanhToan(thanhToanDTO);
-            result.setData(thanhToanE);
-            result.setStatus(BasicApiConstant.SUCCEED.getStatus());
-            result.setMessages(BasicApiConstant.SUCCEED.name());
-        } catch (Exception e) {
-            log.info("fail when call api /api-public/thanhToan",e);
-            throw new RuntimeException(e);
-        }
-        return result;
+    @PostMapping("/create")
+    public ResponseEntity<ThanhToanE> createPayment(@RequestBody ThanhToanDTO thanhToanDTO) {
+        ThanhToanE newPayment = thanhToanService.createPayment(thanhToanDTO);
+        return ResponseEntity.ok(newPayment);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ThanhToanE> getPaymentById(@PathVariable int id) {
+        Optional<ThanhToanE> payment = thanhToanService.findPaymentById(id);
+        return payment.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ThanhToanE>> getAllPayments() {
+        List<ThanhToanE> payments = thanhToanService.findAllPayments();
+        return ResponseEntity.ok(payments);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ThanhToanE> updatePayment(@PathVariable int id, @RequestBody ThanhToanDTO thanhToanDTO) {
+        ThanhToanE updatedPayment = thanhToanService.updatePayment(id, thanhToanDTO);
+        return ResponseEntity.ok(updatedPayment);
+    }
 }

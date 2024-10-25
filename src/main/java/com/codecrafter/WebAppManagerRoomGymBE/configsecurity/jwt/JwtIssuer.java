@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -36,5 +37,13 @@ public class JwtIssuer {
         private final Long userId;
         private final String username;
         private final List<String> roles;
+    }
+    public String issueRefreshToken(JwtIssuer.Request request) {
+        return JWT.create()
+                .withSubject(String.valueOf(request.getUserId()))
+                .withExpiresAt(new Date(System.currentTimeMillis() + jwtProperties.getRefreshExpiration())) // Thời gian tồn tại của refresh token
+                .withClaim("username", request.getUsername())
+                .withClaim("au", request.getRoles())
+                .sign(Algorithm.HMAC256(jwtProperties.getSecretKey()));
     }
 }

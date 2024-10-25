@@ -4,6 +4,7 @@ package com.codecrafter.WebAppManagerRoomGymBE.service;
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.UuDaiDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.UuDaiE;
 
+import java.util.Date;
 import java.util.List;
 
 public interface UuDaiService {
@@ -19,5 +20,7 @@ public interface UuDaiService {
     UuDaiE updateUuDai(int id, UuDaiDTO uuDaiDTO);
 
     void deleteUuDai(int id);
+
+    List<UuDaiE> getUuDaiByIdAndOtherParam(Integer maUuDai, Date ngayBatDau, Date ngayKetThuc, Boolean trangThaiUuDai);
 }
 

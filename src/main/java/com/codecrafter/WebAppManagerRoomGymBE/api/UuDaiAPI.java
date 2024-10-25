@@ -5,9 +5,11 @@ import com.codecrafter.WebAppManagerRoomGymBE.data.dto.UuDaiDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.UuDaiE;
 import com.codecrafter.WebAppManagerRoomGymBE.service.UuDaiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -58,6 +60,16 @@ public class UuDaiAPI {
     public ResponseEntity<Void> deleteUuDai(@PathVariable int id) {
         uuDaiService.deleteUuDai(id);
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/search")
+    public ResponseEntity<List<UuDaiE>> getUuDaiByIdAndOtherParam(
+            @RequestParam(required = false) Integer maUuDai,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayBatDau,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayKetThuc,
+            @RequestParam(required = false) Boolean trangThaiUuDai) {
+
+        List<UuDaiE> uuDais = uuDaiService.getUuDaiByIdAndOtherParam(maUuDai, ngayBatDau, ngayKetThuc, trangThaiUuDai);
+        return ResponseEntity.ok(uuDais);
     }
 }
 

@@ -12,11 +12,13 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties("security.jwt")
 public class JwtProperties {
 
-//    @Value("${security.jwt.secret-key}")
+    @Value("${security.jwt.secret-key}")
     private String secretKey;
 
     @Value("${security.jwt.expiration}")
     private Long expiration;
+    @Value("${security.jwt.refresh-expiration}")
+    private Long RefreshExpiration;
 
 
 }

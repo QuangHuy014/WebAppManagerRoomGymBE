@@ -34,8 +34,6 @@ import org.springframework.context.annotation.Configuration;
                 url = "http://localhost:8085"
         )
 
-
-
 )
 @Configuration
 public class OpenApiConfig {

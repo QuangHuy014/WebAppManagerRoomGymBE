@@ -39,18 +39,26 @@ public class HoaDonServiceImpl implements HoaDonService {
         dangKy.setHoaDon(savedInvoice);
         dangKyRepository.save(dangKy);
 
-        return savedInvoice; // Trả về hóa đơn đã lưu
+        return savedInvoice;
     }
 
-    // Hàm tính tổng số tiền từ thông tin đăng ký
     private float calculateTotalAmount(DangKyE dangKy) {
 
         float totalAmount = 0.0f;
-        totalAmount = dangKy.getGoiUuDai().getGoiTap().getGiaGoiTap();
-        totalAmount = dangKy.getLopHoc().getGiaLopHoc();
-//         totalAmount = dangKy.getLopHoc().getSoLuong() * dangKy.getGoiUuDai().getDonGia();
+
+        // Kiểm tra nếu có gói tập
+        if (dangKy.getGoiUuDai() != null && dangKy.getGoiUuDai().getGoiTap() != null) {
+            totalAmount += dangKy.getGoiUuDai().getGoiTap().getGiaGoiTap();
+        }
+
+        // Kiểm tra nếu có lớp học
+        if (dangKy.getLopHoc() != null) {
+            totalAmount += dangKy.getLopHoc().getGiaLopHoc();
+        }
+
         return totalAmount;
     }
+
 
     @Override
     public List<HoaDonE> findAll() {

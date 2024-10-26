@@ -1,5 +1,6 @@
 package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 
+import com.codecrafter.WebAppManagerRoomGymBE.data.dto.HoaDonDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.DoanhThuE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.HoaDonE;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.DoanhThuRepo;
@@ -9,66 +10,69 @@ import com.codecrafter.WebAppManagerRoomGymBE.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
 public class HoaDonServiceImpl implements HoaDonService {
- @Autowired
-    private HoaDonRepo hoaDonRepo;
-
-    @Autowired
-    private DoanhThuRepo doanhThuRepo;
+  @Autowired
+    private HoaDonRepo hoaDonRepository;
 
     @Override
-    public long countHoaDonByDate(Date date) {
-        return hoaDonRepo.findByDate(date).size();
-    }
+    public Map<String, Object> getHoaDonDetailsByMonth(int month, int year) {
+        List<HoaDonE> hoaDons = hoaDonRepository.findByMonthAndYear(month, year);
 
-    @Override
-    public long countHoaDonByMonth(int month, int year) {
-        return hoaDonRepo.findByMonthAndYear(month, year).size();
-    }
+        // Tính tổng doanh thu và số lượng hóa đơn
+        double totalRevenue = hoaDons.stream().mapToDouble(HoaDonE::getSoTienThanhToan).sum();
+        int totalCount = hoaDons.size();
 
-    @Override
-    public long countHoaDonByYear(int year) {
-        return hoaDonRepo.findByYear(year).size();
-    }
+        // Tạo DTO cho từng hóa đơn
+        List<HoaDonDTO> hoaDonDTOs = hoaDons.stream().map(hoaDon -> {
+            HoaDonDTO dto = new HoaDonDTO();
+            dto.setMaHoaDon(hoaDon.getMaHoaDon());
+            dto.setNgayTaoHoaDon(hoaDon.getNgayTaoHoaDon());
+            dto.setSoTienThanhToan(hoaDon.getSoTienThanhToan());
+            return dto;
+        }).collect(Collectors.toList());
 
-    @Override
-    public Double calculateRevenueByDate(Date date) {
-        List<HoaDonE> hoaDonList = hoaDonRepo.findByDate(date);
-        double totalRevenue = hoaDonList.stream().mapToDouble(HoaDonE::getSoTienThanhToan).sum();
+        // Chuẩn bị kết quả trả về
+        Map<String, Object> result = new HashMap<>();
+        result.put("totalRevenue", totalRevenue);
+        result.put("totalCount", totalCount);
+        result.put("hoaDons", hoaDonDTOs);
 
-        saveRevenueRecord("Ngày", date, totalRevenue);
-        return totalRevenue;
-    }
-
-    @Override
-    public Double calculateRevenueByMonth(int month, int year) {
-        List<HoaDonE> hoaDonList = hoaDonRepo.findByMonthAndYear(month, year);
-        double totalRevenue = hoaDonList.stream().mapToDouble(HoaDonE::getSoTienThanhToan).sum();
-
-        saveRevenueRecord("Tháng", new Date(year - 1900, month - 1, 1), totalRevenue);
-        return totalRevenue;
+        return result;
     }
 
     @Override
-    public Double calculateRevenueByYear(int year) {
-        List<HoaDonE> hoaDonList = hoaDonRepo.findByYear(year);
-        double totalRevenue = hoaDonList.stream().mapToDouble(HoaDonE::getSoTienThanhToan).sum();
+    public Map<String, Object> getHoaDonDetailsByYear(int year) {
+        List<HoaDonE> hoaDons = hoaDonRepository.findByYear(year);
 
-        saveRevenueRecord("Năm", new Date(year - 1900, 0, 1), totalRevenue);
-        return totalRevenue;
+        // Tính tổng doanh thu và số lượng hóa đơn
+        double totalRevenue = hoaDons.stream().mapToDouble(HoaDonE::getSoTienThanhToan).sum();
+        int totalCount = hoaDons.size();
+
+        // Tạo DTO cho từng hóa đơn
+        List<HoaDonDTO> hoaDonDTOs = hoaDons.stream().map(hoaDon -> {
+            HoaDonDTO dto = new HoaDonDTO();
+            dto.setMaHoaDon(hoaDon.getMaHoaDon());
+            dto.setNgayTaoHoaDon(hoaDon.getNgayTaoHoaDon());
+            dto.setSoTienThanhToan(hoaDon.getSoTienThanhToan());
+            return dto;
+        }).collect(Collectors.toList());
+
+        // Chuẩn bị kết quả trả về
+        Map<String, Object> result = new HashMap<>();
+        result.put("totalRevenue", totalRevenue);
+        result.put("totalCount", totalCount);
+        result.put("hoaDons", hoaDonDTOs);
+
+        return result;
     }
 
-    private void saveRevenueRecord(String loaiThoiGian, Date ngay, double soTienDoanhThu) {
-        DoanhThuE doanhThu = new DoanhThuE();
-        doanhThu.setLoaiThoiGianDoanhThu(loaiThoiGian);
-        doanhThu.setNgayTaoDoanhThu(ngay);
-        doanhThu.setSoTienDoanhThu(soTienDoanhThu);
-        doanhThuRepo.save(doanhThu);
-    }
 
 }

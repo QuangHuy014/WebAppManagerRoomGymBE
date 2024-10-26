@@ -39,6 +39,8 @@ public class HoaDonE {
     @JsonBackReference
     private List<ThanhToanE> thanhToans;
 
+
+
     @Transient
     private int tongHoaDon;
 

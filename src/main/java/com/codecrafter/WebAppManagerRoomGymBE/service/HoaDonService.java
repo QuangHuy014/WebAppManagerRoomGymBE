@@ -1,15 +1,12 @@
 package com.codecrafter.WebAppManagerRoomGymBE.service;
 
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.Map;
 
 public interface HoaDonService {
-     long countHoaDonByDate(Date date);
-    long countHoaDonByMonth(int month, int year);
-    long countHoaDonByYear(int year);
-
-    Double calculateRevenueByDate(Date date);
-    Double calculateRevenueByMonth(int month, int year);
-    Double calculateRevenueByYear(int year);
+    Map<String, Object> getHoaDonDetailsByMonth(int month, int year);
+    Map<String, Object> getHoaDonDetailsByYear(int year);
 
 }

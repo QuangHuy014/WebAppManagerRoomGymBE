@@ -11,6 +11,7 @@ import java.util.List;
 
 @Data
 public class HoaDonDTO {
+    private int maHoaDon;
     private Date ngayTaoHoaDon;
     private float soTienThanhToan;
 

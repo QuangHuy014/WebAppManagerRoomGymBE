@@ -11,14 +11,11 @@ import java.util.List;
 
 @Repository
 public interface HoaDonRepo extends JpaRepository <HoaDonE, Integer> {
-     @Query("SELECT h FROM HoaDonE h WHERE DATE(h.ngayTaoHoaDon) = :date")
-     List<HoaDonE> findByDate(Date date);
-
-    @Query("SELECT h FROM HoaDonE h WHERE MONTH(h.ngayTaoHoaDon) = :month AND YEAR(h.ngayTaoHoaDon) = :year")
-    List<HoaDonE> findByMonthAndYear(int month, int year);
+      @Query("SELECT h FROM HoaDonE h WHERE MONTH(h.ngayTaoHoaDon) = :month AND YEAR(h.ngayTaoHoaDon) = :year")
+    List<HoaDonE> findByMonthAndYear(@Param("month") int month, @Param("year") int year);
 
     @Query("SELECT h FROM HoaDonE h WHERE YEAR(h.ngayTaoHoaDon) = :year")
-    List<HoaDonE> findByYear(int year);
+    List<HoaDonE> findByYear(@Param("year") int year);
 }
 
 

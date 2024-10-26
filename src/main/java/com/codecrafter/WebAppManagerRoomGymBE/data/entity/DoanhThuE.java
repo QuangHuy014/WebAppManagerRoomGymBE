@@ -1,5 +1,6 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,6 +20,7 @@ public class DoanhThuE {
     @Column
     private String loaiThoiGianDoanhThu;
 
+
     @Column(name = "so_tien_doanh_thu")
     private double soTienDoanhThu;
 
@@ -27,6 +29,6 @@ public class DoanhThuE {
 
 
     @OneToMany(mappedBy = "doanhThu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
     private List<HoaDonE> hoaDonS;
-
 }

@@ -1,51 +1,37 @@
 package com.codecrafter.WebAppManagerRoomGymBE.api;
 
-<<<<<<< HEAD
+
 import com.codecrafter.WebAppManagerRoomGymBE.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/hoa-don")
 public class HoaDonAPI {
 
-     @Autowired
+    @Autowired
     private HoaDonService hoaDonService;
 
-    @GetMapping("/count-by-date")
-    public long countByDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
-        return hoaDonService.countHoaDonByDate(date);
+    @GetMapping("/hoa-don-by-month")
+    public ResponseEntity<Map<String, Object>> getHoaDonByMonth(
+            @RequestParam("month") int month,
+            @RequestParam("year") int year) {
+        Map<String, Object> result = hoaDonService.getHoaDonDetailsByMonth(month, year);
+        return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/count-by-month")
-    public long countByMonth(@RequestParam("month") int month, @RequestParam("year") int year) {
-        return hoaDonService.countHoaDonByMonth(month, year);
+    @GetMapping("/hoa-don-by-year")
+    public ResponseEntity<Map<String, Object>> getHoaDonByYear(@RequestParam("year") int year) {
+        Map<String, Object> result = hoaDonService.getHoaDonDetailsByYear(year);
+        return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/count-by-year")
-    public long countByYear(@RequestParam("year") int year) {
-        return hoaDonService.countHoaDonByYear(year);
-    }
 
-    @GetMapping("/doanh-thu-by-date")
-    public Double getDoanhThuByDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
-        return hoaDonService.calculateRevenueByDate(date);
-    }
 
-    @GetMapping("/doanh-thu-by-month")
-    public Double getDoanhThuByMonth(@RequestParam("month") int month, @RequestParam("year") int year) {
-        return hoaDonService.calculateRevenueByMonth(month, year);
-    }
-
-    @GetMapping("/doanh-thu-by-year")
-    public Double getDoanhThuByYear(@RequestParam("year") int year) {
-        return hoaDonService.calculateRevenueByYear(year);
-    }
-    
 }

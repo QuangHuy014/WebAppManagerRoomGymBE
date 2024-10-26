@@ -8,6 +8,7 @@ import com.codecrafter.WebAppManagerRoomGymBE.service.GoiTapService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.SendMailService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,11 +23,14 @@ public class ThanhVienServiceImpl implements ThanhVienService {
     @Autowired
     private SendMailService sendMailService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public Optional<ThanhVienE> register(ThanhVienDTO userDTO, int maGoiTap) {
-         // Kiểm tra xem email hoặc tên thành viên có tồn tại hay không
+        // Kiểm tra xem email hoặc tên thành viên có tồn tại hay không
         if (thanhVienRepository.existsByEmailThanhVien(userDTO.getEmailThanhVien()) ||
-            thanhVienRepository.existsByTenThanhVien(userDTO.getTenThanhVien())) {
+                thanhVienRepository.existsByTenThanhVien(userDTO.getTenThanhVien())) {
             return Optional.empty();
         }
 
@@ -34,7 +38,7 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         ThanhVienE thanhVien = new ThanhVienE();
         thanhVien.setTenThanhVien(userDTO.getTenThanhVien());
         thanhVien.setEmailThanhVien(userDTO.getEmailThanhVien());
-        thanhVien.setMatKhauNguoiDung(userDTO.getMatKhauNguoiDung());
+        thanhVien.setMatKhauNguoiDung(passwordEncoder.encode(userDTO.getMatKhauNguoiDung()));
         thanhVien.setSoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
         thanhVien.setNgaySinhThanhVien(java.sql.Date.valueOf(userDTO.getNgaySinhThanhVien()));
         thanhVien.setDuLieuQrDinhDanh(userDTO.getDuLieuQrDinhDanh());
@@ -72,6 +76,15 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         }
 
         return Optional.of(thanhVien);
+    }
+
+    @Override
+    public Optional<ThanhVienE> login(ThanhVienDTO memberDTO) {
+        Optional<ThanhVienE> member = thanhVienRepository.findByTenThanhVien(memberDTO.getTenThanhVien());
+        if (member.isPresent() && passwordEncoder.matches(memberDTO.getMatKhauNguoiDung(), member.get().getMatKhauNguoiDung())) {
+            return member; // Nếu thành viên tồn tại và mật khẩu khớp, trả về đối tượng thành viên
+        }
+        return Optional.empty(); // Nếu không, trả về Optional.empty()
     }
 
 

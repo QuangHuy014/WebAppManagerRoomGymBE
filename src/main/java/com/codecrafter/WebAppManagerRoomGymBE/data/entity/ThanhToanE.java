@@ -17,7 +17,7 @@ public class ThanhToanE {
 
 
     @ManyToOne
-    @JoinColumn(name = "ma_hoa_don", nullable = false)
+    @JoinColumn(name = "ma_hoa_don", nullable = false) // Foreign key reference to HoaDonE
     private HoaDonE hoaDon;
 
     @Column(name = "ngay_thanh_toan")

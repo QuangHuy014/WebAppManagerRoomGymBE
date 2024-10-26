@@ -1,5 +1,6 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class NguoiDungE {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ma_vai_tro")
+    @JsonBackReference
     private VaiTroE vaiTro;
     private boolean hoatDongNguoiDung;
     private String duLieuQrDinhDanh;

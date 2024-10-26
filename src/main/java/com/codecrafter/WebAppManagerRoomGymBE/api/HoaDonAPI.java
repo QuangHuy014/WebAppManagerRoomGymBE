@@ -1,5 +1,6 @@
 package com.codecrafter.WebAppManagerRoomGymBE.api;
 
+<<<<<<< HEAD
 import com.codecrafter.WebAppManagerRoomGymBE.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,7 +15,7 @@ import java.util.Date;
 @RequestMapping("/api/hoa-don")
 public class HoaDonAPI {
 
-   @Autowired
+     @Autowired
     private HoaDonService hoaDonService;
 
     @GetMapping("/count-by-date")
@@ -46,5 +47,5 @@ public class HoaDonAPI {
     public Double getDoanhThuByYear(@RequestParam("year") int year) {
         return hoaDonService.calculateRevenueByYear(year);
     }
-
+    
 }

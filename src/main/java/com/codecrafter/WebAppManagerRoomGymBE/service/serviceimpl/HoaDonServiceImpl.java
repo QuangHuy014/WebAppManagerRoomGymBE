@@ -3,6 +3,7 @@ package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.DoanhThuE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.HoaDonE;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.DoanhThuRepo;
+
 import com.codecrafter.WebAppManagerRoomGymBE.repository.HoaDonRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,10 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
+
 @Service
 public class HoaDonServiceImpl implements HoaDonService {
-     @Autowired
+ @Autowired
     private HoaDonRepo hoaDonRepo;
 
     @Autowired

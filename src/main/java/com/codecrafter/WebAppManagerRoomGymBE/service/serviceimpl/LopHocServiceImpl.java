@@ -1,6 +1,7 @@
 
 package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 
+import com.codecrafter.WebAppManagerRoomGymBE.data.dto.LopHocDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.LopHocE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.model.LopHocM;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.LopHocRepo;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class LopHocServiceImpl implements LopHocService {
     @Autowired
@@ -20,4 +23,36 @@ public class LopHocServiceImpl implements LopHocService {
         List<LopHocE> lopHocEList = lopHocRepo.findByMaThanhVien(maThanhVien);
         return LopHocM.convertListLopHocEToLopHocM(lopHocEList);
     }
+
+    @Override
+    public LopHocE addLopHoc(LopHocDTO lopHocDTO) {
+        LopHocE lopHocE = new LopHocE();
+        lopHocE.setTenLopHoc(lopHocDTO.getTenLopHoc());
+        lopHocE.setMoTaLopHoc(lopHocDTO.getMoTaLopHoc());
+        lopHocE.setGiaLopHoc(lopHocDTO.getGiaLopHoc());
+        lopHocE.setLichHoc(lopHocDTO.getLichHoc());
+        lopHocE.setSoLuongThanhVienLopHoc(lopHocDTO.getSoLuongThanhVienLopHoc());
+        return lopHocRepo.save(lopHocE);
+    }
+
+    @Override
+    public LopHocE updateLopHoc(int maLopHoc, LopHocDTO lopHocDTO) {
+        Optional<LopHocE> lopHocOpt = lopHocRepo.findById(maLopHoc);
+        if (lopHocOpt.isPresent()) {
+            LopHocE lopHocE = lopHocOpt.get();
+            lopHocE.setTenLopHoc(lopHocDTO.getTenLopHoc());
+            lopHocE.setMoTaLopHoc(lopHocDTO.getMoTaLopHoc());
+            lopHocE.setGiaLopHoc(lopHocDTO.getGiaLopHoc());
+            lopHocE.setLichHoc(lopHocDTO.getLichHoc());
+            lopHocE.setSoLuongThanhVienLopHoc(lopHocDTO.getSoLuongThanhVienLopHoc());
+            return lopHocRepo.save(lopHocE);
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteLopHoc(int maLopHoc) {
+        lopHocRepo.deleteById(maLopHoc);
+    }
+
 }

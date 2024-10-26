@@ -1,14 +1,21 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
 
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "gym_uu_dai")
 public class UuDaiE {
 
@@ -37,4 +44,11 @@ public class UuDaiE {
     @OneToMany(mappedBy = "uuDai", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<GoiUuDaiE> goiUuDais;
+
+    @Transient
+    private int tongUuDai;
+
+//    public int tongUuDai(int tongUuDai){
+//        return this.tongUuDai +=tongUuDai;
+//    }
 }

@@ -7,9 +7,9 @@ public interface HoaDonService {
     long countHoaDonByMonth(int month, int year);
     long countHoaDonByYear(int year);
 
-    Double getDoanhThuByDate(Date date);
-    Double getDoanhThuByMonth(int month, int year);
-    Double getDoanhThuByYear(int year);
+    Double calculateRevenueByDate(Date date);
+    Double calculateRevenueByMonth(int month, int year);
+    Double calculateRevenueByYear(int year);
 
 
 }

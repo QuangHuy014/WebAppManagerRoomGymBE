@@ -14,7 +14,7 @@ import java.util.Date;
 @RequestMapping("/api/hoa-don")
 public class HoaDonAPI {
 
-    @Autowired
+   @Autowired
     private HoaDonService hoaDonService;
 
     @GetMapping("/count-by-date")
@@ -34,17 +34,17 @@ public class HoaDonAPI {
 
     @GetMapping("/doanh-thu-by-date")
     public Double getDoanhThuByDate(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
-        return hoaDonService.getDoanhThuByDate(date);
+        return hoaDonService.calculateRevenueByDate(date);
     }
 
     @GetMapping("/doanh-thu-by-month")
     public Double getDoanhThuByMonth(@RequestParam("month") int month, @RequestParam("year") int year) {
-        return hoaDonService.getDoanhThuByMonth(month, year);
+        return hoaDonService.calculateRevenueByMonth(month, year);
     }
 
     @GetMapping("/doanh-thu-by-year")
     public Double getDoanhThuByYear(@RequestParam("year") int year) {
-        return hoaDonService.getDoanhThuByYear(year);
+        return hoaDonService.calculateRevenueByYear(year);
     }
 
 }

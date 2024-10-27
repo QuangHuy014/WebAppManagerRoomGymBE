@@ -11,8 +11,10 @@ public interface LopHocService {
 
     public List<LopHocM> getLopHocByThanhVienId(int maThanhVien);
 
+
     LopHocE addLopHoc(LopHocDTO lopHocDTO);
     LopHocE updateLopHoc(int maLopHoc, LopHocDTO lopHocDTO);
     void deleteLopHoc(int maLopHoc);
+    List<LopHocM> getAllLopHoc();
 
 }

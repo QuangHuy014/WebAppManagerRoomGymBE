@@ -7,6 +7,7 @@ import java.util.Date;
 
 @Data
 public class ThanhVienDTO {
+
     private int maThanhVien;
     private String tenThanhVien;
     private String matKhauNguoiDung;
@@ -15,8 +16,7 @@ public class ThanhVienDTO {
     private LocalDate ngaySinhThanhVien;
     private String duLieuQrDinhDanh;
 
-      private int maGoiTap; // Thêm trường này
-
-
+    private int maGoiTap; // Thêm trường này
+    private int maDangKy;
 
 }

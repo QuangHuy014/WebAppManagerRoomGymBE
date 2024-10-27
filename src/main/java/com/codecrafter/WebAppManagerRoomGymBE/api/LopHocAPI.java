@@ -31,7 +31,21 @@ public class LopHocAPI {
             log.info("fail when call api /api-public/lophoc/getLopHocByThanhVien", e);
         }
         return result;
+    }
 
+    @GetMapping("/getAllLopHoc")
+    public ResponseObject<?> getAllLopHoc() {
+        var result = new ResponseObject<>();
+        try {
+            result.setData(lopHocService.getAllLopHoc());
+            result.setStatus(BasicApiConstant.SUCCEED.getStatus());
+            result.setMessages("Lấy tất cả lớp học thành công");
+        } catch (Exception e) {
+            log.error("Lỗi khi lấy tất cả lớp học", e);
+            result.setStatus(BasicApiConstant.ERROR.getStatus());
+            result.setMessages("Lỗi khi lấy tất cả lớp học");
+        }
+        return result;
     }
 
 

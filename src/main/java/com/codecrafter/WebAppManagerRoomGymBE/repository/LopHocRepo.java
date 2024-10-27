@@ -19,4 +19,5 @@ public interface LopHocRepo extends JpaRepository<LopHocE, Integer> {
 
     Optional<LopHocE> findById(int maLopHoc);
 
+
 }

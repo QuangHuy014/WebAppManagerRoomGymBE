@@ -5,6 +5,7 @@ import com.codecrafter.WebAppManagerRoomGymBE.data.entity.GoiTapE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepository;
 import com.codecrafter.WebAppManagerRoomGymBE.service.GoiTapService;
+import com.codecrafter.WebAppManagerRoomGymBE.service.LichSuTapLuyenService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.SendMailService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class ThanhVienServiceImpl implements ThanhVienService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private LichSuTapLuyenService lichSuTapLuyenService;
 
     @Override
     public Optional<ThanhVienE> register(ThanhVienDTO userDTO, int maGoiTap) {

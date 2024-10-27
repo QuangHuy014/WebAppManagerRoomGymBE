@@ -73,7 +73,7 @@ public class UuDaiServiceImpl implements UuDaiService {
 
     @Override
     public List<UuDaiE> getUuDaiByIdAndOtherParam(Integer maUuDai, Date ngayBatDau, Date ngayKetThuc, Boolean trangThaiUuDai) {
-        return uuDaiRepository.findAll((Root<UuDaiE> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
+         List<UuDaiE> listUuDai= uuDaiRepository.findAll((Root<UuDaiE> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 
             // Kiểm tra từng tham số và thêm điều kiện tương ứng nếu tham số không null
@@ -93,6 +93,11 @@ public class UuDaiServiceImpl implements UuDaiService {
             // Kết hợp các điều kiện với AND và trả về
             return cb.and(predicates.toArray(new Predicate[0]));
         });
+
+         for (UuDaiE uuDai : listUuDai){
+             uuDai.setTongUuDai(listUuDai.size());
+         }
+         return listUuDai;
     }
 
 }

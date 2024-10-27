@@ -26,16 +26,24 @@ public class HoaDonServiceImpl implements HoaDonService {
 
     @Override
     public HoaDonE register(DangKyDTO registration) {
+        // Kiểm tra xem maDangKy có hợp lệ không
+        if (registration.getMaDangKy() == null) {
+            throw new IllegalArgumentException("Mã đăng ký không được để trống");
+        }
+
+        // Tạo hóa đơn mới
         HoaDonE invoice = new HoaDonE();
         invoice.setNgayTaoHoaDon(new Date());
 
+        // Tìm kiếm đăng ký trong cơ sở dữ liệu
         DangKyE dangKy = dangKyRepository.findById(registration.getMaDangKy())
                 .orElseThrow(() -> new RuntimeException("Đăng ký không tồn tại"));
 
+        // Tính toán số tiền thanh toán
         invoice.setSoTienThanhToan(calculateTotalAmount(dangKy));
-
         HoaDonE savedInvoice = hoaDonRepository.save(invoice);
 
+        // Liên kết hóa đơn với đăng ký
         dangKy.setHoaDon(savedInvoice);
         dangKyRepository.save(dangKy);
 

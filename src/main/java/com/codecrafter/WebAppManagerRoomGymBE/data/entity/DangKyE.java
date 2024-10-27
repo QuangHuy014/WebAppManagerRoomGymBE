@@ -1,12 +1,17 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.context.annotation.Lazy;
 
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "gym_dang_ky")
 public class DangKyE {
@@ -40,5 +45,8 @@ public class DangKyE {
     // Many-to-One relationship with HoaDonE
     @ManyToOne
     @JoinColumn(name = "ma_hoa_don")
+    @JsonBackReference
     private HoaDonE hoaDon;
+
+
 }

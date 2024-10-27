@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class DangKyDTO {
 
-    private int maDangKy;
+    private Integer maDangKy;
     private int maThanhVien;
     private int maGoiUuDai;
     private Date ngayDangKy;

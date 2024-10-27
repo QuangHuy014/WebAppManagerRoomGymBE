@@ -9,4 +9,9 @@ public interface LichSuTapLuyenService {
 
     public List<LichSuTapLuyenM> getLichSuTapLuyenByThanhVienId(int maThanhVien);
 
+    int getNewestLichSuTapLuyenId(int maThanhVien);
+
+
+
+
     }

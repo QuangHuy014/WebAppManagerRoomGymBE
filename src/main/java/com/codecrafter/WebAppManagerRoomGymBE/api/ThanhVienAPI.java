@@ -6,7 +6,9 @@ import com.codecrafter.WebAppManagerRoomGymBE.constant.common.BasicApiConstant;
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.LoginStatus;
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.ThanhVienDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
+import com.codecrafter.WebAppManagerRoomGymBE.service.LichSuTapLuyenService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
+import com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl.LichSuTapLuyenServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,20 +24,22 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/member")
 public class ThanhVienAPI {
-      @Autowired
+    @Autowired
     private ThanhVienService thanhVienService;
 
     @Autowired
     private final JwtIssuer jwtIssuer;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private LichSuTapLuyenService lichSuTapLuyenService;
 
     public ThanhVienAPI(JwtIssuer jwtIssuer) {
         this.jwtIssuer = jwtIssuer;
     }
 
 
-  @PostMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<LoginResponseTV> login(@RequestBody ThanhVienDTO memberDTO) {
         // Kiểm tra tên thành viên
         if (memberDTO.getTenThanhVien() == null || memberDTO.getTenThanhVien().isEmpty()) {
@@ -54,36 +58,35 @@ public class ThanhVienAPI {
                     .build());
         }
 
-        // Gọi dịch vụ để xác thực đăng nhập
         Optional<ThanhVienE> member = thanhVienService.login(memberDTO);
         if (member.isPresent()) {
             ThanhVienE thanhVien = member.get();
 
             if (!passwordEncoder.matches(memberDTO.getMatKhauNguoiDung(), thanhVien.getMatKhauNguoiDung())) {
-            return ResponseEntity.status(401).body(LoginResponseTV.builder()
-                    .accessToken(null)
-                    .status(BasicApiConstant.FAILED.getStatus())
-                    .description(LoginStatus.FAILED_PASSWORD.getStatusDescription())
-                    .build());
-        }
-
-
+                return ResponseEntity.status(401).body(LoginResponseTV.builder()
+                        .accessToken(null)
+                        .status(BasicApiConstant.FAILED.getStatus())
+                        .description(LoginStatus.FAILED_PASSWORD.getStatusDescription())
+                        .build());
+            }
 
             // Tạo yêu cầu để phát hành JWT
             var requestBuilder = JwtIssuer.Request.builder()
-                    .userId((long) thanhVien.getMaThanhVien()) // ID thành viên
-                    .username(thanhVien.getTenThanhVien()) // Tên thành viên
+                    .userId((long) thanhVien.getMaThanhVien())
+                    .username(thanhVien.getTenThanhVien())
                     .build();
-
-            // Phát hành token
             var token = jwtIssuer.issue(requestBuilder);
 
-            // Tạo phản hồi LoginResponseTV với tên thành viên
+            // **Lấy maLichSuTapLuyen mới nhất của thành viên**
+            int maLichSuTapLuyen = lichSuTapLuyenService.getNewestLichSuTapLuyenId(thanhVien.getMaThanhVien());
+
+            // Tạo phản hồi LoginResponseTV với maLichSuTapLuyen và các thông tin khác
             LoginResponseTV response = LoginResponseTV.builder()
                     .accessToken(token)
-                    .tenThanhVien(thanhVien.getTenThanhVien()) // Thêm tên thành viên
+                    .maLichSuTapLuyen(maLichSuTapLuyen) // Gán giá trị mới vào phản hồi
+                    .tenThanhVien(thanhVien.getTenThanhVien())
                     .status(BasicApiConstant.SUCCEED.getStatus())
-                    .description(LoginStatus.SUCCEDD.getStatusDescription()) // Thêm thông điệp thành công
+                    .description(LoginStatus.SUCCEDD.getStatusDescription())
                     .build();
 
             return ResponseEntity.ok(response);
@@ -94,6 +97,6 @@ public class ThanhVienAPI {
                     .description(LoginStatus.NOT_EXIST.getStatusDescription())
                     .build());
         }
-    }
 
+    }
 }

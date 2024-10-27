@@ -31,7 +31,6 @@ public class LopHocAPI {
             log.info("fail when call api /api-public/lophoc/getLopHocByThanhVien", e);
         }
         return result;
-
     }
 
 

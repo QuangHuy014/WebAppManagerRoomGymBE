@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +20,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class HoaDonServiceImpl implements HoaDonService {
-  @Autowired
+     @Autowired
     private HoaDonRepo hoaDonRepository;
+
+    @Autowired
+    private DoanhThuRepo doanhThuRepository; // Thêm DoanhThuRepo vào
 
     @Override
     public Map<String, Object> getHoaDonDetailsByMonth(int month, int year) {
@@ -39,6 +43,15 @@ public class HoaDonServiceImpl implements HoaDonService {
             return dto;
         }).collect(Collectors.toList());
 
+        // Lưu doanh thu vào bảng gym_doanh_thu
+        DoanhThuE doanhThu = new DoanhThuE();
+        doanhThu.setLoaiThoiGianDoanhThu("Tháng " + month + " Năm " + year);
+        doanhThu.setSoTienDoanhThu(totalRevenue); // Lưu tổng doanh thu
+        doanhThu.setNgayTaoDoanhThu(new Date()); // Ngày hiện tại, hoặc có thể dùng ngày cụ thể nếu cần
+
+        // Lưu đối tượng DoanhThu vào cơ sở dữ liệu
+        doanhThuRepository.save(doanhThu);
+
         // Chuẩn bị kết quả trả về
         Map<String, Object> result = new HashMap<>();
         result.put("totalRevenue", totalRevenue);
@@ -56,14 +69,25 @@ public class HoaDonServiceImpl implements HoaDonService {
         double totalRevenue = hoaDons.stream().mapToDouble(HoaDonE::getSoTienThanhToan).sum();
         int totalCount = hoaDons.size();
 
-        // Tạo DTO cho từng hóa đơn
+
         List<HoaDonDTO> hoaDonDTOs = hoaDons.stream().map(hoaDon -> {
             HoaDonDTO dto = new HoaDonDTO();
             dto.setMaHoaDon(hoaDon.getMaHoaDon());
+
             dto.setNgayTaoHoaDon(hoaDon.getNgayTaoHoaDon());
             dto.setSoTienThanhToan(hoaDon.getSoTienThanhToan());
             return dto;
         }).collect(Collectors.toList());
+
+        // Lưu doanh thu vào bảng gym_doanh_thu
+        DoanhThuE doanhThu = new DoanhThuE();
+        doanhThu.setLoaiThoiGianDoanhThu("Năm " + year);
+
+        doanhThu.setSoTienDoanhThu(totalRevenue);
+        doanhThu.setNgayTaoDoanhThu(new Date());
+
+        // Lưu đối tượng DoanhThu vào cơ sở dữ liệu
+        doanhThuRepository.save(doanhThu);
 
         // Chuẩn bị kết quả trả về
         Map<String, Object> result = new HashMap<>();

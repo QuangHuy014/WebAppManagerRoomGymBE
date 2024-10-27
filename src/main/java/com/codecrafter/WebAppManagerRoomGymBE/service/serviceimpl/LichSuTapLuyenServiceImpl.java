@@ -20,4 +20,12 @@ public class LichSuTapLuyenServiceImpl implements LichSuTapLuyenService {
         List<LichSuTapLuyenE> listLichSuTapLuyen = lichSuTapLuyenRepo.findByThanhVien_MaThanhVien(maThanhVien);
         return LichSuTapLuyenM.convertListLichSuTapLuyenEToListLichSuTapLuyenM(listLichSuTapLuyen);
     }
+
+    @Override
+    public int getNewestLichSuTapLuyenId(int maThanhVien) {
+        return lichSuTapLuyenRepo.findTopByThanhVien_MaThanhVienOrderByThoiGianTapLuyenDesc(maThanhVien)
+                .map(LichSuTapLuyenE::getMaLichSuTapLuyen)
+                .orElse(0); // Trả về 0 nếu không có lịch sử tập luyện
+    }
+
 }

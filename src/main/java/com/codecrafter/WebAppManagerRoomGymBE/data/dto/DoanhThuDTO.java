@@ -8,6 +8,7 @@ import java.util.Date;
 public class DoanhThuDTO {
     private int maDoanhThu;
     private String loaiThoiGianDoanhThu;
+    private int maHoaDon;
     private double soTienThanhToan;
     private Date ngayTaoDoanhThu;
 }

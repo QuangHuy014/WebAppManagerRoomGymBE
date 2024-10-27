@@ -31,4 +31,6 @@ public class DoanhThuE {
     @OneToMany(mappedBy = "doanhThu", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonBackReference
     private List<HoaDonE> hoaDonS;
+
+
 }

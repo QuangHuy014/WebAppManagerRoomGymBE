@@ -84,6 +84,7 @@ public class ThanhVienAPI {
             LoginResponseTV response = LoginResponseTV.builder()
                     .accessToken(token)
                     .maLichSuTapLuyen(maLichSuTapLuyen) // Gán giá trị mới vào phản hồi
+                    .maThanhVien(thanhVien.getMaThanhVien())
                     .tenThanhVien(thanhVien.getTenThanhVien())
                     .status(BasicApiConstant.SUCCEED.getStatus())
                     .description(LoginStatus.SUCCEDD.getStatusDescription())

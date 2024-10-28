@@ -10,6 +10,7 @@ import lombok.Setter;
 public class LoginResponseTV {
       private final String accessToken;
     private String tenThanhVien;
+    private int maThanhVien;
     private int maLichSuTapLuyen;
      private String status;
     private String description;

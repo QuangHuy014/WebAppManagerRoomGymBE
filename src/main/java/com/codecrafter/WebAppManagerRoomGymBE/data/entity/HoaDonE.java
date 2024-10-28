@@ -1,14 +1,13 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
-
 
 @Getter
 @Setter
@@ -27,12 +26,14 @@ public class HoaDonE {
     @Column(name = "so_tien_thanh_toan")
     private float soTienThanhToan;
 
-    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL)
-    private List<DangKyE> dangkys;
+    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<DangKyE> dangkys ;
 
-    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL)
-    @JsonBackReference
+
+    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
     private List<ThanhToanE> thanhToans;
+
 
     @Transient
     private int tongHoaDon;

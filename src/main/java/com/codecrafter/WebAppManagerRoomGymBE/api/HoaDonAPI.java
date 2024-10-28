@@ -55,11 +55,11 @@ public class HoaDonAPI {
 
 
     @PostMapping
-    public ResponseObject<Object> register(@RequestBody DangKyDTO registration) {
+    public ResponseObject<Object> saveHoaDon(@RequestBody DangKyDTO registration) {
         var result = new ResponseObject<>();
         try {
 
-            HoaDonE invoice = hoaDonService.register(registration);
+            HoaDonE invoice = hoaDonService.saveHoaDon(registration);
             result.setData(invoice);
             result.setStatus(BasicApiConstant.SUCCEED.getStatus());
             result.setMessages(BasicApiConstant.SUCCEED.name());

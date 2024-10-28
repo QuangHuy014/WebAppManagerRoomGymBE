@@ -54,6 +54,7 @@ public class NguoiDungAPI {
     private JwtProperties jwtProperties;
     @Autowired
     private JwtDecoder jwtDecoder;
+
     public NguoiDungAPI(JwtIssuer jwtIssuer) {
         this.jwtIssuer = jwtIssuer;
     }
@@ -198,8 +199,16 @@ public class NguoiDungAPI {
 
     }
 
+    @GetMapping("/getUser/{id}")
+    public ResponseEntity<NguoiDungE> getUserInfo(@PathVariable int id) {
+        Optional<NguoiDungE> user = nguoiDungService.getUserInfo(id);
 
-
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return ResponseEntity.status(404).body(null); // Hoặc trả về một response tùy chỉnh
+        }
+    }
 
 
 }

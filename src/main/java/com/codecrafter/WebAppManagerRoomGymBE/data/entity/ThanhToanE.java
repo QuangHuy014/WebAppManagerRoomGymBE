@@ -1,5 +1,6 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -7,7 +8,7 @@ import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "thanh_toan") // Specify the table name in the database
+@Table(name = "gym_thanh_toan")
 public class ThanhToanE {
 
     @Id
@@ -17,6 +18,7 @@ public class ThanhToanE {
 
     @ManyToOne
     @JoinColumn(name = "ma_hoa_don", nullable = false) // Foreign key reference to HoaDonE
+    @JsonBackReference
     private HoaDonE hoaDon;
 
     @Column(name = "ngay_thanh_toan")

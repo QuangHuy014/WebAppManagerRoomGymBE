@@ -2,11 +2,8 @@ package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
-import org.springframework.context.annotation.Lazy;
 
 import java.util.Date;
 
@@ -29,24 +26,22 @@ public class DangKyE {
     @JoinColumn(name = "ma_goi_uu_dai")
     private GoiUuDaiE goiUuDai;
 
-    @JoinColumn(name = "ngay_dang_ky")
+    @Column(name = "ngay_dang_ky")
     private Date ngayDangKy;
 
-    @JoinColumn(name = "ngay_kich_hoat")
+    @Column(name = "ngay_kich_hoat")
     private Date ngayKichHoat;
 
-    @JoinColumn(name = "trang_thai_dang_ky")
+    @Column(name = "trang_thai_dang_ky")
     private boolean trangThaiDangKy;
 
     @ManyToOne
     @JoinColumn(name = "ma_lop_hoc")
     private LopHocE lopHoc;
 
-    // Many-to-One relationship with HoaDonE
     @ManyToOne
-    @JoinColumn(name = "ma_hoa_don")
+    @JoinColumn(name = "ma_hoa_don", nullable = false) // Chỉ định "nullable = false" nếu mã hóa đơn bắt buộc
     @JsonBackReference
     private HoaDonE hoaDon;
-
 
 }

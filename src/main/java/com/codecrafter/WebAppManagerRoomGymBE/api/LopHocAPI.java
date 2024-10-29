@@ -39,7 +39,7 @@ public class LopHocAPI {
         try {
             result.setData(lopHocService.getAllLopHoc());
             result.setStatus(BasicApiConstant.SUCCEED.getStatus());
-            result.setMessages("Lấy tất cả lớp học thành công");
+            result.setMessages("Danh sách lớp học là: " +lopHocService.getAllLopHoc().size());
         } catch (Exception e) {
             log.error("Lỗi khi lấy tất cả lớp học", e);
             result.setStatus(BasicApiConstant.ERROR.getStatus());

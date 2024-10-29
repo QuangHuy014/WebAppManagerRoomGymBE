@@ -25,8 +25,8 @@ public class GoiUuDaiAPI {
 
     @GetMapping("/thanh-vien/{maThanhVien}")
     public ResponseEntity<List<GoiUuDaiE>> getGoiUuDaiByThanhVien(@PathVariable int maThanhVien) {
-        List<GoiUuDaiE> góiUuDais = goiUuDaiService.getGoiUuDaiByThanhVien(maThanhVien);
-        return ResponseEntity.ok(góiUuDais);
+        List<GoiUuDaiE> goiUuDais = goiUuDaiService.getGoiUuDaiByThanhVien(maThanhVien);
+        return ResponseEntity.ok(goiUuDais);
     }
 
 }

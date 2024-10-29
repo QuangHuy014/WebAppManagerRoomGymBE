@@ -16,14 +16,13 @@ import java.util.stream.Collectors;
 public class LichSuTapLuyenM {
 
     private int maLichSuTapLuyen;
-    private ThanhVienE thanhVien;
+
     private Date thoiGianTapLuyen;
     private String ghiChuTapLuyen;
 
     public static LichSuTapLuyenM convertLichSuTapLuyenEToLichSuTapLuyenM(LichSuTapLuyenE lichSuTapLuyenE){
         return LichSuTapLuyenM.builder()
                 .maLichSuTapLuyen(lichSuTapLuyenE.getMaLichSuTapLuyen())
-                .thanhVien(lichSuTapLuyenE.getThanhVien())
                 .thoiGianTapLuyen(lichSuTapLuyenE.getThoiGianTapLuyen())
                 .ghiChuTapLuyen(lichSuTapLuyenE.getGhiChuTapLuyen())
                 .build();

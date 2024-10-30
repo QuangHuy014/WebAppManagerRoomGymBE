@@ -5,6 +5,7 @@ import com.codecrafter.WebAppManagerRoomGymBE.data.dto.LopHocDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.LopHocE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.model.LopHocM;
 
+import java.util.Date;
 import java.util.List;
 
 public interface LopHocService {
@@ -16,5 +17,7 @@ public interface LopHocService {
     LopHocE updateLopHoc(int maLopHoc, LopHocDTO lopHocDTO);
     void deleteLopHoc(int maLopHoc);
     List<LopHocM> getAllLopHoc();
+
+   List<LopHocE> getLopHocByParams(Integer maLopHoc, String tenLopHoc, String moTaLopHoc, Float giaLopHoc, Date lichHoc);
 
 }

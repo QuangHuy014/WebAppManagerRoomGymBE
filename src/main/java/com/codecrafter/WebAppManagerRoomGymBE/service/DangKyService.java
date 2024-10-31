@@ -11,6 +11,4 @@ public interface DangKyService {
 
     DangKyE registerWithoutDiscount(int maThanhVien, int maGoiTap);
     List<DangKyE> getDangKyByParams(Integer maDangKy, Integer maThanhVien, Integer maGoiUuDai, Date ngayDangKy, Date ngayKichHoat, Boolean trangThaiDangKy, Integer maLopHoc, Integer maHoaDon);
-
-     List<DangKyE> getAllDangKy();
 }

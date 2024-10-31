@@ -51,10 +51,5 @@ public class DangKyAPI {
     ) {
         return dangKyService.getDangKyByParams(maDangKy, maThanhVien, maGoiUuDai, ngayDangKy, ngayKichHoat, trangThaiDangKy, maLopHoc, maHoaDon);
     }
-     @GetMapping("/all")
-    public ResponseEntity<List<DangKyE>> getAllDangKy() {
-        List<DangKyE> registrations = dangKyService.getAllDangKy();
-        return ResponseEntity.ok(registrations);
-    }
 }
 

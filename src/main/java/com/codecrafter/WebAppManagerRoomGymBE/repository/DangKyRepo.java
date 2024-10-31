@@ -10,6 +10,5 @@ import java.util.List;
 @Repository
 public interface DangKyRepo extends JpaRepository<DangKyE, Integer>, JpaSpecificationExecutor<DangKyE> {
      List<DangKyE> findByThanhVien_MaThanhVien(int maThanhVien);
-      List<DangKyE> findAll();
 }
 

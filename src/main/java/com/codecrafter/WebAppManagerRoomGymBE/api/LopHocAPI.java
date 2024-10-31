@@ -9,12 +9,7 @@ import com.codecrafter.WebAppManagerRoomGymBE.service.LopHocService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -44,7 +39,7 @@ public class LopHocAPI {
         try {
             result.setData(lopHocService.getAllLopHoc());
             result.setStatus(BasicApiConstant.SUCCEED.getStatus());
-            result.setMessages("Danh sách lớp học là: " + lopHocService.getAllLopHoc().size());
+            result.setMessages("Danh sách lớp học là: " +lopHocService.getAllLopHoc().size());
         } catch (Exception e) {
             log.error("Lỗi khi lấy tất cả lớp học", e);
             result.setStatus(BasicApiConstant.ERROR.getStatus());
@@ -52,18 +47,6 @@ public class LopHocAPI {
         }
         return result;
     }
-  @GetMapping("/search")
-    public ResponseEntity<List<LopHocE>> searchLopHoc(
-            @RequestParam(required = false) Integer maLopHoc,
-            @RequestParam(required = false) String tenLopHoc,
-            @RequestParam(required = false) String moTaLopHoc,
-            @RequestParam(required = false) Float giaLopHoc,
-            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date lichHoc) {
-
-        List<LopHocE> lopHocs = lopHocService.getLopHocByParams(maLopHoc, tenLopHoc, moTaLopHoc, giaLopHoc, lichHoc);
-        return ResponseEntity.ok(lopHocs);
-    }
-
 
 
     @PostMapping("/add")

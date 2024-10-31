@@ -32,8 +32,6 @@ public class ThanhVienAPI {
     private final JwtIssuer jwtIssuer;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
-    private ThanhVienRepo thanhVienRepository;
 
     public ThanhVienAPI(JwtIssuer jwtIssuer) {
         this.jwtIssuer = jwtIssuer;

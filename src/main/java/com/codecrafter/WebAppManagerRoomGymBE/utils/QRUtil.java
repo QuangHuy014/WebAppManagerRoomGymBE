@@ -32,6 +32,7 @@ public class    QRUtil {
             } catch (Exception e) {
                 System.out.println("fail when generate qr code ");
                 e.printStackTrace();
+
             }
         }
         return readImages.toString();

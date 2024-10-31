@@ -9,6 +9,10 @@ import com.codecrafter.WebAppManagerRoomGymBE.service.LichSuTapLuyenService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.SendMailService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -89,6 +93,12 @@ public class ThanhVienServiceImpl implements ThanhVienService {
             return member; // Nếu thành viên tồn tại và mật khẩu khớp, trả về đối tượng thành viên
         }
         return Optional.empty(); // Nếu không, trả về Optional.empty()
+    }
+
+    public Page<ThanhVienE> getAllMembers(int page, int size, String sortBy, boolean ascending) {
+        Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return thanhVienRepository.findAll(pageable);
     }
 
 

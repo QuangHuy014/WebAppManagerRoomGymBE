@@ -36,11 +36,17 @@ public class ThanhVienServiceImpl implements ThanhVienService {
 
     @Override
     public Optional<ThanhVienE> register(ThanhVienDTO userDTO, int maGoiTap) {
-        // Kiểm tra xem email hoặc tên thành viên có tồn tại hay không
-        if (thanhVienRepository.existsByEmailThanhVien(userDTO.getEmailThanhVien()) ||
-                thanhVienRepository.existsByTenThanhVien(userDTO.getTenThanhVien())) {
-            return Optional.empty();
-        }
+        boolean emailExists = thanhVienRepository.existsByEmailThanhVien(userDTO.getEmailThanhVien());
+    boolean soDienThoaiExists = thanhVienRepository.existsBySoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
+
+    if (emailExists && soDienThoaiExists) {
+        throw new IllegalArgumentException("Email và số điện thoại đã tồn tại.");
+    } else if (emailExists) {
+        throw new IllegalArgumentException("Email đã tồn tại. Vui lòng chọn email khác.");
+    } else if (soDienThoaiExists) {
+        throw new IllegalArgumentException("Số điện thoại đã tồn tại. Vui lòng chọn số điện thoại khác.");
+    }
+
 
         // Tạo một đối tượng ThanhVienE mới
         ThanhVienE thanhVien = new ThanhVienE();

@@ -13,7 +13,7 @@ public class ThanhVienDTO {
     private String matKhauNguoiDung;
     private String emailThanhVien;
     private long soDienThoaiThanhVien;
-    private LocalDate ngaySinhThanhVien;
+    private Date ngaySinhThanhVien;
     private String duLieuQrDinhDanh;
 
     private int maGoiTap; // Thêm trường này

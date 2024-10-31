@@ -48,7 +48,7 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         thanhVien.setEmailThanhVien(userDTO.getEmailThanhVien());
         thanhVien.setMatKhauNguoiDung(passwordEncoder.encode(userDTO.getMatKhauNguoiDung()));
         thanhVien.setSoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
-        thanhVien.setNgaySinhThanhVien(java.sql.Date.valueOf(userDTO.getNgaySinhThanhVien()));
+        thanhVien.setNgaySinhThanhVien(userDTO.getNgaySinhThanhVien());
         thanhVien.setDuLieuQrDinhDanh(userDTO.getDuLieuQrDinhDanh());
 
         // Lưu vào cơ sở dữ liệu

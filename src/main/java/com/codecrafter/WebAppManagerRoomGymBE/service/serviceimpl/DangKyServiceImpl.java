@@ -102,4 +102,8 @@ public class DangKyServiceImpl implements DangKyService {
             return cb.and(predicates.toArray(new Predicate[0]));
         });
     }
+     @Override
+    public List<DangKyE> getAllDangKy() {
+        return dangKyRepository.findAll(); // Lấy tất cả các đăng ký
+    }
 }

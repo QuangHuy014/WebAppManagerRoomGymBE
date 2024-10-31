@@ -53,7 +53,7 @@ public class WebSecurityConfig {
                 .securityMatcher("/**")
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/user/login").permitAll()
-                        .requestMatchers("/user/register").hasAnyRole("Admin")
+//                        .requestMatchers("/user/register").hasAnyRole("Admin")
                         .requestMatchers("/member/login").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()

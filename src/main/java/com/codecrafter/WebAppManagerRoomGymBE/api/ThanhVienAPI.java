@@ -6,7 +6,7 @@ import com.codecrafter.WebAppManagerRoomGymBE.constant.common.BasicApiConstant;
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.LoginStatus;
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.ThanhVienDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
-import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepository;
+import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.service.LichSuTapLuyenService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl.ThanhVienServiceImpl;
@@ -37,7 +37,7 @@ public class ThanhVienAPI {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
-    private ThanhVienRepository thanhVienRepository;
+    private ThanhVienRepo thanhVienRepository;
 
     public ThanhVienAPI(JwtIssuer jwtIssuer) {
         this.jwtIssuer = jwtIssuer;

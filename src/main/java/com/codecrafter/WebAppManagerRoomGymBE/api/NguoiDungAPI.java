@@ -78,24 +78,22 @@ public class NguoiDungAPI {
                     .build());
         }
 
-
-    try {
+        // Đăng ký khách hàng
         Optional<ThanhVienE> registeredMember = thanhVienService.register(thanhVienDTO, maGoiTap);
+        if (registeredMember.isEmpty()) {
+            return ResponseEntity.status(400).body(RegisterResponse.builder()
+                    .status(BasicApiConstant.FAILED.getStatus())
+                    .description(RegisterStatus.ACCOUNT_EXISTED.getStateDescription())
+                    .build());
+        }
+
 
         // Nếu đăng ký thành công
         return ResponseEntity.ok(RegisterResponse.builder()
                 .status(BasicApiConstant.SUCCEED.getStatus())
                 .description(RegisterStatus.SUCCEED.getStateDescription())
                 .build());
-    } catch (IllegalArgumentException ex) {
-        return ResponseEntity.status(400).body(RegisterResponse.builder()
-                .status(BasicApiConstant.FAILED.getStatus())
-                .description(ex.getMessage())
-                .build());
     }
-    }
-
-
 
     @PostMapping("/refresh-token")
     public ResponseEntity<LoginResponse> refreshAccessToken(@RequestBody TokenRefreshRequest tokenRefreshRequest) {

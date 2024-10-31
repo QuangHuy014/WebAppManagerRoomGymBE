@@ -6,12 +6,16 @@ import com.codecrafter.WebAppManagerRoomGymBE.constant.common.BasicApiConstant;
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.LoginStatus;
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.ThanhVienDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
-import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepo;
+import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepository;
 import com.codecrafter.WebAppManagerRoomGymBE.service.LichSuTapLuyenService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
+import com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl.ThanhVienServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +36,8 @@ public class ThanhVienAPI {
     private final JwtIssuer jwtIssuer;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private ThanhVienRepository thanhVienRepository;
 
     public ThanhVienAPI(JwtIssuer jwtIssuer) {
         this.jwtIssuer = jwtIssuer;

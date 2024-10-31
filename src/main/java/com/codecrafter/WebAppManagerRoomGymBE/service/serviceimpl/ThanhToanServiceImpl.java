@@ -6,9 +6,14 @@ import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhToanE;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.HoaDonRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhToanRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhToanService;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -58,4 +63,30 @@ public class ThanhToanServiceImpl implements ThanhToanService {
 
         return thanhToanRepository.save(existingPayment);
     }
+
+    @Override
+    public List<ThanhToanE> getHoaDonByParams(Integer maHoaDon, Date ngayThanhToan, Float soTienThanhToan, String phuongThucThanhToan) {
+        List<ThanhToanE> listThanhToan = thanhToanRepository.findAll((Root<ThanhToanE> root, CriteriaQuery<?> query, CriteriaBuilder cb) -> {
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (maHoaDon != null) {
+                predicates.add(cb.equal(root.get("hoaDon").get("maHoaDon"), maHoaDon));
+            }
+            if (ngayThanhToan != null) {
+                predicates.add(cb.equal(root.get("ngayThanhToan"), ngayThanhToan));
+            }
+            if (soTienThanhToan != null) {
+                predicates.add(cb.equal(root.get("soTienThanhToan"), soTienThanhToan));
+            }
+            if (phuongThucThanhToan != null) {
+                predicates.add(cb.equal(root.get("phuongThucThanhToan"), phuongThucThanhToan));
+            }
+
+            // Kết hợp các điều kiện với AND và trả về
+            return cb.and(predicates.toArray(new Predicate[0]));
+        });
+
+        return listThanhToan;
+    }
+
 }

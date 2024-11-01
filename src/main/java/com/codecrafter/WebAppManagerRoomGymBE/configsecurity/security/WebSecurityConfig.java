@@ -56,7 +56,7 @@ public class WebSecurityConfig {
                 .securityMatcher("/**")
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/user/login").permitAll()
-                        .requestMatchers("/user/register").hasAnyAuthority("ROLE_Admin","ROLE_Nhân viên")
+                        .requestMatchers("/user/register").hasAnyAuthority("ROLE_Admin","ROLE_Staff")
                         .requestMatchers("/member/login").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()

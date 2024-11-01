@@ -31,8 +31,10 @@ public class HoaDonE {
 
 
     @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-
     private List<ThanhToanE> thanhToans;
+
+    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<DoanhThuE> doanhThus; // Danh sách các doanh thu liên kết với hóa đơn này
 
 
     @Transient

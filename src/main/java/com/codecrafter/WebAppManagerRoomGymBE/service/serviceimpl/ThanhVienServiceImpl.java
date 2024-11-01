@@ -35,8 +35,8 @@ public class ThanhVienServiceImpl implements ThanhVienService {
     private LichSuTapLuyenService lichSuTapLuyenService;
 
     @Override
-     public Optional<ThanhVienE> register(ThanhVienDTO userDTO, int maGoiTap) {
-        boolean emailExists = thanhVienRepository.existsByEmailThanhVien(userDTO.getEmailThanhVien());
+public Optional<ThanhVienE> register(ThanhVienDTO userDTO, int maGoiTap) {
+    boolean emailExists = thanhVienRepository.existsByEmailThanhVien(userDTO.getEmailThanhVien());
     boolean soDienThoaiExists = thanhVienRepository.existsBySoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
 
     if (emailExists && soDienThoaiExists) {
@@ -47,49 +47,54 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         throw new IllegalArgumentException("Số điện thoại đã tồn tại. Vui lòng chọn số điện thoại khác.");
     }
 
-        // Tạo một đối tượng ThanhVienE mới
-        ThanhVienE thanhVien = new ThanhVienE();
-        thanhVien.setTenThanhVien(userDTO.getTenThanhVien());
-        thanhVien.setEmailThanhVien(userDTO.getEmailThanhVien());
-        thanhVien.setMatKhauNguoiDung(passwordEncoder.encode(userDTO.getMatKhauNguoiDung()));
-        thanhVien.setSoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
-        thanhVien.setNgaySinhThanhVien(userDTO.getNgaySinhThanhVien());
-        thanhVien.setDuLieuQrDinhDanh(userDTO.getDuLieuQrDinhDanh());
+    // Tạo một đối tượng ThanhVienE mới
+    ThanhVienE thanhVien = new ThanhVienE();
+    thanhVien.setTenThanhVien(userDTO.getTenThanhVien());
+    thanhVien.setEmailThanhVien(userDTO.getEmailThanhVien());
 
-        // Lưu vào cơ sở dữ liệu
-        thanhVienRepository.save(thanhVien);
+    // Mã hóa mật khẩu để lưu trữ trong cơ sở dữ liệu
+    String encodedPassword = passwordEncoder.encode(userDTO.getMatKhauNguoiDung());
+    thanhVien.setMatKhauNguoiDung(encodedPassword);
 
-        // Lấy thông tin gói tập theo maGoiTap
-        Optional<GoiTapE> goiTap = goiTapService.getGoiTapById(maGoiTap);
-        if (goiTap.isPresent()) {
-            // Chuẩn bị thông tin email
-            String subject = "Thông tin đăng ký gói tập";
-            String message = String.format("Chào %s,\n\nBạn đã đăng ký thành công gói tập: %s.\nMô tả: %s\nGiá: %.2f\n\n" +
-                            "Thông tin thành viên:\n" +
-                            "- Tên thành viên: %s\n" +
-                            "- Email: %s\n" +
-                            "- Số điện thoại: %s\n" +
-                            "- Ngày sinh: %s\n" +
-                            "- Mật khẩu: %s\n" +
-                            "- Dữ liệu QR định danh: %s\n\n" +
-                            "Cảm ơn bạn đã tham gia!",
-                    thanhVien.getTenThanhVien(),
-                    goiTap.get().getTenGoiTap(),
-                    goiTap.get().getMoTaGoiTap(),
-                    goiTap.get().getGiaGoiTap(),
-                    thanhVien.getTenThanhVien(),
-                    thanhVien.getEmailThanhVien(),
-                    thanhVien.getSoDienThoaiThanhVien(),
-                    thanhVien.getNgaySinhThanhVien(),
-                    thanhVien.getMatKhauNguoiDung(),
-                    thanhVien.getDuLieuQrDinhDanh());
+    thanhVien.setSoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
+    thanhVien.setNgaySinhThanhVien(userDTO.getNgaySinhThanhVien());
+    thanhVien.setDuLieuQrDinhDanh(userDTO.getDuLieuQrDinhDanh());
 
-            // Gửi thông tin đến email
-            sendMailService.sendEmail(userDTO, subject, message);
-        }
+    // Lưu vào cơ sở dữ liệu
+    thanhVienRepository.save(thanhVien);
 
-        return Optional.of(thanhVien);
+    // Lấy thông tin gói tập theo maGoiTap
+    Optional<GoiTapE> goiTap = goiTapService.getGoiTapById(maGoiTap);
+    if (goiTap.isPresent()) {
+        // Chuẩn bị thông tin email
+        String subject = "Thông tin đăng ký gói tập";
+        String message = String.format("Chào %s,\n\nBạn đã đăng ký thành công gói tập: %s.\nMô tả: %s\nGiá: %.2f\n\n" +
+                        "Thông tin thành viên:\n" +
+                        "- Tên thành viên: %s\n" +
+                        "- Email: %s\n" +
+                        "- Số điện thoại: %s\n" +
+                        "- Ngày sinh: %s\n" +
+                        "- Mật khẩu: %s\n" +  // Gửi mật khẩu không mã hóa
+                        "- Dữ liệu QR định danh: %s\n\n" +
+                        "Cảm ơn bạn đã tham gia!",
+                thanhVien.getTenThanhVien(),
+                goiTap.get().getTenGoiTap(),
+                goiTap.get().getMoTaGoiTap(),
+                goiTap.get().getGiaGoiTap(),
+                thanhVien.getTenThanhVien(),
+                thanhVien.getEmailThanhVien(),
+                thanhVien.getSoDienThoaiThanhVien(),
+                thanhVien.getNgaySinhThanhVien(),
+                userDTO.getMatKhauNguoiDung(),  // Sử dụng mật khẩu không mã hóa
+                thanhVien.getDuLieuQrDinhDanh());
+
+        // Gửi thông tin đến email
+        sendMailService.sendEmail(userDTO, subject, message);
     }
+
+    return Optional.of(thanhVien);
+}
+
 
     @Override
     public Optional<ThanhVienE> login(ThanhVienDTO memberDTO) {

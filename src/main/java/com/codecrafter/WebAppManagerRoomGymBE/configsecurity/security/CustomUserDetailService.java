@@ -2,6 +2,8 @@ package com.codecrafter.WebAppManagerRoomGymBE.configsecurity.security;
 
 import com.codecrafter.WebAppManagerRoomGymBE.service.NguoiDungService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,15 +17,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomUserDetailService implements UserDetailsService {
 
+    private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailService.class);
     private final NguoiDungService nguoiDungService;
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = nguoiDungService.findByUserName(username);
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        var user = nguoiDungService.findByUserName(userName).orElseThrow();
+        var authorities = List.of(new SimpleGrantedAuthority("ROLE_" + user.getVaiTro().getTenVaiTro()));
+        logger.info("User roles: {}", authorities);  // Log roles to verify
         return UserPrincipal.builder()
-                .userId((int) user.get().getMaNguoiDung())
-                .userName(user.get().getTenNguoiDung())
-                .passWord(user.get().getMatKhauNguoiDung())
-                .authorities(List.of(new SimpleGrantedAuthority(user.get().getVaiTro().getTenVaiTro())))
-                .build();
+                .userId(user.getMaNguoiDung())
+                .userName(user.getTenNguoiDung())
+                .passWord(user.getMatKhauNguoiDung())
+                .authorities(List.of(new SimpleGrantedAuthority(user.getVaiTro().getTenVaiTro())))
+                .build()
+                ;
     }
 }

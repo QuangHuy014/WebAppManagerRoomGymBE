@@ -27,11 +27,14 @@ public class WebSecurityConfig {
     private final CustomUserDetailService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomUserDetailService customUserDetailService;
+
 
      @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 
     @Bean
     public SecurityFilterChain appSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -53,7 +56,7 @@ public class WebSecurityConfig {
                 .securityMatcher("/**")
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/user/login").permitAll()
-//                        .requestMatchers("/user/register").hasAnyRole("Admin")
+                        .requestMatchers("/user/register").hasAnyAuthority("ROLE_Admin","ROLE_Nhân viên")
                         .requestMatchers("/member/login").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
@@ -78,6 +81,14 @@ public class WebSecurityConfig {
                         .allowCredentials(true);
             }
         };
+    }
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        var builder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        builder
+                .userDetailsService(customUserDetailService)
+                .passwordEncoder(passwordEncoder());
+        return builder.build();
     }
 
 }

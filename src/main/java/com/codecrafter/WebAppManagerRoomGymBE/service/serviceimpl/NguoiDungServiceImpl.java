@@ -1,5 +1,6 @@
 package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 
+import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.security.CustomUserDetailService;
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.NguoiDungDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.NguoiDungE;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.NguoiDungRepo;
@@ -15,7 +16,6 @@ import java.util.Optional;
 public class NguoiDungServiceImpl implements NguoiDungService {
     @Autowired
     private NguoiDungRepo nguoiDungRepository;
-
 
     @Override
     public Optional<NguoiDungE> login(NguoiDungDTO userDTO) {
@@ -39,6 +39,7 @@ public class NguoiDungServiceImpl implements NguoiDungService {
 //        public boolean checkPassword(String rawPassword, String encodedPassword) {
 //        return passwordEncoder.matches(rawPassword, encodedPassword);
 //    }
+
 
 }
 

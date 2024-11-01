@@ -1,5 +1,6 @@
 package com.codecrafter.WebAppManagerRoomGymBE.configsecurity.security;
 
+import com.codecrafter.WebAppManagerRoomGymBE.service.NguoiDungService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,18 +22,18 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return this.authorities;
 
     }
 
     @Override
     public String getPassword() {
-        return "";
+        return this.passWord;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return this.userName;
     }
 
 

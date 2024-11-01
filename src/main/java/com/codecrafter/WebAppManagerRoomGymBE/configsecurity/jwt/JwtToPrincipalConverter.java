@@ -12,7 +12,7 @@ public class JwtToPrincipalConverter {
 
     public UserPrincipal convert (DecodedJWT jwt){
         var authorityList = getClaimOrEmptyList(jwt,"au").stream()
-                .map(SimpleGrantedAuthority::new)
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .toList();
 
 

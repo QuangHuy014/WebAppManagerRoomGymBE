@@ -37,6 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if(StringUtils.hasText(token) && token.startsWith("Bearer ")){
             return Optional.of(token.substring(7));
         }
+
         return  Optional.empty();
     }
 }

@@ -6,6 +6,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.jwt.JwtDecoder;
 import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.jwt.JwtIssuer;
 import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.jwt.JwtProperties;
+import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.model.LoginRequest;
 import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.model.LoginResponse;
 import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.model.RegisterResponse;
 import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.model.TokenRefreshRequest;
@@ -26,6 +27,11 @@ import com.codecrafter.WebAppManagerRoomGymBE.service.ThanhVienService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,6 +60,9 @@ public class NguoiDungAPI {
     private JwtProperties jwtProperties;
     @Autowired
     private JwtDecoder jwtDecoder;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
 
     public NguoiDungAPI(JwtIssuer jwtIssuer) {
         this.jwtIssuer = jwtIssuer;
@@ -134,6 +143,13 @@ public class NguoiDungAPI {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody NguoiDungDTO userDTO) {
+        var authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userDTO.getTenNguoiDung(), userDTO.getMatKhauNguoiDung())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        var userPrincipal = (UserPrincipal) authentication.getPrincipal();
+
+
         if (userDTO.getTenNguoiDung() == null || userDTO.getTenNguoiDung().isEmpty()) {
             return ResponseEntity.status(400).body(LoginResponse.builder()
                     .accessToken(null)
@@ -169,9 +185,9 @@ public class NguoiDungAPI {
 
             // Tạo request cho access token và refresh token
             var requestBuilder = JwtIssuer.Request.builder()
-                    .userId((long) nguoiDung.getMaNguoiDung())
-                    .username(nguoiDung.getTenNguoiDung())
-                    .roles(List.of(role))
+                    .userId(userPrincipal.getUserId())
+                    .username(userPrincipal.getUsername())
+                    .roles(userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
                     .build();
 
             // Tạo access token và refresh token

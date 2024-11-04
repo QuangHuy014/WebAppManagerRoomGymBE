@@ -57,10 +57,12 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/user/login").permitAll()
                         .requestMatchers("/user/register").hasAnyAuthority("ROLE_Admin","ROLE_Staff")
+                        .requestMatchers("/api-public/lichsutapluyen/**").permitAll()
+                        .requestMatchers("/api/doanh-thu").hasAuthority("ROLE_Admin")
                         .requestMatchers("/member/login").permitAll()
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/**").hasAnyAuthority("ROLE_Admin", "ROLE_Staff") // Restrict all other endpoints to Admin and Staff
                         .anyRequest().authenticated()
                 );
          http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

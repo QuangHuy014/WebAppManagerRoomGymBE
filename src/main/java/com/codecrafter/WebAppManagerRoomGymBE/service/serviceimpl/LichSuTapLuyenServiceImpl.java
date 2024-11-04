@@ -22,6 +22,12 @@ public class LichSuTapLuyenServiceImpl implements LichSuTapLuyenService {
     }
 
     @Override
+    public List<LichSuTapLuyenM> getAllLichSuTapLuyenMs() {
+        List<LichSuTapLuyenE> listLichSuTapLuyen = lichSuTapLuyenRepo.findAll();
+        return LichSuTapLuyenM.convertListLichSuTapLuyenEToListLichSuTapLuyenM(listLichSuTapLuyen);
+    }
+
+    @Override
     public int getNewestLichSuTapLuyenId(int maThanhVien) {
         return lichSuTapLuyenRepo.findTopByThanhVien_MaThanhVienOrderByThoiGianTapLuyenDesc(maThanhVien)
                 .map(LichSuTapLuyenE::getMaLichSuTapLuyen)

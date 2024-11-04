@@ -3,6 +3,7 @@ package com.codecrafter.WebAppManagerRoomGymBE.api;
 import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.security.UserPrincipal;
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.BasicApiConstant;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.LichSuTapLuyenE;
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.mgt.ResponseObject;
 import com.codecrafter.WebAppManagerRoomGymBE.data.model.LichSuTapLuyenM;
 import com.codecrafter.WebAppManagerRoomGymBE.service.LichSuTapLuyenService;
@@ -29,8 +30,11 @@ public class LichSuTapLuyenAPI {
             // Lấy thông tin UserPrincipal từ SecurityContext
             UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-            // Lấy userId từ UserPrincipal và kiểm tra xem user có quyền truy cập không
-            if (userPrincipal.getUserId() != maThanhVien) {
+            boolean isAdminOrStaff = userPrincipal.getAuthorities().stream()
+                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_Admin") || authority.getAuthority().equals("ROLE_Staff"));
+
+            // Nếu không phải Admin hoặc Staff và userId không khớp với maThanhVien, từ chối truy cập
+            if (!isAdminOrStaff && userPrincipal.getUserId() != maThanhVien) {
                 result.setStatus(BasicApiConstant.FAILED.getStatus());
                 result.setMessages("Không có quyền truy cập lịch sử tập luyện của người dùng khác.");
                 return result;
@@ -49,4 +53,36 @@ public class LichSuTapLuyenAPI {
         }
         return result;
     }
+
+    @GetMapping("/thanhvien/")
+    public ResponseObject<?> getAllLichSuTapLuyen() {
+        var result = new ResponseObject<>();
+        try {
+            // Lấy thông tin UserPrincipal từ SecurityContext
+            UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            boolean isAdminOrStaff = userPrincipal.getAuthorities().stream()
+                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_Admin") || authority.getAuthority().equals("ROLE_Staff"));
+
+            // Nếu không phải Admin hoặc Staff và userId không khớp với maThanhVien, từ chối truy cập
+            if (!isAdminOrStaff) {
+                result.setStatus(BasicApiConstant.FAILED.getStatus());
+                result.setMessages("Không có quyền truy cập lịch sử tập luyện của người dùng khác.");
+                return result;
+            }
+
+            // Gọi service để lấy danh sách lịch sử tập luyện
+            List<LichSuTapLuyenM> lichSuList = lichSuTapLuyenService.getAllLichSuTapLuyenMs();
+            result.setData(lichSuList);
+            result.setStatus(BasicApiConstant.SUCCEED.getStatus());
+            result.setMessages("Lấy lịch sử tập luyện thành công cho thành viên");
+
+        } catch (Exception e) {
+            log.info("Lỗi khi gọi API /api-public/lichsutapluyen/thanhvien", e);
+            result.setStatus(BasicApiConstant.FAILED.getStatus());
+            result.setMessages("Đã xảy ra lỗi khi lấy lịch sử tập luyện.");
+        }
+        return result;
+    }
+
 }

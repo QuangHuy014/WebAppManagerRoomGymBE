@@ -8,6 +8,7 @@ import java.util.List;
 public interface LichSuTapLuyenService {
 
     public List<LichSuTapLuyenM> getLichSuTapLuyenByThanhVienId(int maThanhVien);
+    public List<LichSuTapLuyenM> getAllLichSuTapLuyenMs();
 
     int getNewestLichSuTapLuyenId(int maThanhVien);
 

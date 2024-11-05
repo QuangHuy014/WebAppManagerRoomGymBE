@@ -21,6 +21,7 @@ public class ThanhVienE {
     private String matKhauNguoiDung;
     private long soDienThoaiThanhVien;
     private Date ngaySinhThanhVien;
+    @Lob 
     private String duLieuQrDinhDanh;
 
     @ManyToOne(fetch = FetchType.EAGER)

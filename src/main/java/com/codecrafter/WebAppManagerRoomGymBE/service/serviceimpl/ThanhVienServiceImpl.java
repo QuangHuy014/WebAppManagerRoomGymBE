@@ -49,6 +49,7 @@ public Optional<ThanhVienE> register(ThanhVienDTO userDTO, int maGoiTap) {
 
     // Tạo một đối tượng ThanhVienE mới
     ThanhVienE thanhVien = new ThanhVienE();
+    thanhVien.setMaThanhVien(userDTO.getMaThanhVien());
     thanhVien.setTenThanhVien(userDTO.getTenThanhVien());
     thanhVien.setEmailThanhVien(userDTO.getEmailThanhVien());
 

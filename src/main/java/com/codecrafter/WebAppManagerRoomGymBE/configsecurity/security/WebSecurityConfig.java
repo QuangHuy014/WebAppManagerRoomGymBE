@@ -29,12 +29,10 @@ public class WebSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomUserDetailService customUserDetailService;
 
-
      @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
     @Bean
     public SecurityFilterChain appSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -56,11 +54,11 @@ public class WebSecurityConfig {
                 .securityMatcher("/**")
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers("/user/login").permitAll()
+                        .requestMatchers("/member/login").permitAll()
+                        .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/user/register").hasAnyAuthority("ROLE_Admin","ROLE_Staff")
                         .requestMatchers("/api-public/lichsutapluyen/**").permitAll()
                         .requestMatchers("/api/doanh-thu").hasAuthority("ROLE_Admin")
-                        .requestMatchers("/member/login").permitAll()
-                        .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/**").hasAnyAuthority("ROLE_Admin", "ROLE_Staff") // Restrict all other endpoints to Admin and Staff
                         .anyRequest().authenticated()
@@ -68,8 +66,6 @@ public class WebSecurityConfig {
          http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
-
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {

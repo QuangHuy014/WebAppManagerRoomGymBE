@@ -36,8 +36,5 @@ public ResponseEntity<DoanhThuDTO> getDoanhThuDetails(
 
     return ResponseEntity.ok(responseDTO);
 }
-
-
-
 }
 

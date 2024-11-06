@@ -1,6 +1,7 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,11 +16,12 @@ public class DangKyE {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ma_dang_ky")
+    @Column(name = "ma_dang_ky")
     private int maDangKy;
 
     @ManyToOne
     @JoinColumn(name = "ma_thanh_vien")
+    @JsonManagedReference
     private ThanhVienE thanhVien;
 
     @ManyToOne
@@ -43,5 +45,10 @@ public class DangKyE {
     @JoinColumn(name = "ma_hoa_don", nullable = false) // Chỉ định "nullable = false" nếu mã hóa đơn bắt buộc
     @JsonBackReference
     private HoaDonE hoaDon;
+
+    @ManyToOne
+    @JoinColumn(name = "ma_goi_tap")
+    private GoiTapE goiTap;
+
 
 }

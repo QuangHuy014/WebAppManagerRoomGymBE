@@ -46,9 +46,7 @@ public class DangKyE {
     @JsonBackReference
     private HoaDonE hoaDon;
 
-    @ManyToOne
-    @JoinColumn(name = "ma_goi_tap")
-    private GoiTapE goiTap;
+
 
 
 }

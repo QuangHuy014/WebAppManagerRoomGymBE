@@ -101,43 +101,9 @@ public class ThanhVienServiceImpl implements ThanhVienService {
 //            sendMailService.sendEmail(userDTO, subject, message);
 //        }
 //
-//        return Optional.of(thanhVien);
-       GoiTapE goiTap = goiTapService.getGoiTapById(maGoiTap)
-                                   .orElseThrow(() -> new IllegalArgumentException("Gói tập không tồn tại"));
-    DangKyE dangKy = new DangKyE();
-    dangKy.setThanhVien(thanhVien);
-    dangKy.setGoiTap(goiTap);
-    dangKy.setNgayDangKy(new Date());
-    dangKy.setTrangThaiDangKy(true);
-    dangKyRepo.save(dangKy);
+        return Optional.of(thanhVien);
 
-    // Định dạng nội dung email
-    String subject = "Thông tin đăng ký gói tập";
-    String message = String.format("Chào %s,\n\nBạn đã đăng ký thành công gói tập: %s.\nMô tả: %s\nGiá: %.2f\n\n" +
-                    "Thông tin thành viên:\n" +
-                    "- Tên thành viên: %s\n" +
-                    "- Email: %s\n" +
-                    "- Số điện thoại: %s\n" +
-                    "- Ngày sinh: %s\n" +
-                    "- Mật khẩu: %s\n" +
-                    "- Dữ liệu QR định danh: %s\n\n" +
-                    "Cảm ơn bạn đã tham gia!",
-            thanhVien.getTenThanhVien(),               // Tên thành viên
-            goiTap.getTenGoiTap(),                     // Tên gói tập
-            goiTap.getMoTaGoiTap(),                    // Mô tả gói tập
-            goiTap.getGiaGoiTap(),                     // Giá gói tập
-            thanhVien.getTenThanhVien(),               // Tên thành viên
-            thanhVien.getEmailThanhVien(),             // Email thành viên
-            thanhVien.getSoDienThoaiThanhVien(),       // Số điện thoại thành viên
-            thanhVien.getNgaySinhThanhVien(),          // Ngày sinh thành viên
-            userDTO.getMatKhauNguoiDung(),             // Mật khẩu thành viên
-            thanhVien.getDuLieuQrDinhDanh());          // Dữ liệu QR định danh
-
-    // Gửi email xác nhận đăng ký gói tập
-    sendMailService.sendEmail(userDTO, subject, message);
-
-    return Optional.of(thanhVien);
-}
+    }
 
 
     @Override

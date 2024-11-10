@@ -22,14 +22,8 @@ import java.util.Optional;
 public class ThanhVienServiceImpl implements ThanhVienService {
     @Autowired
     private ThanhVienRepo thanhVienRepository;
-
-
-    @Autowired
-    private SendMailService sendMailService;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private LichSuTapLuyenService lichSuTapLuyenService;
     @Autowired
@@ -59,9 +53,12 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         thanhVien.setTenThanhVien(userDTO.getTenThanhVien());
         thanhVien.setEmailThanhVien(userDTO.getEmailThanhVien());
 
+
         // Mã hóa mật khẩu
-        String encodedPassword = passwordEncoder.encode(userDTO.getMatKhauNguoiDung());
-        thanhVien.setMatKhauNguoiDung(encodedPassword);
+//        String encodedPassword = passwordEncoder.encode(userDTO.getMatKhauNguoiDung());
+//        thanhVien.setMatKhauNguoiDung(encodedPassword);
+         String originalPassword = userDTO.getMatKhauNguoiDung();
+        thanhVien.setMatKhauNguoiDung(originalPassword);
 
         thanhVien.setSoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
         thanhVien.setNgaySinhThanhVien(userDTO.getNgaySinhThanhVien());
@@ -75,7 +72,6 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         return Optional.of(thanhVien);
 
     }
-
 
 
     @Override

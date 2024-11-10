@@ -24,7 +24,7 @@ public class DangKyE {
     @JsonManagedReference
     private ThanhVienE thanhVien;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ma_goi_uu_dai")
     private GoiUuDaiE goiUuDai;
 

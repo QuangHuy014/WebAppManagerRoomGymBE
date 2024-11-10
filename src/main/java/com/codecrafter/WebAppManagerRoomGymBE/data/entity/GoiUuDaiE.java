@@ -19,12 +19,10 @@ public class GoiUuDaiE {
 
      @ManyToOne
      @JoinColumn(name = "ma_goi_tap", nullable = false)
-
      private GoiTapE goiTap;
 
      @ManyToOne
-     @JoinColumn(name = "ma_uu_dai", nullable = false)
-
+     @JoinColumn(name = "ma_uu_dai", nullable = true)
      private UuDaiE uuDai;
 
      @OneToMany(fetch = FetchType.EAGER, mappedBy = "goiUuDai")

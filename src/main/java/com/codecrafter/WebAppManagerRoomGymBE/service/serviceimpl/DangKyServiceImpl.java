@@ -36,7 +36,7 @@ public class DangKyServiceImpl implements DangKyService {
 
     private final LopHocRepo lopHocRepo;
     @Override
-    public DangKyE registerWithDiscount(int maThanhVien, int maGoiTap, int maGoiUuDai) {
+    public DangKyE registerWithDiscount(int maThanhVien, int maGoiTap, int maGoiUuDai, Date ngayKichHoat, boolean trangThaiDangKy) {
         // Validate member
         ThanhVienE thanhVien = thanhVienRepository.findById(maThanhVien)
                 .orElseThrow(() -> new RuntimeException("Member not found"));
@@ -54,14 +54,14 @@ public class DangKyServiceImpl implements DangKyService {
         dangKy.setThanhVien(thanhVien);
         dangKy.setGoiUuDai(goiUuDai);
         dangKy.setNgayDangKy(new Date());
-        dangKy.setNgayKichHoat(new Date());
-        dangKy.setTrangThaiDangKy(true);
+        dangKy.setNgayKichHoat(ngayKichHoat);
+        dangKy.setTrangThaiDangKy(trangThaiDangKy);
 
         return dangKyRepository.save(dangKy);
     }
 
     @Override
-    public DangKyE registerWithoutDiscount(int maThanhVien, int maGoiTap) {
+    public DangKyE registerWithoutDiscount(int maThanhVien, int maGoiTap, Date ngayKichHoat, boolean trangThaiDangKy) {
         // Validate member
         ThanhVienE thanhVien = thanhVienRepository.findById(maThanhVien)
                 .orElseThrow(() -> new RuntimeException("Member not found"));
@@ -70,7 +70,8 @@ public class DangKyServiceImpl implements DangKyService {
         DangKyE dangKy = new DangKyE();
         dangKy.setThanhVien(thanhVien);
         dangKy.setNgayDangKy(new Date());
-        dangKy.setTrangThaiDangKy(true);
+        dangKy.setNgayKichHoat(ngayKichHoat);
+        dangKy.setTrangThaiDangKy(trangThaiDangKy);
 
         // Save the registration
         return dangKyRepository.save(dangKy);

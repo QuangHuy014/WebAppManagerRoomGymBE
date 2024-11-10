@@ -22,9 +22,11 @@ public class DangKyAPI {
     public ResponseEntity<DangKyE> registerWithDiscount(
             @RequestParam int maThanhVien,
             @RequestParam int maGoiTap,
-            @RequestParam int maGoiUuDai) {
+            @RequestParam int maGoiUuDai,
+             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayKichHoat,
+            @RequestParam boolean trangThaiDangKy) {
 
-        DangKyE registration = dangKyService.registerWithDiscount(maThanhVien, maGoiTap, maGoiUuDai);
+        DangKyE registration = dangKyService.registerWithDiscount(maThanhVien, maGoiTap, maGoiUuDai, ngayKichHoat, trangThaiDangKy);
         return ResponseEntity.ok(registration);
     }
 
@@ -32,9 +34,11 @@ public class DangKyAPI {
     @PostMapping("/without-discount")
     public ResponseEntity<DangKyE> registerWithoutDiscount(
             @RequestParam int maThanhVien,
-            @RequestParam int maGoiTap) {
+            @RequestParam int maGoiTap,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayKichHoat,
+            @RequestParam boolean trangThaiDangKy) {
 
-        DangKyE registration = dangKyService.registerWithoutDiscount(maThanhVien, maGoiTap);
+        DangKyE registration = dangKyService.registerWithoutDiscount(maThanhVien, maGoiTap, ngayKichHoat, trangThaiDangKy);
         return ResponseEntity.ok(registration);
     }
 

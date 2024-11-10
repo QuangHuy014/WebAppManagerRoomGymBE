@@ -9,7 +9,6 @@ public class DangKyDTO {
 
     private Integer maDangKy;
     private int maThanhVien;
-    private int maGoiTap;
     private int maGoiUuDai;
     private Date ngayDangKy;
     private Date ngayKichHoat;

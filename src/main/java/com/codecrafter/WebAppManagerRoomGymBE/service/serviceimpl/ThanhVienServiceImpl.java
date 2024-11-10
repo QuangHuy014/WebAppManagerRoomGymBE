@@ -23,8 +23,7 @@ public class ThanhVienServiceImpl implements ThanhVienService {
     @Autowired
     private ThanhVienRepo thanhVienRepository;
 
-    @Autowired
-    private GoiTapService goiTapService;
+
     @Autowired
     private SendMailService sendMailService;
 

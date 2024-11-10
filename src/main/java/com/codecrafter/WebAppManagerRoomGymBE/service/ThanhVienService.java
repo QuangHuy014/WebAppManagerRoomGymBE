@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import java.util.Optional;
 
 public interface ThanhVienService {
-     Optional<ThanhVienE> register(ThanhVienDTO userDTO, int maGoiTap);
+     Optional<ThanhVienE> register(ThanhVienDTO userDTO);
       Optional<ThanhVienE> login(ThanhVienDTO memberDTO);
     public Page<ThanhVienE> getAllMembers(int page, int size, String sortBy, boolean ascending);
 

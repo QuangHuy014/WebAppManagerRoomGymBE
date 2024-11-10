@@ -2,10 +2,12 @@ package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.DangKyE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.GoiUuDaiE;
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.LopHocE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
 
 import com.codecrafter.WebAppManagerRoomGymBE.repository.DangKyRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.GoiUuDaiRepo;
+import com.codecrafter.WebAppManagerRoomGymBE.repository.LopHocRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.service.DangKyService;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +34,7 @@ public class DangKyServiceImpl implements DangKyService {
 
     private final GoiUuDaiRepo goiUuDaiRepository;
 
+    private final LopHocRepo lopHocRepo;
     @Override
     public DangKyE registerWithDiscount(int maThanhVien, int maGoiTap, int maGoiUuDai) {
         // Validate member
@@ -40,11 +44,17 @@ public class DangKyServiceImpl implements DangKyService {
         // Validate discount
         GoiUuDaiE goiUuDai = goiUuDaiRepository.findByMaGoiUuDai(maGoiUuDai)
                 .orElseThrow(() -> new RuntimeException("Invalid or expired discount code"));
-
         DangKyE dangKy = new DangKyE();
+
+        // Validate discount
+        Optional<LopHocE> lopHoc = lopHocRepo.findById(dangKy.getLopHoc().getMaLopHoc());
+
+        dangKy.setGoiUuDai(goiUuDai);
+        dangKy.setLopHoc(lopHoc.get());
         dangKy.setThanhVien(thanhVien);
         dangKy.setGoiUuDai(goiUuDai);
         dangKy.setNgayDangKy(new Date());
+        dangKy.setNgayKichHoat(new Date());
         dangKy.setTrangThaiDangKy(true);
 
         return dangKyRepository.save(dangKy);

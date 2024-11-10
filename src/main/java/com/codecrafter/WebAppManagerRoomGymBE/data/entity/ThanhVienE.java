@@ -51,4 +51,8 @@ public class ThanhVienE {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "thanhVien", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<LichSuTapLuyenE> lichSuTapLuyen;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "thanhVien")
+    @JsonBackReference
+    private List<DangKyE> dangKy;
 }

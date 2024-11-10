@@ -42,7 +42,7 @@ public class DangKyE {
     private LopHocE lopHoc;
 
     @ManyToOne
-    @JoinColumn(name = "ma_hoa_don", nullable = false) // Chỉ định "nullable = false" nếu mã hóa đơn bắt buộc
+    @JoinColumn(name = "ma_hoa_don") // Chỉ định "nullable = false" nếu mã hóa đơn bắt buộc
     @JsonBackReference
     private HoaDonE hoaDon;
 

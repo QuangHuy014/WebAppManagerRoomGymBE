@@ -39,7 +39,7 @@ public class ThanhVienServiceImpl implements ThanhVienService {
     private DangKyRepo dangKyRepo;
 
     @Override
-    public Optional<ThanhVienE> register(ThanhVienDTO userDTO, int maGoiTap) {
+    public Optional<ThanhVienE> register(ThanhVienDTO userDTO) {
         // Kiểm tra email và số điện thoại
         boolean tenThanhVienExists = thanhVienRepository.existsByTenThanhVien(userDTO.getTenThanhVien());
         boolean emailExists = thanhVienRepository.existsByEmailThanhVien(userDTO.getEmailThanhVien());
@@ -73,37 +73,10 @@ public class ThanhVienServiceImpl implements ThanhVienService {
 
         // Lưu vào cơ sở dữ liệu
         thanhVienRepository.save(thanhVien);
-
-        // Lấy thông tin gói tập và gửi email
-//        Optional<GoiTapE> goiTap = goiTapService.getGoiTapById(maGoiTap);
-//        if (goiTap.isPresent()) {
-//            String subject = "Thông tin đăng ký gói tập";
-//            String message = String.format("Chào %s,\n\nBạn đã đăng ký thành công gói tập: %s.\nMô tả: %s\nGiá: %.2f\n\n" +
-//                            "Thông tin thành viên:\n" +
-//                            "- Tên thành viên: %s\n" +
-//                            "- Email: %s\n" +
-//                            "- Số điện thoại: %s\n" +
-//                            "- Ngày sinh: %s\n" +
-//                            "- Mật khẩu: %s\n" +
-//                            "- Dữ liệu QR định danh: %s\n\n" +
-//                            "Cảm ơn bạn đã tham gia!",
-//                    thanhVien.getTenThanhVien(),
-//                    goiTap.get().getTenGoiTap(),
-//                    goiTap.get().getMoTaGoiTap(),
-//                    goiTap.get().getGiaGoiTap(),
-//                    thanhVien.getTenThanhVien(),
-//                    thanhVien.getEmailThanhVien(),
-//                    thanhVien.getSoDienThoaiThanhVien(),
-//                    thanhVien.getNgaySinhThanhVien(),
-//                    userDTO.getMatKhauNguoiDung(),
-//                    thanhVien.getDuLieuQrDinhDanh());
-//
-//            sendMailService.sendEmail(userDTO, subject, message);
-//        }
-//
         return Optional.of(thanhVien);
 
     }
+
 
 
     @Override

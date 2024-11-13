@@ -2,12 +2,10 @@ package com.codecrafter.WebAppManagerRoomGymBE.api;
 
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.BasicApiConstant;
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.DangKyDTO;
-import com.codecrafter.WebAppManagerRoomGymBE.data.entity.DangKyE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.HoaDonE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.mgt.ResponseObject;
 import com.codecrafter.WebAppManagerRoomGymBE.service.HoaDonService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +21,7 @@ public class HoaDonAPI {
     private HoaDonService hoaDonService;
 
     @GetMapping
-    public ResponseObject<?> getAllHoaDon(){
+    public ResponseObject<?> getAllHoaDon() {
         var result = new ResponseObject<>();
         try {
             List<HoaDonE> row = hoaDonService.findAll();
@@ -32,14 +30,14 @@ public class HoaDonAPI {
             result.setMessages(BasicApiConstant.SUCCEED.name());
 
         } catch (Exception e) {
-            log.info("fail when call api /api-public/registration",e);
+            log.info("fail when call api /api-public/registration", e);
             throw new RuntimeException(e);
         }
         return result;
     }
 
     @GetMapping("{id}")
-    public ResponseObject<?> getHoaDonById(@PathVariable int maHoaDon){
+    public ResponseObject<?> getHoaDonById(@PathVariable int maHoaDon) {
         var result = new ResponseObject<>();
         try {
             Optional<HoaDonE> data = hoaDonService.findHoaDonById(maHoaDon);
@@ -47,10 +45,10 @@ public class HoaDonAPI {
             result.setStatus(BasicApiConstant.SUCCEED.getStatus());
             result.setData(data);
         } catch (Exception e) {
-            log.info("fail when call api /api-public/registration"+ maHoaDon ,e);
+            log.info("fail when call api /api-public/registration" + maHoaDon, e);
             throw new RuntimeException(e);
         }
-        return  result;
+        return result;
     }
 
 
@@ -64,7 +62,7 @@ public class HoaDonAPI {
             result.setStatus(BasicApiConstant.SUCCEED.getStatus());
             result.setMessages(BasicApiConstant.SUCCEED.name());
         } catch (Exception e) {
-            log.info("fail when call api /api-public/registration",e);
+            log.info("fail when call api /api-public/registration", e);
         }
         return result;
     }

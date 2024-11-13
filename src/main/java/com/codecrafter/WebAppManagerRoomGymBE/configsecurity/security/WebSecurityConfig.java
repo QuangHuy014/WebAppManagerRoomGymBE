@@ -1,7 +1,7 @@
 package com.codecrafter.WebAppManagerRoomGymBE.configsecurity.security;
 
 
-//import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.jwt.JwtAuthenticationFilter;
+
 import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

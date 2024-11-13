@@ -39,4 +39,5 @@ public class HoaDonE {
 
     @Transient
     private int tongHoaDon;
+
 }

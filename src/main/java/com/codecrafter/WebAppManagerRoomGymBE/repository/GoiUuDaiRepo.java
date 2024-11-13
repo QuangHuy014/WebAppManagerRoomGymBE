@@ -1,5 +1,6 @@
 package com.codecrafter.WebAppManagerRoomGymBE.repository;
 
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.GoiTapE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.GoiUuDaiE;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +17,6 @@ public interface GoiUuDaiRepo extends JpaRepository<GoiUuDaiE, Integer> {
     List<GoiUuDaiE> findByMaThanhVien(@Param("maThanhVien") int maThanhVien);
 
     Optional<GoiUuDaiE> findByMaGoiUuDai(int maGoiUuDai);
+
 }
 

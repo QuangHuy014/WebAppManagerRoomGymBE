@@ -19,8 +19,8 @@ public class GoiUuDaiAPI {
 
     @GetMapping("/all")
     public ResponseEntity<List<GoiUuDaiE>> getAllGoiUuDai() {
-        List<GoiUuDaiE> góiUuDais = goiUuDaiService.getGoiUuDai();
-        return ResponseEntity.ok(góiUuDais);
+        List<GoiUuDaiE> goiUuDais = goiUuDaiService.getGoiUuDai();
+        return ResponseEntity.ok(goiUuDais);
     }
 
     @GetMapping("/thanh-vien/{maThanhVien}")

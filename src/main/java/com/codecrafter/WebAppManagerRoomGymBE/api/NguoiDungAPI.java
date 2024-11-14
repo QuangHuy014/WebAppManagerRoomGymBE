@@ -70,7 +70,7 @@ public class NguoiDungAPI {
 
 
     @PostMapping("/register") // Endpoint cho đăng ký khách hàng
-    public ResponseEntity<RegisterResponse> register(@RequestBody ThanhVienDTO thanhVienDTO, @RequestParam int maGoiTap) {
+    public ResponseEntity<RegisterResponse> register(@RequestBody ThanhVienDTO thanhVienDTO) {
         // Kiểm tra xem tên khách hàng có rỗng không
         if (thanhVienDTO.getTenThanhVien() == null || thanhVienDTO.getTenThanhVien().isEmpty()) {
             return ResponseEntity.status(400).body(RegisterResponse.builder()
@@ -88,7 +88,7 @@ public class NguoiDungAPI {
         }
 
        try {
-        Optional<ThanhVienE> registeredMember = thanhVienService.register(thanhVienDTO, maGoiTap);
+        Optional<ThanhVienE> registeredMember = thanhVienService.register(thanhVienDTO);
 
         // Nếu đăng ký thành công
         return ResponseEntity.ok(RegisterResponse.builder()

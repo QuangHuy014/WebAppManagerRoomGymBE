@@ -45,7 +45,6 @@ public class GenerateQrCodeAPI {
             result.setStatus(BasicApiConstant.FAILED.getStatus());
         }
         return  result;
-
     }
 
 }

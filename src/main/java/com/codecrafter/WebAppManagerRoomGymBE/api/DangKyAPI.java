@@ -37,7 +37,6 @@ public class DangKyAPI {
         DangKyE registration = dangKyService.registerWithoutDiscount(maThanhVien, maGoiTap);
         return ResponseEntity.ok(registration);
     }
-
     @GetMapping("/search")
     public List<DangKyE> searchDangKy(
             @RequestParam(required = false) Integer maDangKy,

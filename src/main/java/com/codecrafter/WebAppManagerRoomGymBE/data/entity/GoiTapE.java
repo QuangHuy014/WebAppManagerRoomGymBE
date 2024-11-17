@@ -1,6 +1,7 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -30,8 +31,8 @@ public class GoiTapE {
     @Temporal(TemporalType.DATE)
     private Date thoiHanGoiTap;
 
-    // One-to-Many with GoiUuDaiE (mapped by "goiTap" field in GoiUuDaiE)
+
     @OneToMany(mappedBy = "goiTap", cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonManagedReference
     private List<GoiUuDaiE> goiUuDais;
 }

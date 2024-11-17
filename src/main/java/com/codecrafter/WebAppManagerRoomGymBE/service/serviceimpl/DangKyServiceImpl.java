@@ -35,7 +35,7 @@ public class DangKyServiceImpl implements DangKyService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public DangKyE registerWithDiscount(int maThanhVien, int maGoiTap, int maGoiUuDai, Integer maLopHoc, Date ngayKichHoat, boolean trangThaiDangKy) {
+    public DangKyE registerWithDiscountOrWithOutDiscount(int maThanhVien, int maGoiUuDai, Integer maLopHoc, Date ngayKichHoat, boolean trangThaiDangKy) {
         // Validate member
         ThanhVienE thanhVien = thanhVienRepository.findById(maThanhVien)
                 .orElseThrow(() -> new RuntimeException("Member not found"));
@@ -44,24 +44,20 @@ public class DangKyServiceImpl implements DangKyService {
         GoiUuDaiE goiUuDai = goiUuDaiRepository.findByMaGoiUuDai(maGoiUuDai)
                 .orElseThrow(() -> new RuntimeException("Invalid or expired discount code"));
 
-        // Validate and set GoiTap
-        GoiTapE goiTap = null;
-        if (maGoiTap != 0) {
-            goiTap = goiTapRepository.findById(maGoiTap)
-                    .orElseThrow(() -> new RuntimeException("Package not found"));
-        }
-
         DangKyE dangKy = new DangKyE();
         dangKy.setGoiUuDai(goiUuDai);
-        dangKy.setGoiTap(goiTap); // Gán gói tập vào đăng ký
 
+        GoiTapE goiTap = goiUuDai.getGoiTap();
+        if (goiTap == null) {
+            throw new RuntimeException("No associated package found for this discount");
+        }
 
         if (maLopHoc != null && maLopHoc != 0) {
             LopHocE lopHoc = lopHocRepo.findById(maLopHoc)
                     .orElseThrow(() -> new RuntimeException("Class not found"));
             dangKy.setLopHoc(lopHoc);
         } else {
-            dangKy.setLopHoc(null); // Đặt maLopHoc là null nếu không có giá trị
+            dangKy.setLopHoc(null);
         }
 
         dangKy.setThanhVien(thanhVien);
@@ -79,7 +75,6 @@ public class DangKyServiceImpl implements DangKyService {
         thanhVienDTO.setSoDienThoaiThanhVien(thanhVien.getSoDienThoaiThanhVien());
         thanhVienDTO.setNgaySinhThanhVien(thanhVien.getNgaySinhThanhVien());
         thanhVienDTO.setDuLieuQrDinhDanh(thanhVien.getDuLieuQrDinhDanh());
-        thanhVienDTO.setMaGoiTap(maGoiTap); // Gán mã gói tập vào DTO
         thanhVienDTO.setMaDangKy(savedDangKy.getMaDangKy());
 
         // Lấy mật khẩu gốc từ thanhVien
@@ -100,9 +95,9 @@ public class DangKyServiceImpl implements DangKyService {
                         "- Dữ liệu QR định danh: %s\n\n" +
                         "Cảm ơn bạn đã tham gia!",
                 thanhVienDTO.getTenThanhVien(),
-                goiTap != null ? goiTap.getTenGoiTap() : "Không có gói tập",
-                goiTap != null ? goiTap.getMoTaGoiTap() : "không có mô tả",
-                goiTap != null ? goiTap.getGiaGoiTap() : "không có giá gói tập",
+                goiTap.getTenGoiTap(),
+                goiTap.getMoTaGoiTap(),
+                goiTap.getGiaGoiTap(),
                 thanhVienDTO.getMaThanhVien(),
                 thanhVienDTO.getTenThanhVien(),
                 thanhVienDTO.getEmailThanhVien(),
@@ -116,89 +111,74 @@ public class DangKyServiceImpl implements DangKyService {
         return savedDangKy;
     }
 
-    @Override
-    public DangKyE registerWithoutDiscount(int maThanhVien, int maGoiTap, Integer maGoiUuDai, Integer maLopHoc, Date ngayKichHoat, boolean trangThaiDangKy) {
-        // Validate member
-        ThanhVienE thanhVien = thanhVienRepository.findById(maThanhVien)
-                .orElseThrow(() -> new RuntimeException("Member not found"));
-
-        DangKyE dangKy = new DangKyE();
-
-        // Xử lý gói tập
-        GoiTapE goiTap = null;
-        if (maGoiTap != 0) {
-            goiTap = goiTapRepository.findById(maGoiTap)
-                    .orElseThrow(() -> new RuntimeException("Invalid package"));
-        }
-        dangKy.setGoiTap(goiTap);  // Gán gói tập vào đăng ký
-
-
-        if (maLopHoc != null && maLopHoc != 0) {
-            LopHocE lopHoc = lopHocRepo.findById(maLopHoc)
-                    .orElseThrow(() -> new RuntimeException("Class not found"));
-            dangKy.setLopHoc(lopHoc);
-        } else {
-            dangKy.setLopHoc(null); // Đặt maLopHoc là null nếu không có giá trị
-        }
-
-        // Thiết lập GoiUuDai nếu có
-        GoiUuDaiE goiUuDai = null;
-        if (maGoiUuDai != null && maGoiUuDai != 0) {  // Check if the discount code is valid
-            goiUuDai = goiUuDaiRepository.findByMaGoiUuDai(maGoiUuDai)
-                    .orElseThrow(() -> new RuntimeException("Invalid or expired discount code"));
-            goiUuDai.setGoiTap(goiTap);
-        }
-
-        dangKy.setGoiUuDai(goiUuDai);  // Gán GoUuDai vào DangKy
-        dangKy.setThanhVien(thanhVien);
-        dangKy.setNgayDangKy(new Date());
-        dangKy.setNgayKichHoat(ngayKichHoat);
-        dangKy.setTrangThaiDangKy(trangThaiDangKy);
-
-        DangKyE savedDangKy = dangKyRepository.save(dangKy);
-
-        ThanhVienDTO thanhVienDTO = new ThanhVienDTO();
-        thanhVienDTO.setMaThanhVien(thanhVien.getMaThanhVien());
-        thanhVienDTO.setTenThanhVien(thanhVien.getTenThanhVien());
-        thanhVienDTO.setEmailThanhVien(thanhVien.getEmailThanhVien());
-        thanhVienDTO.setMatKhauNguoiDung(thanhVien.getMatKhauNguoiDung());
-        thanhVienDTO.setSoDienThoaiThanhVien(thanhVien.getSoDienThoaiThanhVien());
-        thanhVienDTO.setNgaySinhThanhVien(thanhVien.getNgaySinhThanhVien());
-        thanhVienDTO.setDuLieuQrDinhDanh(thanhVien.getDuLieuQrDinhDanh());
-        thanhVienDTO.setMaGoiTap(maGoiTap); // Thêm mã gói tập vào DTO
-        thanhVienDTO.setMaDangKy(savedDangKy.getMaDangKy());
-
-        String originalPassword = thanhVien.getMatKhauNguoiDung();
-        String encodedPassword = passwordEncoder.encode(originalPassword); // Mã hóa mật khẩu
-        thanhVien.setMatKhauNguoiDung(encodedPassword);
-
-        // Chuẩn bị nội dung email
-        String subject = "Thông tin đăng ký gói tập";
-        String message = String.format("Chào %s,\n\nBạn đã đăng ký thành công gói tập: %s.\nMô tả: %s\nGiá: %.2f\n\n" +
-                        "Thông tin thành viên:\n" +
-                        "- Mã thành viên: %d\n" +
-                        "- Tên thành viên: %s\n" +
-                        "- Email: %s\n" +
-                        "- Mật khẩu người dùng: %s\n" +
-                        "- Số điện thoại: %d\n" +
-                        "- Ngày sinh: %s\n" +
-                        "- Dữ liệu QR định danh: %s\n\n" +
-                        "Cảm ơn bạn đã tham gia!",
-                thanhVienDTO.getTenThanhVien(),
-                goiTap != null ? goiTap.getTenGoiTap() : "Không có gói tập",
-                goiTap != null ? goiTap.getMoTaGoiTap() : "không có mô tả",
-                goiTap != null ? goiTap.getGiaGoiTap() : "không có giá gói tập",
-                thanhVienDTO.getMaThanhVien(),
-                thanhVienDTO.getTenThanhVien(),
-                thanhVienDTO.getEmailThanhVien(),
-                originalPassword,
-                thanhVienDTO.getSoDienThoaiThanhVien(),
-                thanhVienDTO.getNgaySinhThanhVien(),
-                thanhVienDTO.getDuLieuQrDinhDanh());
-
-        sendMailService.sendEmail(thanhVienDTO, subject, message);
-        return savedDangKy;
-    }
+//    @Override
+//    public DangKyE registerWithoutDiscount(int maThanhVien, int maGoiUuDai, Integer maLopHoc, Date ngayKichHoat, boolean trangThaiDangKy) {
+//        // Validate member
+//        ThanhVienE thanhVien = thanhVienRepository.findById(maThanhVien)
+//                .orElseThrow(() -> new RuntimeException("Member not found"));
+//
+//        DangKyE dangKy = new DangKyE();
+//
+//        if (maLopHoc != null && maLopHoc != 0) {
+//            LopHocE lopHoc = lopHocRepo.findById(maLopHoc)
+//                    .orElseThrow(() -> new RuntimeException("Class not found"));
+//            dangKy.setLopHoc(lopHoc);
+//        } else {
+//            dangKy.setLopHoc(null); // Đặt maLopHoc là null nếu không có giá trị
+//        }
+//
+//        // Thiết lập GoiUuDai nếu có
+//        GoiUuDaiE goiUuDai = null;
+//
+//
+//        dangKy.setGoiUuDai(goiUuDai);  // Gán GoUuDai vào DangKy
+//        dangKy.setThanhVien(thanhVien);
+//        dangKy.setNgayDangKy(new Date());
+//        dangKy.setNgayKichHoat(ngayKichHoat);
+//        dangKy.setTrangThaiDangKy(trangThaiDangKy);
+//
+//        DangKyE savedDangKy = dangKyRepository.save(dangKy);
+//
+//        ThanhVienDTO thanhVienDTO = new ThanhVienDTO();
+//        thanhVienDTO.setMaThanhVien(thanhVien.getMaThanhVien());
+//        thanhVienDTO.setTenThanhVien(thanhVien.getTenThanhVien());
+//        thanhVienDTO.setEmailThanhVien(thanhVien.getEmailThanhVien());
+//        thanhVienDTO.setMatKhauNguoiDung(thanhVien.getMatKhauNguoiDung());
+//        thanhVienDTO.setSoDienThoaiThanhVien(thanhVien.getSoDienThoaiThanhVien());
+//        thanhVienDTO.setNgaySinhThanhVien(thanhVien.getNgaySinhThanhVien());
+//        thanhVienDTO.setDuLieuQrDinhDanh(thanhVien.getDuLieuQrDinhDanh());
+//
+//        thanhVienDTO.setMaDangKy(savedDangKy.getMaDangKy());
+//
+//        String originalPassword = thanhVien.getMatKhauNguoiDung();
+//        String encodedPassword = passwordEncoder.encode(originalPassword); // Mã hóa mật khẩu
+//        thanhVien.setMatKhauNguoiDung(encodedPassword);
+//
+//        // Chuẩn bị nội dung email
+//        String subject = "Thông tin đăng ký gói tập";
+//        String message = String.format("Chào %s,\n\nBạn đã đăng ký thành công gói tập: %s.\nMô tả: %s\nGiá: %.2f\n\n" +
+//                        "Thông tin thành viên:\n" +
+//                        "- Mã thành viên: %d\n" +
+//                        "- Tên thành viên: %s\n" +
+//                        "- Email: %s\n" +
+//                        "- Mật khẩu người dùng: %s\n" +
+//                        "- Số điện thoại: %d\n" +
+//                        "- Ngày sinh: %s\n" +
+//                        "- Dữ liệu QR định danh: %s\n\n" +
+//                        "Cảm ơn bạn đã tham gia!",
+//                thanhVienDTO.getTenThanhVien(),
+//                goiUuDai.getMaGoiUuDai(),
+//                thanhVienDTO.getMaThanhVien(),
+//                thanhVienDTO.getTenThanhVien(),
+//                thanhVienDTO.getEmailThanhVien(),
+//                originalPassword,
+//                thanhVienDTO.getSoDienThoaiThanhVien(),
+//                thanhVienDTO.getNgaySinhThanhVien(),
+//                thanhVienDTO.getDuLieuQrDinhDanh());
+//
+//        sendMailService.sendEmail(thanhVienDTO, subject, message);
+//        return savedDangKy;
+//    }
 
 
     @Override

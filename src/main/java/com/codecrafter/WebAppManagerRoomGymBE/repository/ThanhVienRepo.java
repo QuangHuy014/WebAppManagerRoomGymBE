@@ -16,7 +16,4 @@ public interface ThanhVienRepo extends JpaRepository<ThanhVienE, Integer> {
     boolean existsBySoDienThoaiThanhVien(long soDienThoaiThanhVien);
     Optional<ThanhVienE> findByTenThanhVien(String tenThanhVien);
     Page<ThanhVienE> findAll(Pageable pageable);
-
-
-
 }

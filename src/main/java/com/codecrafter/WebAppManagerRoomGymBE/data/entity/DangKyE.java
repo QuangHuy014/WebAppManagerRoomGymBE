@@ -19,9 +19,9 @@ public class DangKyE {
     @Column(name = "ma_dang_ky")
     private int maDangKy;
 
-    @ManyToOne
-    @JoinColumn(name = "ma_goi_tap", nullable = false) // Tên cột cho khóa ngoại trong bảng DangKy
-    private GoiTapE goiTap;
+//    @ManyToOne
+//    @JoinColumn(name = "ma_goi_uu_dai", nullable = false) // Tên cột cho khóa ngoại trong bảng DangKy
+//    private GoiUuDaiE goiUuDaiE;
 
     @ManyToOne
     @JoinColumn(name = "ma_thanh_vien")
@@ -29,7 +29,7 @@ public class DangKyE {
     private ThanhVienE thanhVien;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ma_goi_uu_dai", nullable = true)
+    @JoinColumn(name = "ma_goi_uu_dai", nullable = false)
     private GoiUuDaiE goiUuDai;
 
     @Column(name = "ngay_dang_ky")

@@ -35,7 +35,7 @@ public class DangKyServiceImpl implements DangKyService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public DangKyE registerWithDiscount(int maThanhVien, int maGoiTap, int maGoiUuDai, Integer maLopHoc, Date ngayKichHoat, boolean trangThaiDangKy) {
+    public DangKyE registerWithDiscount(int maThanhVien, int maGoiTap, Integer maGoiUuDai, Integer maLopHoc, Date ngayKichHoat, boolean trangThaiDangKy) {
         // Validate member
         ThanhVienE thanhVien = thanhVienRepository.findById(maThanhVien)
                 .orElseThrow(() -> new RuntimeException("Member not found"));

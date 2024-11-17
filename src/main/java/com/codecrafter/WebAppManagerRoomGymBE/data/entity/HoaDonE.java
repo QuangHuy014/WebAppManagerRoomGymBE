@@ -27,6 +27,7 @@ public class HoaDonE {
     private float soTienThanhToan;
 
     @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<DangKyE> dangkys ;
 
 
@@ -34,6 +35,7 @@ public class HoaDonE {
     private List<ThanhToanE> thanhToans;
 
     @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<DoanhThuE> doanhThus; // Danh sách các doanh thu liên kết với hóa đơn này
 
 

@@ -1,5 +1,6 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,6 +21,7 @@ public class DoanhThuE {
 
     @ManyToOne
     @JoinColumn(name = "ma_hoa_don", nullable = false) // Khóa ngoại tham chiếu đến HoaDonE
+    @JsonBackReference
     private HoaDonE hoaDon;
 
     @Column(name = "so_tien_doanh_thu")

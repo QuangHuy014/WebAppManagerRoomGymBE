@@ -5,12 +5,15 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "gym_thanh_vien")
 public class ThanhVienE {
@@ -43,16 +46,18 @@ public class ThanhVienE {
     @JsonBackReference // Ngăn không tuần tự hóa NguoiDungE khi tuần tự hóa ThanhVienE
     private NguoiDungE nguoiDung;
 
-    @OneToMany(mappedBy = "thanhVien", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private List<DangKyE> dangKys = new ArrayList<>();
+//    @OneToMany(mappedBy = "thanhVien", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonManagedReference
+//    @JsonBackReference
+//    private List<DangKyE> dangKys = new ArrayList<>();
 
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "thanhVien", cascade = CascadeType.ALL)
-    @JsonBackReference
+    @JsonManagedReference
     private List<LichSuTapLuyenE> lichSuTapLuyen;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "thanhVien")
-    @JsonBackReference
+//    @JsonBackReference
+    @JsonManagedReference
     private List<DangKyE> dangKy;
 }

@@ -20,16 +20,17 @@ public class DangKyE {
     private int maDangKy;
 
     @ManyToOne
-    @JoinColumn(name = "ma_goi_tap", nullable = false) // Tên cột cho khóa ngoại trong bảng DangKy
+    @JoinColumn(name = "ma_goi_tap", nullable = false)
     private GoiTapE goiTap;
 
     @ManyToOne
     @JoinColumn(name = "ma_thanh_vien")
-    @JsonManagedReference
+    @JsonBackReference
     private ThanhVienE thanhVien;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ma_goi_uu_dai", nullable = true)
+    @JsonBackReference
     private GoiUuDaiE goiUuDai;
 
     @Column(name = "ngay_dang_ky")
@@ -43,6 +44,7 @@ public class DangKyE {
 
     @ManyToOne
     @JoinColumn(name = "ma_lop_hoc")
+    @JsonBackReference
     private LopHocE lopHoc;
 
     @ManyToOne

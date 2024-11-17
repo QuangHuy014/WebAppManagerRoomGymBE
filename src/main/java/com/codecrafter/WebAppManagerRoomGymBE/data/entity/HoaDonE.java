@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,12 +27,16 @@ public class HoaDonE {
     @Column(name = "so_tien_thanh_toan")
     private float soTienThanhToan;
 
+    //    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JsonManagedReference
+//    private List<DangKyE> dangkys ;
+    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<DangKyE> dangkys = new ArrayList<>();
+
+
     @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private List<DangKyE> dangkys ;
-
-
-    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ThanhToanE> thanhToans;
 
     @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

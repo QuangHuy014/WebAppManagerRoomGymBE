@@ -35,7 +35,8 @@ public class DangKyServiceImpl implements DangKyService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public DangKyE registerWithDiscount(int maThanhVien, int maGoiUuDai, Integer maLopHoc, Date ngayKichHoat, boolean trangThaiDangKy) {
+
+    public DangKyE registerWithDiscountOrWithOutDiscount(int maThanhVien, int maGoiUuDai, Integer maLopHoc, Date ngayKichHoat, boolean trangThaiDangKy) {
         // Validate member
         ThanhVienE thanhVien = thanhVienRepository.findById(maThanhVien)
                 .orElseThrow(() -> new RuntimeException("Member not found"));
@@ -44,17 +45,19 @@ public class DangKyServiceImpl implements DangKyService {
         GoiUuDaiE goiUuDai = goiUuDaiRepository.findByMaGoiUuDai(maGoiUuDai)
                 .orElseThrow(() -> new RuntimeException("Invalid or expired discount code"));
 
-        // Validate and set GoiTap
-
         DangKyE dangKy = new DangKyE();
         dangKy.setGoiUuDai(goiUuDai);
 
+        GoiTapE goiTap = goiUuDai.getGoiTap();
+        if (goiTap == null) {
+            throw new RuntimeException("No associated package found for this discount");
+        }
         if (maLopHoc != null && maLopHoc != 0) {
             LopHocE lopHoc = lopHocRepo.findById(maLopHoc)
                     .orElseThrow(() -> new RuntimeException("Class not found"));
             dangKy.setLopHoc(lopHoc);
         } else {
-            dangKy.setLopHoc(null); // Đặt maLopHoc là null nếu không có giá trị
+            dangKy.setLopHoc(null);
         }
 
         dangKy.setThanhVien(thanhVien);
@@ -79,32 +82,32 @@ public class DangKyServiceImpl implements DangKyService {
         String encodedPassword = passwordEncoder.encode(originalPassword);
         thanhVien.setMatKhauNguoiDung(encodedPassword);
 
-//        // Chuẩn bị nội dung email
-//        String subject = "Thông tin đăng ký gói tập";
-//        String message = String.format("Chào %s,\n\nBạn đã đăng ký thành công gói tập: %s.\nMô tả: %s\nGiá: %.2f\n\n" +
-//                        "Thông tin thành viên:\n" +
-//                        "- Mã thành viên: %d\n" +
-//                        "- Tên thành viên: %s\n" +
-//                        "- Email: %s\n" +
-//                        "- Mật khẩu người dùng: %s\n" +
-//                        "- Số điện thoại: %d\n" +
-//                        "- Ngày sinh: %s\n" +
-//                        "- Dữ liệu QR định danh: %s\n\n" +
-//                        "Cảm ơn bạn đã tham gia!",
-//                thanhVienDTO.getTenThanhVien(),
-//                goiTap != null ? goiTap.getTenGoiTap() : "Không có gói tập",
-//                goiTap != null ? goiTap.getMoTaGoiTap() : "không có mô tả",
-//                goiTap != null ? goiTap.getGiaGoiTap() : "không có giá gói tập",
-//                thanhVienDTO.getMaThanhVien(),
-//                thanhVienDTO.getTenThanhVien(),
-//                thanhVienDTO.getEmailThanhVien(),
-//                originalPassword,
-//                thanhVienDTO.getSoDienThoaiThanhVien(),
-//                thanhVienDTO.getNgaySinhThanhVien(),
-//                thanhVienDTO.getDuLieuQrDinhDanh());
-//
-//        // Gửi email
-//        sendMailService.sendEmail(thanhVienDTO, subject, message);
+        // Chuẩn bị nội dung email
+        String subject = "Thông tin đăng ký gói tập";
+        String message = String.format("Chào %s,\n\nBạn đã đăng ký thành công gói tập: %s.\nMô tả: %s\nGiá: %.2f\n\n" +
+                        "Thông tin thành viên:\n" +
+                        "- Mã thành viên: %d\n" +
+                        "- Tên thành viên: %s\n" +
+                        "- Email: %s\n" +
+                        "- Mật khẩu người dùng: %s\n" +
+                        "- Số điện thoại: %d\n" +
+                        "- Ngày sinh: %s\n" +
+                        "- Dữ liệu QR định danh: %s\n\n" +
+                        "Cảm ơn bạn đã tham gia!",
+                thanhVienDTO.getTenThanhVien(),
+                goiTap.getTenGoiTap(),
+                goiTap.getMoTaGoiTap(),
+                goiTap.getGiaGoiTap(),
+                thanhVienDTO.getMaThanhVien(),
+                thanhVienDTO.getTenThanhVien(),
+                thanhVienDTO.getEmailThanhVien(),
+                originalPassword,
+                thanhVienDTO.getSoDienThoaiThanhVien(),
+                thanhVienDTO.getNgaySinhThanhVien(),
+                thanhVienDTO.getDuLieuQrDinhDanh());
+
+        // Gửi email
+        sendMailService.sendEmail(thanhVienDTO, subject, message);
         return savedDangKy;
     }
 

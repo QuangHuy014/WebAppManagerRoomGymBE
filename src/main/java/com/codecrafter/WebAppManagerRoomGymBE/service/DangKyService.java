@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface DangKyService {
 
-    DangKyE registerWithDiscount(int maThanhVien, int maGoiUuDai,Integer maLopHoc, Date ngayKichHoat, boolean trangThaiKichHoat);
-//    DangKyE registerWithoutDiscount(int maThanhVien, int maGoiTap,Integer maGoiUuDai, Integer maLopHoc, Date ngayKichHoat, boolean trangThaiKichHoat);
+    DangKyE registerWithDiscountOrWithOutDiscount(int maThanhVien, int maGoiUuDai,Integer maLopHoc, Date ngayKichHoat, boolean trangThaiKichHoat);
+//    DangKyE registerWithoutDiscount(int maThanhVien,int maGoiUuDai, Integer maLopHoc, Date ngayKichHoat, boolean trangThaiKichHoat);
     List<DangKyE> getDangKyByParams(Integer maDangKy, Integer maThanhVien, Integer maGoiUuDai, Date ngayDangKy, Date ngayKichHoat, Boolean trangThaiDangKy, Integer maLopHoc, Integer maHoaDon);
 }

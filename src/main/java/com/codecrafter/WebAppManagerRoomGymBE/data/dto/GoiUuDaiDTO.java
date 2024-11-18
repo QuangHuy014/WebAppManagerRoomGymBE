@@ -6,6 +6,6 @@ import lombok.Data;
 public class GoiUuDaiDTO {
     private int maGoiUuDai;
     private int maGoiTap;
-    private int maUuDai;
+    private Integer maUuDai;
 
 }

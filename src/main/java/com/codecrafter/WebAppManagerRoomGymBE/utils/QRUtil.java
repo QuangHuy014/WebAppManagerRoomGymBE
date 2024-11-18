@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.util.Base64;
 
-public class    QRUtil {
+public class QRUtil {
 
     public static String GenerateQRCode(String data, int with, int height){
         StringBuilder readImages = new StringBuilder();

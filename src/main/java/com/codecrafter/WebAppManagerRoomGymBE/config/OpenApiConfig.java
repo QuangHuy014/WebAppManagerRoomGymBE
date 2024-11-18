@@ -45,10 +45,10 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI().addSecurityItem(new SecurityRequirement().
-                        addList("Bearer Authentication"))
+                addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes
-                        ("Bearer Authentication", createAPIKeyScheme()))
-                      ;
+                ("Bearer Authentication", createAPIKeyScheme()))
+                ;
     }
 }
 

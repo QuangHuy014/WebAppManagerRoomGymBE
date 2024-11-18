@@ -19,7 +19,6 @@ import java.util.*;
 
 
 @Service
-@Transactional
 
 public class HoaDonServiceImpl implements HoaDonService {
 
@@ -30,28 +29,33 @@ public class HoaDonServiceImpl implements HoaDonService {
     private HoaDonRepo hoaDonRepository;
 
     @Override
+    @Transactional // Đảm bảo phương thức chạy trong một giao dịch
     public HoaDonE saveHoaDon(DangKyDTO registration) {
+        // Kiểm tra đầu vào
         if (registration.getMaDangKy() == null) {
             throw new IllegalArgumentException("Mã đăng ký không được để trống");
         }
 
+        // Tìm đối tượng đăng ký từ database
         DangKyE dangKy = dangKyRepository.findById(registration.getMaDangKy())
                 .orElseThrow(() -> new RuntimeException("Đăng ký không tồn tại"));
 
+        // Tạo mới hóa đơn
         HoaDonE invoice = new HoaDonE();
-        invoice.setNgayTaoHoaDon(new Date());
-        invoice.setSoTienThanhToan(calculateTotalAmount(dangKy));
+        invoice.setNgayTaoHoaDon(new Date()); // Gán ngày tạo hóa đơn
+        invoice.setSoTienThanhToan(calculateTotalAmount(dangKy)); // Tính tổng số tiền cần thanh toán
 
-        // Gán hóa đơn cho đăng ký và thêm đăng ký vào danh sách của hóa đơn
+        // Thiết lập mối quan hệ giữa hóa đơn và đăng ký
         dangKy.setHoaDon(invoice);
         invoice.setDangkys(Collections.singletonList(dangKy));
 
-        // Lưu hóa đơn và đồng bộ lại đăng ký
-        HoaDonE savedInvoice = hoaDonRepository.save(invoice);
-        dangKyRepository.save(dangKy);
 
-        return savedInvoice;
+        // Lưu hóa đơn (cascade sẽ tự động lưu đăng ký nếu được cấu hình)
+        HoaDonE savedInvoice = hoaDonRepository.save(invoice);
+
+        return savedInvoice; // Trả về hóa đơn đã lưu
     }
+
 
 
 

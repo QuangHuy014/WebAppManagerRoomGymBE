@@ -30,9 +30,9 @@ public class HoaDonE {
     //    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JsonManagedReference
 //    private List<DangKyE> dangkys ;
-    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    private List<DangKyE> dangkys = new ArrayList<>();
+    private List<DangKyE> dangkys ;
 
 
     @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

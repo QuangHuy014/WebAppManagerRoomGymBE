@@ -19,8 +19,6 @@ public class DangKyE {
     @Column(name = "ma_dang_ky")
     private int maDangKy;
 
-
-
     @ManyToOne
     @JoinColumn(name = "ma_thanh_vien")
     @JsonBackReference
@@ -46,7 +44,8 @@ public class DangKyE {
     private LopHocE lopHoc;
 
     @ManyToOne
-    @JoinColumn(name = "ma_hoa_don")
+    @JoinColumn(name = "ma_hoa_don"
+    )
     @JsonBackReference
     private HoaDonE hoaDon;
 }

@@ -15,7 +15,6 @@ public class JwtToPrincipalConverter {
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .toList();
 
-
         return UserPrincipal.builder()
                 .userId(Integer.valueOf(jwt.getSubject()))
                 .userName(jwt.getClaim("username").asString())

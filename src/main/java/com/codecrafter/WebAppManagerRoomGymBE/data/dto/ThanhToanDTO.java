@@ -13,7 +13,7 @@ public class ThanhToanDTO {
 
     private int maHoaDon;
     private Date ngayThanhToan;
-    private float soTienThanhToan;
+//    private float soTienThanhToan;
     private String phuongThucThanhToan;
     private String moTaThanhToan;
 }

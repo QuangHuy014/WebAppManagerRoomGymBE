@@ -35,7 +35,7 @@ public class ThanhToanServiceImpl implements ThanhToanService {
 
         payment.setHoaDon(hoaDon);
         payment.setNgayThanhToan(new Date());
-        payment.setSoTienThanhToan(thanhToanDTO.getSoTienThanhToan());
+        payment.setSoTienThanhToan(hoaDon.getSoTienThanhToan());
         payment.setPhuongThucThanhToan(thanhToanDTO.getPhuongThucThanhToan());
         payment.setMoTaThanhToan(thanhToanDTO.getMoTaThanhToan());
 
@@ -57,7 +57,7 @@ public class ThanhToanServiceImpl implements ThanhToanService {
         ThanhToanE existingPayment = thanhToanRepository.findById(maThanhToan)
                 .orElseThrow(() -> new RuntimeException("Thanh toán không tồn tại"));
 
-        existingPayment.setSoTienThanhToan(thanhToanDTO.getSoTienThanhToan());
+//        existingPayment.setSoTienThanhToan(thanhToanDTO.getSoTienThanhToan());
         existingPayment.setPhuongThucThanhToan(thanhToanDTO.getPhuongThucThanhToan());
         existingPayment.setMoTaThanhToan(thanhToanDTO.getMoTaThanhToan());
 

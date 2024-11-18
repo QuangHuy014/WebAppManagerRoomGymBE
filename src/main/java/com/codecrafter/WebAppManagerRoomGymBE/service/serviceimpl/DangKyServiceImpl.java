@@ -65,6 +65,7 @@ public class DangKyServiceImpl implements DangKyService {
         dangKy.setNgayKichHoat(ngayKichHoat);
         dangKy.setTrangThaiDangKy(trangThaiDangKy);
 
+
         DangKyE savedDangKy = dangKyRepository.save(dangKy);
 
         // Thiết lập các thuộc tính cho DTO

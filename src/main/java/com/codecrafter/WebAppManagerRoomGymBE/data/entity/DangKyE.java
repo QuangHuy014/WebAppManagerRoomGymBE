@@ -25,7 +25,6 @@ public class DangKyE {
     private ThanhVienE thanhVien;
 
     @ManyToOne(cascade = CascadeType.ALL)
-
     @JoinColumn(name = "ma_goi_uu_dai", nullable = true)
     @JsonBackReference
     private GoiUuDaiE goiUuDai;
@@ -45,7 +44,8 @@ public class DangKyE {
     private LopHocE lopHoc;
 
     @ManyToOne
-    @JoinColumn(name = "ma_hoa_don")
+    @JoinColumn(name = "ma_hoa_don"
+    )
     @JsonBackReference
     private HoaDonE hoaDon;
 }

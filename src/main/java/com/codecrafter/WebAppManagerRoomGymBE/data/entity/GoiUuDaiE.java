@@ -2,6 +2,7 @@ package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,13 +20,15 @@ public class GoiUuDaiE {
 
      @ManyToOne
      @JoinColumn(name = "ma_goi_tap", nullable = false)
+     @JsonBackReference
      private GoiTapE goiTap;
 
      @ManyToOne
      @JoinColumn(name = "ma_uu_dai", nullable = true)
+     @JsonBackReference
      private UuDaiE uuDai;
 
      @OneToMany(fetch = FetchType.EAGER, mappedBy = "goiUuDai")
-     @JsonBackReference
+     @JsonManagedReference
      private List<DangKyE> dangKy;
 }

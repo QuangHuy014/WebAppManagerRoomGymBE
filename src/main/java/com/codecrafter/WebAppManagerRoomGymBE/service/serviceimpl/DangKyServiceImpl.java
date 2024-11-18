@@ -6,23 +6,23 @@ import com.codecrafter.WebAppManagerRoomGymBE.data.entity.*;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.*;
 import com.codecrafter.WebAppManagerRoomGymBE.service.DangKyService;
 import com.codecrafter.WebAppManagerRoomGymBE.service.SendMailService;
+import com.codecrafter.WebAppManagerRoomGymBE.utils.EmailService;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 @Transactional
 public class DangKyServiceImpl implements DangKyService {
 
@@ -30,9 +30,11 @@ public class DangKyServiceImpl implements DangKyService {
     private final ThanhVienRepo thanhVienRepository;
     private final GoiUuDaiRepo goiUuDaiRepository;
     private final LopHocRepo lopHocRepo;
-    private final SendMailService sendMailService;
+//    private final SendMailService sendMailService;
     private final GoiTapRepo goiTapRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
+
 
     @Override
 
@@ -82,20 +84,7 @@ public class DangKyServiceImpl implements DangKyService {
         String originalPassword = thanhVien.getMatKhauNguoiDung();
         String encodedPassword = passwordEncoder.encode(originalPassword);
         thanhVien.setMatKhauNguoiDung(encodedPassword);
-
-        // Chuẩn bị nội dung email
-        String subject = "Thông tin đăng ký gói tập";
-        String message = String.format("Chào %s,\n\nBạn đã đăng ký thành công gói tập: %s.\nMô tả: %s\nGiá: %.2f\n\n" +
-                        "Thông tin thành viên:\n" +
-                        "- Mã thành viên: %d\n" +
-                        "- Tên thành viên: %s\n" +
-                        "- Email: %s\n" +
-                        "- Mật khẩu người dùng: %s\n" +
-                        "- Số điện thoại: %d\n" +
-                        "- Ngày sinh: %s\n" +
-                        "- Dữ liệu QR định danh: %s\n\n" +
-                        "Cảm ơn bạn đã tham gia!",
-                thanhVienDTO.getTenThanhVien(),
+        emailService.emailTemplate(
                 goiTap.getTenGoiTap(),
                 goiTap.getMoTaGoiTap(),
                 goiTap.getGiaGoiTap(),
@@ -103,12 +92,11 @@ public class DangKyServiceImpl implements DangKyService {
                 thanhVienDTO.getTenThanhVien(),
                 thanhVienDTO.getEmailThanhVien(),
                 originalPassword,
-                thanhVienDTO.getSoDienThoaiThanhVien(),
+                String.valueOf(thanhVienDTO.getSoDienThoaiThanhVien()),
                 thanhVienDTO.getNgaySinhThanhVien(),
-                thanhVienDTO.getDuLieuQrDinhDanh());
+                thanhVienDTO.getDuLieuQrDinhDanh()
+        );
 
-        // Gửi email
-        sendMailService.sendEmail(thanhVienDTO, subject, message);
         return savedDangKy;
     }
 

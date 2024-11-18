@@ -2,6 +2,7 @@ package com.codecrafter.WebAppManagerRoomGymBE.api;
 
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.DangKyE;
 import com.codecrafter.WebAppManagerRoomGymBE.service.DangKyService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +13,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api-public/dang-ky-goi")
+@RequiredArgsConstructor
 public class DangKyAPI {
 
-    @Autowired
-    private DangKyService dangKyService;
+    private final   DangKyService dangKyService;
 
     // Register with discount code
     @PostMapping("/with-discount")

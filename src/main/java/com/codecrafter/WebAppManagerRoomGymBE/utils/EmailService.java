@@ -56,7 +56,6 @@ public class EmailService {
                               int memberId, String memberName,String email, String rawPassword, String phoneNumber, Date birthDate, String qrData) {
         log.info("Sending email to: " + email);
 
-        // Tạo bản đồ chứa các thông tin cần truyền vào template
         Map<String, Object> placeholders = new HashMap<>();
         placeholders.put("packageName", packageName);
         placeholders.put("packageDescription", packageDescription);

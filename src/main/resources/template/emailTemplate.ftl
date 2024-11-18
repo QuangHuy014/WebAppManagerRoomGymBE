@@ -877,7 +877,7 @@ END OF IMPORTANT
                                                         <tr>
                                                             <td align="center" class="esd-block-text es-p10t es-p5b">
                                                                 <h2 style="color: #00413f;">Happy, ${memberName}</h2>
-                                                                <h2>Chào ${memberName},</h2>
+<#--                                                                <h2>Chào ${memberName},</h2>-->
                                                                 <p>Cảm ơn bạn đã đăng ký thành công gói tập!</p>
 
                                                                 <h3>Thông tin gói tập:</h3>

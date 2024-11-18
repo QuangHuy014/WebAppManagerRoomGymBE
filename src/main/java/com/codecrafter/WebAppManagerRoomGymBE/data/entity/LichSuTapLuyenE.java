@@ -1,5 +1,6 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class LichSuTapLuyenE {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ma_thanh_vien")
+    @JsonBackReference
     private ThanhVienE thanhVien;
 
     private Date thoiGianTapLuyen;

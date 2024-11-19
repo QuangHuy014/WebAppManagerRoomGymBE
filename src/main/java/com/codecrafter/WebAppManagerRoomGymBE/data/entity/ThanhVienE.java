@@ -60,4 +60,6 @@ public class ThanhVienE {
 //    @JsonBackReference
     @JsonManagedReference
     private List<DangKyE> dangKy;
+    @Column(name = "trang_thai_thanh_vien", nullable = false)
+    private boolean trangThaiThanhVien;
 }

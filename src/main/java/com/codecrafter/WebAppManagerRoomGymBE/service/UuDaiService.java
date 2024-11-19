@@ -19,7 +19,7 @@ public interface UuDaiService {
 
     UuDaiE updateUuDai(int id, UuDaiDTO uuDaiDTO);
 
-    void deleteUuDai(int id);
+    UuDaiE deleteUuDai(int id);
 
     List<UuDaiE> getUuDaiByIdAndOtherParam(Integer maUuDai, Date ngayBatDau, Date ngayKetThuc, Boolean trangThaiUuDai);
 }

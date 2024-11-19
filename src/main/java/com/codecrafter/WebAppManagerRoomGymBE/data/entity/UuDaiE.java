@@ -48,6 +48,7 @@ public class UuDaiE {
     @Transient
     private int tongUuDai;
 
+
     public int tongUuDai(int tongUuDai){
         return this.tongUuDai +=tongUuDai;
     }

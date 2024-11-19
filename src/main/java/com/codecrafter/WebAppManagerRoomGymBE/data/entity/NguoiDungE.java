@@ -26,4 +26,6 @@ public class NguoiDungE {
     private VaiTroE vaiTro;
     private boolean hoatDongNguoiDung;
     private String duLieuQrDinhDanh;
+    @Column(name = "trang_thai_nguoi_dung", nullable = false)
+    private boolean trangThaiNguoiDung;
 }

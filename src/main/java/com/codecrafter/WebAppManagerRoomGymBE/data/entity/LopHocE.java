@@ -29,4 +29,7 @@ public class LopHocE {
 
     @Column(name = "so_luong_thanh_vien_lop_hoc")
     private int soLuongThanhVienLopHoc;
+
+    @Column(name = "trang_thai_lop_hoc", nullable = false)
+    private boolean trangThaiLopHoc;
 }

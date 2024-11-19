@@ -66,8 +66,10 @@ public class UuDaiServiceImpl implements UuDaiService {
     }
 
     @Override
-    public void deleteUuDai(int id) {
-        uuDaiRepository.deleteById(id);
+    public UuDaiE deleteUuDai(int id) {
+        UuDaiE existingUuDai = getUuDaiById(id);
+        existingUuDai.setTrangThaiUuDai(false);
+        return uuDaiRepository.save(existingUuDai);
     }
 
 

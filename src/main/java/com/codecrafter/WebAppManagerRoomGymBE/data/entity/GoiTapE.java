@@ -35,4 +35,7 @@ public class GoiTapE {
     @OneToMany(mappedBy = "goiTap", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<GoiUuDaiE> goiUuDais;
+
+    @Column(name = "trang_thai_goi_tap", nullable = false)
+    private boolean trangThaiGoiTap;
 }

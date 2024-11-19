@@ -1,5 +1,6 @@
 package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
+import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.util.Date;
@@ -15,4 +16,6 @@ public class HuanLuyenVienE {
     private Date lichLamViecHuanLuyenVien;
     private int maLopHoc;
     private String duLieuQrDinhDanh;
+    @Column(name = "trang_thai_huan_luyen_vien", nullable = false)
+    private boolean trangThaiHuanLuyenVien;
 }

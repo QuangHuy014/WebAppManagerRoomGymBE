@@ -86,21 +86,28 @@ public class NguoiDungAPI {
                     .description("Mật khẩu không được để trống.")
                     .build());
         }
+        Optional<NguoiDungE> existingUser = nguoiDungService.findByUserName(thanhVienDTO.getTenThanhVien());
+        if (existingUser.isPresent() && !existingUser.get().isTrangThaiNguoiDung()) {
+            return ResponseEntity.status(400).body(RegisterResponse.builder()
+                    .status(BasicApiConstant.FAILED.getStatus())
+                    .description("Tài khoản này đã bị khóa.")
+                    .build());
+        }
 
-       try {
-        Optional<ThanhVienE> registeredMember = thanhVienService.register(thanhVienDTO);
+        try {
+            Optional<ThanhVienE> registeredMember = thanhVienService.register(thanhVienDTO);
 
-        // Nếu đăng ký thành công
-        return ResponseEntity.ok(RegisterResponse.builder()
-                .status(BasicApiConstant.SUCCEED.getStatus())
-                .description(RegisterStatus.SUCCEED.getStateDescription())
-                .build());
-    } catch (IllegalArgumentException ex) {
-        return ResponseEntity.status(400).body(RegisterResponse.builder()
-                .status(BasicApiConstant.FAILED.getStatus())
-                .description(ex.getMessage())
-                .build());
-    }
+            // Nếu đăng ký thành công
+            return ResponseEntity.ok(RegisterResponse.builder()
+                    .status(BasicApiConstant.SUCCEED.getStatus())
+                    .description(RegisterStatus.SUCCEED.getStateDescription())
+                    .build());
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(400).body(RegisterResponse.builder()
+                    .status(BasicApiConstant.FAILED.getStatus())
+                    .description(ex.getMessage())
+                    .build());
+        }
     }
 
 
@@ -170,6 +177,14 @@ public class NguoiDungAPI {
         Optional<NguoiDungE> user = nguoiDungService.login(userDTO);
         if (user.isPresent()) {
             NguoiDungE nguoiDung = user.get();
+            if (!nguoiDung.isTrangThaiNguoiDung()) {
+                return ResponseEntity.status(400).body(LoginResponse.builder()
+                        .accessToken(null)
+                        .refreshToken(null)
+                        .status(BasicApiConstant.FAILED.getStatus())
+                        .description("Tài khoản của bạn đã bị khóa.")
+                        .build());
+            }
             if (!passwordEncoder.matches(userDTO.getMatKhauNguoiDung(), nguoiDung.getMatKhauNguoiDung())) {
                 return ResponseEntity.status(401).body(LoginResponse.builder()
                         .accessToken(null)
@@ -223,6 +238,16 @@ public class NguoiDungAPI {
             return ResponseEntity.ok(user.get());
         } else {
             return ResponseEntity.status(404).body(null); // Hoặc trả về một response tùy chỉnh
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> softDeleteUser(@PathVariable int id) {
+        try {
+            nguoiDungService.softDeleteUser(id); // Gọi phương thức xóa mềm
+            return ResponseEntity.ok("Đã xóa trạng thía thành công.");
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(404).body("Không tìm thấy id!.");
         }
     }
 

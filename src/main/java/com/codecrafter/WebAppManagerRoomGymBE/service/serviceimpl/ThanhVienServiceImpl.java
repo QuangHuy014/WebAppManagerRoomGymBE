@@ -31,6 +31,20 @@ public class ThanhVienServiceImpl implements ThanhVienService {
     @Autowired
     private DangKyRepo dangKyRepo;
 
+
+    @Override
+    public Optional<ThanhVienE> disableMember(int maThanhVien) {
+        Optional<ThanhVienE> thanhVienOpt = thanhVienRepository.findById(maThanhVien);
+        if (thanhVienOpt.isPresent()) {
+            ThanhVienE thanhVien = thanhVienOpt.get();
+            // Cập nhật trangThaiThanhVien thành false
+            thanhVien.setTrangThaiThanhVien(false);
+            thanhVienRepository.save(thanhVien); // Lưu lại cập nhật
+            return Optional.of(thanhVien);
+        }
+        return Optional.empty(); // Nếu không tìm thấy thành viên
+    }
+
     @Override
     public Optional<ThanhVienE> register(ThanhVienDTO userDTO) {
         // Kiểm tra email và số điện thoại
@@ -54,15 +68,15 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         thanhVien.setEmailThanhVien(userDTO.getEmailThanhVien());
 
 
-
         // Mã hóa mật khẩu
 //        String encodedPassword = passwordEncoder.encode(userDTO.getMatKhauNguoiDung());
 //        thanhVien.setMatKhauNguoiDung(encodedPassword);
-         String originalPassword = userDTO.getMatKhauNguoiDung();
+        String originalPassword = userDTO.getMatKhauNguoiDung();
         thanhVien.setMatKhauNguoiDung(originalPassword);
 
         thanhVien.setSoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
         thanhVien.setNgaySinhThanhVien(userDTO.getNgaySinhThanhVien());
+        thanhVien.setTrangThaiThanhVien(userDTO.isTrangThaiThanhVien());
 
         // Tạo mã QR từ thông tin của thành viên và gán vào thuộc tính DuLieuQrDinhDanh
         String qrCodeData = qrCodeService.GenerateQrCode(userDTO); // Gọi phương thức qua instance
@@ -75,14 +89,31 @@ public class ThanhVienServiceImpl implements ThanhVienService {
     }
 
 
+    //    @Override
+//    public Optional<ThanhVienE> login(ThanhVienDTO memberDTO) {
+//        Optional<ThanhVienE> member = thanhVienRepository.findByTenThanhVien(memberDTO.getTenThanhVien());
+//        if (member.isPresent() && passwordEncoder.matches(memberDTO.getMatKhauNguoiDung(), member.get().getMatKhauNguoiDung())) {
+//            return member; // Nếu thành viên tồn tại và mật khẩu khớp, trả về đối tượng thành viên
+//        }
+//        return Optional.empty(); // Nếu không, trả về Optional.empty()
+//    }
     @Override
     public Optional<ThanhVienE> login(ThanhVienDTO memberDTO) {
         Optional<ThanhVienE> member = thanhVienRepository.findByTenThanhVien(memberDTO.getTenThanhVien());
-        if (member.isPresent() && passwordEncoder.matches(memberDTO.getMatKhauNguoiDung(), member.get().getMatKhauNguoiDung())) {
-            return member; // Nếu thành viên tồn tại và mật khẩu khớp, trả về đối tượng thành viên
+        if (member.isPresent()) {
+            ThanhVienE thanhVien = member.get();
+            // Kiểm tra trạng thái thành viên
+            if (!thanhVien.isTrangThaiThanhVien()) {
+                return Optional.empty(); // Nếu thành viên bị khóa, không cho phép đăng nhập
+            }
+            // Kiểm tra mật khẩu
+            if (passwordEncoder.matches(memberDTO.getMatKhauNguoiDung(), thanhVien.getMatKhauNguoiDung())) {
+                return Optional.of(thanhVien);
+            }
         }
-        return Optional.empty(); // Nếu không, trả về Optional.empty()
+        return Optional.empty(); // Nếu không khớp mật khẩu hoặc không tìm thấy thành viên
     }
+
 
     public Page<ThanhVienE> getAllMembers(int page, int size, String sortBy, boolean ascending) {
         Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();

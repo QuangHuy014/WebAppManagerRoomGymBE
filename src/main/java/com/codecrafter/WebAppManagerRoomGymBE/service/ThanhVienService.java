@@ -10,5 +10,5 @@ public interface ThanhVienService {
      Optional<ThanhVienE> register(ThanhVienDTO userDTO);
       Optional<ThanhVienE> login(ThanhVienDTO memberDTO);
     public Page<ThanhVienE> getAllMembers(int page, int size, String sortBy, boolean ascending);
-
+        Optional<ThanhVienE> disableMember(int maThanhVien);
 }

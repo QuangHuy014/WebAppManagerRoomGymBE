@@ -35,9 +35,20 @@ public class NguoiDungServiceImpl implements NguoiDungService {
     }
 
 
-//        public boolean checkPassword(String rawPassword, String encodedPassword) {
+    //        public boolean checkPassword(String rawPassword, String encodedPassword) {
 //        return passwordEncoder.matches(rawPassword, encodedPassword);
 //    }
+   @Override
+    public void softDeleteUser(int id) {
+        Optional<NguoiDungE> user = nguoiDungRepository.findById(id);
+        if (user.isPresent()) {
+            NguoiDungE nguoiDung = user.get();
+            nguoiDung.setTrangThaiNguoiDung(false); // Cập nhật trạng thái xóa mềm
+            nguoiDungRepository.save(nguoiDung); // Lưu lại thay đổi
+        } else {
+            throw new IllegalArgumentException("User not found.");
+        }
+    }
 
 
 }

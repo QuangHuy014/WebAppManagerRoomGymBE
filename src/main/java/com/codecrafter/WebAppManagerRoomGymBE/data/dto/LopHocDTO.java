@@ -12,4 +12,5 @@ public class LopHocDTO {
     private float giaLopHoc;
     private Date lichHoc;
     private int soLuongThanhVienLopHoc;
+    private boolean trangThaiLopHoc;
 }

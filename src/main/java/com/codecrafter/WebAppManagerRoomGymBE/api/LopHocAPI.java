@@ -39,7 +39,7 @@ public class LopHocAPI {
         try {
             result.setData(lopHocService.getAllLopHoc());
             result.setStatus(BasicApiConstant.SUCCEED.getStatus());
-            result.setMessages("Danh sách lớp học là: " +lopHocService.getAllLopHoc().size());
+            result.setMessages("Danh sách lớp học là: " + lopHocService.getAllLopHoc().size());
         } catch (Exception e) {
             log.error("Lỗi khi lấy tất cả lớp học", e);
             result.setStatus(BasicApiConstant.ERROR.getStatus());
@@ -89,7 +89,7 @@ public class LopHocAPI {
     public ResponseObject<?> deleteLopHoc(@PathVariable int maLopHoc) {
         var result = new ResponseObject<>();
         try {
-            lopHocService.deleteLopHoc(maLopHoc);
+            lopHocService.deleteLopHoc(maLopHoc);  // Call the service to update trangThaiLopHoc
             result.setStatus(BasicApiConstant.SUCCEED.getStatus());
             result.setMessages("Xóa lớp học thành công.");
         } catch (Exception e) {
@@ -98,6 +98,6 @@ public class LopHocAPI {
             result.setMessages("Lỗi khi xóa lớp học.");
         }
         return result;
-        
     }
+
 }

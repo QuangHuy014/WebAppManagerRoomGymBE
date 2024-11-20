@@ -15,6 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+
 @Table(name = "gym_thanh_vien")
 public class ThanhVienE {
     @Id
@@ -60,6 +61,6 @@ public class ThanhVienE {
 //    @JsonBackReference
     @JsonManagedReference
     private List<DangKyE> dangKy;
-    @Column(name = "trang_thai_thanh_vien", nullable = false)
+     @Column(name = "trang_thai_thanh_vien")
     private boolean trangThaiThanhVien;
 }

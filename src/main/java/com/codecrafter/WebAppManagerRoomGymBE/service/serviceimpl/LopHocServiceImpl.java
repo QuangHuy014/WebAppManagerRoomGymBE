@@ -44,6 +44,7 @@ public class LopHocServiceImpl implements LopHocService {
         lopHocE.setGiaLopHoc(lopHocDTO.getGiaLopHoc());
         lopHocE.setLichHoc(lopHocDTO.getLichHoc());
         lopHocE.setSoLuongThanhVienLopHoc(lopHocDTO.getSoLuongThanhVienLopHoc());
+        lopHocE.setTrangThaiLopHoc(true);
         return lopHocRepo.save(lopHocE);
     }
 
@@ -57,14 +58,20 @@ public class LopHocServiceImpl implements LopHocService {
             lopHocE.setGiaLopHoc(lopHocDTO.getGiaLopHoc());
             lopHocE.setLichHoc(lopHocDTO.getLichHoc());
             lopHocE.setSoLuongThanhVienLopHoc(lopHocDTO.getSoLuongThanhVienLopHoc());
+            lopHocE.setTrangThaiLopHoc(lopHocDTO.isTrangThaiLopHoc());
             return lopHocRepo.save(lopHocE);
         }
         return null;
     }
 
-    @Override
-    public void deleteLopHoc(int maLopHoc) {
-        lopHocRepo.deleteById(maLopHoc);
+  @Override
+public void deleteLopHoc(int maLopHoc) {
+    Optional<LopHocE> lopHocOpt = lopHocRepo.findById(maLopHoc);
+    if (lopHocOpt.isPresent()) {
+        LopHocE lopHocE = lopHocOpt.get();
+        lopHocE.setTrangThaiLopHoc(false);  // Set trangThaiLopHoc to false
+        lopHocRepo.save(lopHocE);  // Save the updated LopHocE
     }
+}
 
 }

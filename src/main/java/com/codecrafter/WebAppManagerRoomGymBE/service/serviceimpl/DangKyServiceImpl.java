@@ -37,7 +37,6 @@ public class DangKyServiceImpl implements DangKyService {
 
 
     @Override
-
     public DangKyE registerWithDiscountOrWithOutDiscount(int maThanhVien, int maGoiUuDai, Integer maLopHoc, Date ngayKichHoat, boolean trangThaiDangKy) {
         // Validate member
         ThanhVienE thanhVien = thanhVienRepository.findById(maThanhVien)
@@ -99,6 +98,11 @@ public class DangKyServiceImpl implements DangKyService {
 
         return savedDangKy;
     }
+
+
+
+
+
 
 
     @Override

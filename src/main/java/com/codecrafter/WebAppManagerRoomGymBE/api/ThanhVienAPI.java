@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -106,13 +107,24 @@ public class ThanhVienAPI {
 
     }
 
-        @GetMapping("/api-public/members/doGetALlMember")
-        public Page<ThanhVienE> getMembers(
-                @RequestParam(defaultValue = "0") int page,
-                @RequestParam(defaultValue = "10") int size,
-                @RequestParam(defaultValue = "maThanhVien") String sortBy,
-                @RequestParam(defaultValue = "true") boolean ascending) {
-            return thanhVienService.getAllMembers(page, size, sortBy, ascending);
+    @GetMapping("/api-public/members/doGetALlMember")
+    public Page<ThanhVienE> getMembers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "maThanhVien") String sortBy,
+            @RequestParam(defaultValue = "true") boolean ascending) {
+        return thanhVienService.getAllMembers(page, size, sortBy, ascending);
+    }
+
+    @DeleteMapping("/update/{maThanhVien}")
+    public ResponseEntity<String> disableMember(@PathVariable int maThanhVien) {
+        Optional<ThanhVienE> thanhVien = thanhVienService.disableMember(maThanhVien);
+        if (thanhVien.isPresent()) {
+            return ResponseEntity.ok("Thành viên đã bị khóa.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Không tìm thấy thành viên với ID: " + maThanhVien);
         }
+    }
 
 }

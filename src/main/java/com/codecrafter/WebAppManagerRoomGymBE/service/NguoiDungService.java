@@ -11,4 +11,6 @@ public interface NguoiDungService {
     Optional<NguoiDungE> findByUserName(String userName);// Thêm phương thức này
 
     Optional<NguoiDungE> getUserInfo(int id);
+
+    void softDeleteUser(int id);
 }

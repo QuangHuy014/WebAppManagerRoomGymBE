@@ -1,5 +1,7 @@
 package com.codecrafter.WebAppManagerRoomGymBE.service;
 
+import com.codecrafter.WebAppManagerRoomGymBE.data.dto.LichSuTapLuyenDTO;
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.LichSuTapLuyenE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.model.LichSuTapLuyenM;
 
 import java.util.List;
@@ -12,7 +14,7 @@ public interface LichSuTapLuyenService {
 
     int getNewestLichSuTapLuyenId(int maThanhVien);
 
-
+    LichSuTapLuyenE saveLichSuTapLuyen(LichSuTapLuyenDTO lichSuTapLuyenDTO);
 
 
     }

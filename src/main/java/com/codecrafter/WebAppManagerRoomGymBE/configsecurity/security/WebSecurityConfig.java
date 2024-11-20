@@ -63,7 +63,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/**").hasAnyAuthority("ROLE_Admin", "ROLE_Staff") // Restrict all other endpoints to Admin and Staff
                         .anyRequest().authenticated()
                 );
-         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
@@ -76,7 +76,7 @@ public class WebSecurityConfig {
                         .allowedOrigins("http://localhost:3000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowCredentials(true);
+                        .allowCredentials(true);//cho phep client gửi thông tin xac thuc tuong tu nhu cookie or session
             }
         };
     }

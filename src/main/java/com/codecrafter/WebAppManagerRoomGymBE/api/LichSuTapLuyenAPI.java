@@ -2,6 +2,7 @@ package com.codecrafter.WebAppManagerRoomGymBE.api;
 
 import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.security.UserPrincipal;
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.BasicApiConstant;
+import com.codecrafter.WebAppManagerRoomGymBE.data.dto.LichSuTapLuyenDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.LichSuTapLuyenE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.mgt.ResponseObject;
@@ -84,5 +85,37 @@ public class LichSuTapLuyenAPI {
         }
         return result;
     }
+
+    @PostMapping("/thanhvien/save")
+    public ResponseObject<?> saveLichSuTapLuyen(@RequestBody LichSuTapLuyenDTO lichSuTapLuyenDTO) {
+        var result = new ResponseObject<>();
+        try {
+            // Kiểm tra quyền
+            UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            boolean isAdminOrStaff = userPrincipal.getAuthorities().stream()
+                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_Admin") || authority.getAuthority().equals("ROLE_Staff"));
+
+            if (!isAdminOrStaff && userPrincipal.getUserId() != lichSuTapLuyenDTO.getMaThanhVien()) {
+                result.setStatus(BasicApiConstant.FAILED.getStatus());
+                result.setMessages("Không có quyền lưu lịch sử tập luyện cho người dùng khác.");
+                return result;
+            }
+
+            // Gọi service để lưu lịch sử tập luyện
+            LichSuTapLuyenM savedLichSu = LichSuTapLuyenM.convertLichSuTapLuyenEToLichSuTapLuyenM(lichSuTapLuyenService.saveLichSuTapLuyen(lichSuTapLuyenDTO));
+
+            result.setData(savedLichSu);
+            result.setStatus(BasicApiConstant.SUCCEED.getStatus());
+            result.setMessages("Lưu lịch sử tập luyện thành công.");
+
+        } catch (Exception e) {
+            log.info("Lỗi khi gọi API /api-public/lichsutapluyen/thanhvien/save", e);
+            result.setStatus(BasicApiConstant.FAILED.getStatus());
+            result.setMessages("Đã xảy ra lỗi khi lưu lịch sử tập luyện.");
+        }
+        return result;
+    }
+
+
 
 }

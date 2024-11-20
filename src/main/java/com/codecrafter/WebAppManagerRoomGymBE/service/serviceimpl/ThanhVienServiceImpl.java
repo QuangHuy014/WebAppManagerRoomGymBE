@@ -54,6 +54,7 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         thanhVien.setEmailThanhVien(userDTO.getEmailThanhVien());
 
 
+
         // Mã hóa mật khẩu
 //        String encodedPassword = passwordEncoder.encode(userDTO.getMatKhauNguoiDung());
 //        thanhVien.setMatKhauNguoiDung(encodedPassword);

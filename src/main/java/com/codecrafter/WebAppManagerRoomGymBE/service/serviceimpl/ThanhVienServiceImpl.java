@@ -66,27 +66,24 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         ThanhVienE thanhVien = new ThanhVienE();
         thanhVien.setTenThanhVien(userDTO.getTenThanhVien());
         thanhVien.setEmailThanhVien(userDTO.getEmailThanhVien());
-
-
-        // Mã hóa mật khẩu
-//        String encodedPassword = passwordEncoder.encode(userDTO.getMatKhauNguoiDung());
-//        thanhVien.setMatKhauNguoiDung(encodedPassword);
-        String originalPassword = userDTO.getMatKhauNguoiDung();
-        thanhVien.setMatKhauNguoiDung(originalPassword);
-
+        thanhVien.setMatKhauNguoiDung(userDTO.getMatKhauNguoiDung()); // Mật khẩu chưa mã hóa
         thanhVien.setSoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
         thanhVien.setNgaySinhThanhVien(userDTO.getNgaySinhThanhVien());
         thanhVien.setTrangThaiThanhVien(userDTO.isTrangThaiThanhVien());
 
-        // Tạo mã QR từ thông tin của thành viên và gán vào thuộc tính DuLieuQrDinhDanh
-        String qrCodeData = qrCodeService.GenerateQrCode(userDTO); // Gọi phương thức qua instance
-        thanhVien.setDuLieuQrDinhDanh(qrCodeData);
+        // Lưu lần đầu để lấy id
+        ThanhVienE savedThanhVien = thanhVienRepository.save(thanhVien);
 
-        // Lưu vào cơ sở dữ liệu
-        thanhVienRepository.save(thanhVien);
-        return Optional.of(thanhVien);
+        // Tạo mã QR có chứa id
+        String qrCodeData = qrCodeService.GenerateQrCode(savedThanhVien);
+        savedThanhVien.setDuLieuQrDinhDanh(qrCodeData);
 
+        // Cập nhật lại đối tượng với QR code
+        thanhVienRepository.save(savedThanhVien);
+
+        return Optional.of(savedThanhVien);
     }
+
 
 
     //    @Override

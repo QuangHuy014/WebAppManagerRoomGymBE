@@ -71,7 +71,6 @@ public class DangKyServiceImpl implements DangKyService {
 
         // Thiết lập các thuộc tính cho DTO
         ThanhVienDTO thanhVienDTO = new ThanhVienDTO();
-        thanhVienDTO.setMaThanhVien(thanhVien.getMaThanhVien());
         thanhVienDTO.setTenThanhVien(thanhVien.getTenThanhVien());
         thanhVienDTO.setEmailThanhVien(thanhVien.getEmailThanhVien());
         thanhVienDTO.setSoDienThoaiThanhVien(thanhVien.getSoDienThoaiThanhVien());
@@ -87,7 +86,7 @@ public class DangKyServiceImpl implements DangKyService {
                 goiTap.getTenGoiTap(),
                 goiTap.getMoTaGoiTap(),
                 goiTap.getGiaGoiTap(),
-                thanhVienDTO.getMaThanhVien(),
+
                 thanhVienDTO.getTenThanhVien(),
                 thanhVienDTO.getEmailThanhVien(),
                 originalPassword,

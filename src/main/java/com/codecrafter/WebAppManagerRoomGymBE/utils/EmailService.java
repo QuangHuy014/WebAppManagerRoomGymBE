@@ -52,15 +52,13 @@ public class EmailService {
             log.error("Failed to send email to {}",to,e);
         }
     }
-    public void emailTemplate( String packageName, String packageDescription, double packagePrice,
-                              int memberId, String memberName,String email, String rawPassword, String phoneNumber, Date birthDate, String qrData) {
+    public void emailTemplate( String packageName, String packageDescription, double packagePrice, String memberName,String email, String rawPassword, String phoneNumber, Date birthDate, String qrData) {
         log.info("Sending email to: " + email);
 
         Map<String, Object> placeholders = new HashMap<>();
         placeholders.put("packageName", packageName);
         placeholders.put("packageDescription", packageDescription);
         placeholders.put("packagePrice", packagePrice);
-        placeholders.put("memberId", memberId);
         placeholders.put("memberName", memberName);
         placeholders.put("email", email);
         placeholders.put("rawPassword", rawPassword);

@@ -1,6 +1,7 @@
 package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.ThanhVienDTO;
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
 import com.codecrafter.WebAppManagerRoomGymBE.service.QrCodeService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.*;
@@ -37,13 +38,13 @@ public class QrCodeServiceImpl implements QrCodeService {
 
 
     @Override
-    public String GenerateQrCode(ThanhVienDTO thanhVienDTO) {
+    public String GenerateQrCode(ThanhVienE thanhVienE) {
         ObjectMapper objectMapper = new ObjectMapper();
         StringBuilder  result = new StringBuilder();
         String qrCodeContent = null;
         try {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
-            qrCodeContent = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(thanhVienDTO);
+            qrCodeContent = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(thanhVienE);
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
 
             BitMatrix bitMatrix = qrCodeWriter.encode(qrCodeContent, BarcodeFormat.QR_CODE, weight, height);

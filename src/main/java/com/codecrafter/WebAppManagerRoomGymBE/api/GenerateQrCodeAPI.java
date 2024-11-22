@@ -1,6 +1,7 @@
 package com.codecrafter.WebAppManagerRoomGymBE.api;
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.BasicApiConstant;
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.ThanhVienDTO;
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.mgt.ResponseObject;
 import com.codecrafter.WebAppManagerRoomGymBE.service.QrCodeService;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -20,10 +21,10 @@ public class GenerateQrCodeAPI {
     private final QrCodeService qrCodeService;
 
     @PostMapping("/generateQRCode")
-    public ResponseObject<?> GenerateQrCode(@RequestBody ThanhVienDTO thanhVienDTO){
+    public ResponseObject<?> GenerateQrCode(@RequestBody ThanhVienE thanhVienE){
         var result = new ResponseObject<>();
         try {
-            result.setData(qrCodeService.GenerateQrCode(thanhVienDTO));
+            result.setData(qrCodeService.GenerateQrCode(thanhVienE));
             result.setStatus(BasicApiConstant.SUCCEED.getStatus());
             result.setMessages("Generate QRCode thành công");
         } catch (Exception e) {

@@ -1,10 +1,10 @@
 package com.codecrafter.WebAppManagerRoomGymBE.service.serviceimpl;
 
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.ThanhVienDTO;
-import com.codecrafter.WebAppManagerRoomGymBE.data.entity.DangKyE;
-import com.codecrafter.WebAppManagerRoomGymBE.data.entity.GoiTapE;
+import com.codecrafter.WebAppManagerRoomGymBE.data.entity.NguoiDungE;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.DangKyRepo;
+import com.codecrafter.WebAppManagerRoomGymBE.repository.NguoiDungRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +15,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.Optional;
+
+import static com.codecrafter.WebAppManagerRoomGymBE.utils.getCurrentUser.getCurrentUserId;
 
 @Service
 public class ThanhVienServiceImpl implements ThanhVienService {
     @Autowired
     private ThanhVienRepo thanhVienRepository;
+    @Autowired
+    private NguoiDungRepo nguoiDungRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -61,6 +64,9 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         } else if (soDienThoaiExists) {
             throw new IllegalArgumentException("Số điện thoại đã tồn tại. Vui lòng chọn số điện thoại khác.");
         }
+        Long currentUserId = getCurrentUserId();
+        NguoiDungE nguoiDung = nguoiDungRepo.findById(Math.toIntExact(currentUserId))
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy người dùng hiện tại."));
 
         // Tạo đối tượng ThanhVienE mới
         ThanhVienE thanhVien = new ThanhVienE();
@@ -70,7 +76,7 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         thanhVien.setSoDienThoaiThanhVien(userDTO.getSoDienThoaiThanhVien());
         thanhVien.setNgaySinhThanhVien(userDTO.getNgaySinhThanhVien());
         thanhVien.setTrangThaiThanhVien(userDTO.isTrangThaiThanhVien());
-
+        thanhVien.setNguoiDung(nguoiDung);
         // Lưu lần đầu để lấy id
         ThanhVienE savedThanhVien = thanhVienRepository.save(thanhVien);
 

@@ -2,10 +2,13 @@ package com.codecrafter.WebAppManagerRoomGymBE.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -33,4 +36,8 @@ public class NguoiDungE {
     private String duLieuQrDinhDanh;
     @Column(name = "trang_thai_nguoi_dung", nullable = false)
     private boolean trangThaiNguoiDung;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "nguoiDung", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<ThanhVienE> thanhVien;
 }

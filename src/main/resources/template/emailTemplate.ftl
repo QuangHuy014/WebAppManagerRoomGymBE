@@ -889,7 +889,7 @@ END OF IMPORTANT
 
                                                                 <h3>Thông tin thành viên:</h3>
                                                                 <ul>
-                                                                    <li>Mã thành viên: ${memberId}</li>
+<#--                                                                    <li>Mã thành viên: ${memberId}</li>-->
                                                                     <li>Tên thành viên: ${memberName}</li>
                                                                     <li>Email: ${email}</li>
                                                                     <li>Số điện thoại: ${phoneNumber}</li>

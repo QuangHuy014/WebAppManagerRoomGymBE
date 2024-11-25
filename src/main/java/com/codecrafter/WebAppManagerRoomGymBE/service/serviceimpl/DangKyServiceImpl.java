@@ -86,7 +86,6 @@ public class DangKyServiceImpl implements DangKyService {
                 goiTap.getTenGoiTap(),
                 goiTap.getMoTaGoiTap(),
                 goiTap.getGiaGoiTap(),
-
                 thanhVienDTO.getTenThanhVien(),
                 thanhVienDTO.getEmailThanhVien(),
                 originalPassword,

@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class NguoiDungDTO {
-//    private int maNguoiDung;
+    private int maNguoiDung;
     private String tenNguoiDung;
     private String matKhauNguoiDung;
 //    private boolean gioiTinhNguoiDung;

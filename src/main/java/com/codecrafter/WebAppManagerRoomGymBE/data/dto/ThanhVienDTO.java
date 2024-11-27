@@ -11,7 +11,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class ThanhVienDTO {
-
+    private int maThanhVien;
     private String tenThanhVien;
     private String matKhauNguoiDung;
     private String emailThanhVien;

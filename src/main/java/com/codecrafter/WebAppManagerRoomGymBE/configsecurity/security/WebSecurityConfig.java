@@ -40,7 +40,9 @@ public class WebSecurityConfig {
        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http
-                .cors().disable()
+                // Mở CORS (xóa cors().disable())
+                .cors() // Bật CORS
+                .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()

@@ -31,48 +31,7 @@ public class EmailService {
     private final JavaMailSender javaMailSender;
     private final Configuration config;
 
-//    public void sendEmailWithTemplate(String to, String subject, String templateName, Map<String,Object> placeholders, File attachment){
-//        try {
-//            Template t = config.getTemplate(templateName);
-//            String html = FreeMarkerTemplateUtils.processTemplateIntoString(t,placeholders);
-//
-//            MimeMessage message = javaMailSender.createMimeMessage();
-//            MimeMessageHelper helper = new MimeMessageHelper(message,true);
-//
-//            helper.setTo(to);
-//            helper.setSubject(subject);
-//            helper.setText(html,true);
-//
-//            // Add attachment if provided
-//            if(attachment != null){
-//                FileSystemResource fileSystemResource = new FileSystemResource(attachment);
-//                helper.addAttachment(fileSystemResource.getFilename(),fileSystemResource);
-//            }
-//
-//            javaMailSender.send(message);
-//            log.info("Email sent successfully to {}",to);
-//
-//        }catch (MessagingException | TemplateException | IOException e ){
-//            log.error("Failed to send email to {}",to,e);
-//        }
-//    }
-//    public void emailTemplate( String packageName, String packageDescription, double packagePrice, String memberName,String email, String rawPassword, String phoneNumber, Date birthDate, String qrData) {
-//        log.info("Sending email to: " + email);
-//
-//        Map<String, Object> placeholders = new HashMap<>();
-//        placeholders.put("packageName", packageName);
-//        placeholders.put("packageDescription", packageDescription);
-//        placeholders.put("packagePrice", packagePrice);
-//        placeholders.put("memberName", memberName);
-//        placeholders.put("email", email);
-//        placeholders.put("rawPassword", rawPassword);
-//        placeholders.put("phoneNumber", phoneNumber);
-//        placeholders.put("birthDate", birthDate);
-//        placeholders.put("qrData", qrData);
-//
-//        // Gửi email với template
-//        sendEmailWithTemplate(email, "Thông tin đăng ký gói tập", "emailTemplate.ftl", placeholders, null);
-//    }
+
      public void sendEmailWithTemplate(String to, String subject, String templateName, Map<String, Object> placeholders, File qrImageFile) {
         try {
             Template t = config.getTemplate(templateName);

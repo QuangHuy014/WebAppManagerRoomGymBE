@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
 
 <head>
@@ -727,10 +728,15 @@ END OF IMPORTANT
     </style>
     <!--[if (mso 16)]>
     <style type="text/css">
-        a {text-decoration: none;}
+        a {
+            text-decoration: none;
+        }
     </style>
     <![endif]-->
-    <!--[if gte mso 9]><style>sup { font-size: 100% !important; }</style><![endif]-->
+    <!--[if gte mso 9]>
+    <style>sup {
+        font-size: 100% !important;
+    }</style><![endif]-->
     <!--[if !mso]><!-- -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,900&display=swap" rel="stylesheet">
@@ -761,12 +767,17 @@ END OF IMPORTANT
                 <table cellpadding="0" cellspacing="0" class="es-content esd-header-popover" align="center">
                     <tbody>
                     <tr>
-                        <td class="es-adaptive esd-stripe" esd-custom-block-id="17287" align="center" bgcolor="#1b142d" style="background-color: #1b142d;">
-                            <table class="es-content-body" style="background-color: transparent;" width="600" cellspacing="0" cellpadding="0" align="center">
+                        <td class="es-adaptive esd-stripe" esd-custom-block-id="17287" align="center" bgcolor="#1b142d"
+                            style="background-color: #1b142d;">
+                            <table class="es-content-body" style="background-color: transparent;" width="600"
+                                   cellspacing="0" cellpadding="0" align="center">
                                 <tbody>
                                 <tr>
                                     <td class="esd-structure es-p10" align="left">
-                                        <!--[if mso]><table width="580"><tr><td width="280" valign="top"><![endif]-->
+                                        <!--[if mso]>
+                                        <table width="580">
+                                            <tr>
+                                                <td width="280" valign="top"><![endif]-->
                                         <table class="es-left" cellspacing="0" cellpadding="0" align="left">
                                             <tbody>
                                             <tr>
@@ -774,7 +785,8 @@ END OF IMPORTANT
                                                     <table width="100%" cellspacing="0" cellpadding="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td class="es-infoblock esd-block-text es-m-txt-c" align="left">
+                                                            <td class="es-infoblock esd-block-text es-m-txt-c"
+                                                                align="left">
                                                                 <p>Put your preheader text here</p>
                                                             </td>
                                                         </tr>
@@ -784,7 +796,9 @@ END OF IMPORTANT
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <!--[if mso]></td><td width="20"></td><td width="280" valign="top"><![endif]-->
+                                        <!--[if mso]></td>
+                                        <td width="20"></td>
+                                        <td width="280" valign="top"><![endif]-->
                                         <table class="es-right" cellspacing="0" cellpadding="0" align="right">
                                             <tbody>
                                             <tr>
@@ -792,8 +806,10 @@ END OF IMPORTANT
                                                     <table width="100%" cellspacing="0" cellpadding="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td align="right" class="es-infoblock esd-block-text es-m-txt-c">
-                                                                <p><a href="https://viewstripo.email/" target="_blank" class="view">View in browser</a></p>
+                                                            <td align="right"
+                                                                class="es-infoblock esd-block-text es-m-txt-c">
+                                                                <p><a href="https://viewstripo.email/" target="_blank"
+                                                                      class="view">View in browser</a></p>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -815,7 +831,8 @@ END OF IMPORTANT
                     <tbody>
                     <tr>
                         <td class="esd-stripe" align="center" bgcolor="#1b142d" style="background-color: #1b142d;">
-                            <table bgcolor="transparent" class="es-content-body" align="center" cellpadding="0" cellspacing="0" width="600" style="background-color: transparent;">
+                            <table bgcolor="transparent" class="es-content-body" align="center" cellpadding="0"
+                                   cellspacing="0" width="600" style="background-color: transparent;">
                                 <tbody>
                                 <tr>
                                     <td class="esd-structure" align="left" esd-custom-block-id="83873">
@@ -826,7 +843,13 @@ END OF IMPORTANT
                                                     <table width="100%" cellspacing="0" cellpadding="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td align="center" class="esd-block-image" style="font-size:0"><a target="_blank" href="https://viewstripo.email/"><img class="adapt-img" src="https://tlr.stripocdn.email/content/guids/CABINET_8ba9362bd94f8450b9cc99d201c33cda/images/58991575445981042.png" alt style="display: block;" width="405"></a></td>
+                                                            <td align="center" class="esd-block-image"
+                                                                style="font-size:0"><a target="_blank"
+                                                                                       href="https://viewstripo.email/"><img
+                                                                            class="adapt-img"
+                                                                            src="https://tlr.stripocdn.email/content/guids/CABINET_8ba9362bd94f8450b9cc99d201c33cda/images/58991575445981042.png"
+                                                                            alt style="display: block;" width="405"></a>
+                                                            </td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -845,7 +868,12 @@ END OF IMPORTANT
                                                     <table cellpadding="0" cellspacing="0" width="100%">
                                                         <tbody>
                                                         <tr>
-                                                            <td align="center" class="esd-block-image" style="font-size:0"><a target="_blank"><img class="adapt-img" src="https://tlr.stripocdn.email/content/guids/CABINET_8ba9362bd94f8450b9cc99d201c33cda/images/59311575451089515.png" alt style="display: block;" width="600"></a></td>
+                                                            <td align="center" class="esd-block-image"
+                                                                style="font-size:0"><a target="_blank"><img
+                                                                            class="adapt-img"
+                                                                            src="https://tlr.stripocdn.email/content/guids/CABINET_8ba9362bd94f8450b9cc99d201c33cda/images/59311575451089515.png"
+                                                                            alt style="display: block;" width="600"></a>
+                                                            </td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -856,7 +884,8 @@ END OF IMPORTANT
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="esd-structure es-p5t es-p30b es-p20r es-p20l" align="left" bgcolor="#ffffff" style="background-color: #ffffff;">
+                                    <td class="esd-structure es-p5t es-p30b es-p20r es-p20l" align="left"
+                                        bgcolor="#ffffff" style="background-color: #ffffff;">
                                         <table cellpadding="0" cellspacing="0" width="100%">
                                             <tbody>
                                             <tr>
@@ -864,7 +893,12 @@ END OF IMPORTANT
                                                     <table cellpadding="0" cellspacing="0" width="100%">
                                                         <tbody>
                                                         <tr>
-                                                            <td align="center" class="esd-block-image es-p20t" style="font-size:0"><a target="_blank"><img class="adapt-img" src="https://tlr.stripocdn.email/content/guids/CABINET_8ba9362bd94f8450b9cc99d201c33cda/images/42891575466907646.gif" alt style="display: block; width: 300px;" width="300"></a></td>
+                                                            <td align="center" class="esd-block-image es-p20t"
+                                                                style="font-size:0"><a target="_blank"><img
+                                                                            class="adapt-img"
+                                                                            src="https://tlr.stripocdn.email/content/guids/CABINET_8ba9362bd94f8450b9cc99d201c33cda/images/42891575466907646.gif"
+                                                                            alt style="display: block; width: 300px;"
+                                                                            width="300"></a></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -877,7 +911,7 @@ END OF IMPORTANT
                                                         <tr>
                                                             <td align="center" class="esd-block-text es-p10t es-p5b">
                                                                 <h2 style="color: #00413f;">Happy, ${memberName}</h2>
-<#--                                                                <h2>Chào ${memberName},</h2>-->
+                                                                <#--                                                                <h2>Chào ${memberName},</h2>-->
                                                                 <p>Cảm ơn bạn đã đăng ký thành công gói tập!</p>
 
                                                                 <h3>Thông tin gói tập:</h3>
@@ -889,33 +923,50 @@ END OF IMPORTANT
 
                                                                 <h3>Thông tin thành viên:</h3>
                                                                 <ul>
-<#--                                                                    <li>Mã thành viên: ${memberId}</li>-->
+                                                                    <#--                                                                    <li>Mã thành viên: ${memberId}</li>-->
                                                                     <li>Tên thành viên: ${memberName}</li>
                                                                     <li>Email: ${email}</li>
                                                                     <li>Số điện thoại: ${phoneNumber}</li>
-                                                                    <li>Ngày sinh: ${birthDate?string("yyyy-MM-dd")}</li>
-                                                                    <li>Dữ liệu QR định danh: ${qrData!("Không có dữ liệu")}</li>
+                                                                    <li>Ngày
+                                                                        sinh: ${birthDate?string("yyyy-MM-dd")}</li>
+                                                                    <#--                                                                    <li>Dữ liệu QR định danh: ${qrData!("Không có dữ liệu")}</li>-->
+                                                                    <li>Dữ liệu QR định danh:</li>
+                                                                    <img src="${qrImage}" alt="QR Code"/>
+
                                                                     <li>Mật khẩu tạm thời: ${rawPassword}</li>
                                                                 </ul>
-
                                                                 <p>Chúng tôi rất mong chờ được phục vụ bạn!</p>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td align="center" class="esd-block-text es-p10t es-p10b">
-                                                                <p>In warm appreciation of our association, we extend our best wishes for a happy holiday season and a New Year and give you a small gift!</p>
+                                                                <p>In warm appreciation of our association, we extend
+                                                                    our best wishes for a happy holiday season and a New
+                                                                    Year and give you a small gift!</p>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td align="center" class="esd-block-button es-p10t es-p10b">
-                                                                <!--[if mso]><a href="https://viewstripo.email/" target="_blank">
-                                                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="https://viewstripo.email/"
-                                                                                 style="height:49px;v-text-anchor:middle;width:132px;" arcsize="10%" stroke="f" fillcolor="#00c4c6">
+                                                                <!--[if mso]><a href="https://viewstripo.email/"
+                                                                                target="_blank">
+                                                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml"
+                                                                                 xmlns:w="urn:schemas-microsoft-com:office:word"
+                                                                                 esdevVmlButton
+                                                                                 href="https://viewstripo.email/"
+                                                                                 style="height:49px;v-text-anchor:middle;width:132px;"
+                                                                                 arcsize="10%" stroke="f"
+                                                                                 fillcolor="#00c4c6">
                                                                         <w:anchorlock></w:anchorlock>
-                                                                        <center style='color:#ffffff;font-family:arial, "helvetica neue", helvetica, sans-serif;font-size:18px;font-weight:400;'>Take a gift</center>
-                                                                    </v:roundrect></a>
+                                                                        <center style='color:#ffffff;font-family:arial, "helvetica neue", helvetica, sans-serif;font-size:18px;font-weight:400;'>
+                                                                            Take a gift
+                                                                        </center>
+                                                                    </v:roundrect>
+                                                                </a>
                                                                 <![endif]-->
-                                                                <!--[if !mso]><!-- --><span class="msohide es-button-border"><a href="https://viewstripo.email/" class="es-button" target="_blank">Take a gift</a></span>
+                                                                <!--[if !mso]><!-- --><span
+                                                                        class="msohide es-button-border"><a
+                                                                            href="https://viewstripo.email/"
+                                                                            class="es-button" target="_blank">Take a gift</a></span>
                                                                 <!--<![endif]-->
                                                             </td>
                                                         </tr>
@@ -936,11 +987,14 @@ END OF IMPORTANT
                 <table cellpadding="0" cellspacing="0" class="es-footer" align="center">
                     <tbody>
                     <tr>
-                        <td class="esd-stripe" align="center" bgcolor="#1b142d" style="background-color: #1b142d;" esd-custom-block-id="83874">
-                            <table bgcolor="#ffffff" class="es-footer-body" align="center" cellpadding="0" cellspacing="0" width="600">
+                        <td class="esd-stripe" align="center" bgcolor="#1b142d" style="background-color: #1b142d;"
+                            esd-custom-block-id="83874">
+                            <table bgcolor="#ffffff" class="es-footer-body" align="center" cellpadding="0"
+                                   cellspacing="0" width="600">
                                 <tbody>
                                 <tr>
-                                    <td class="esd-structure" align="left" bgcolor="#ffffff" style="background-color: #ffffff;">
+                                    <td class="esd-structure" align="left" bgcolor="#ffffff"
+                                        style="background-color: #ffffff;">
                                         <table cellpadding="0" cellspacing="0" width="100%">
                                             <tbody>
                                             <tr>
@@ -948,7 +1002,12 @@ END OF IMPORTANT
                                                     <table cellpadding="0" cellspacing="0" width="100%">
                                                         <tbody>
                                                         <tr>
-                                                            <td align="center" class="esd-block-image" style="font-size:0"><a target="_blank"><img class="adapt-img" src="https://tlr.stripocdn.email/content/guids/CABINET_8ba9362bd94f8450b9cc99d201c33cda/images/60441575463377280.png" alt style="display: block;" width="600"></a></td>
+                                                            <td align="center" class="esd-block-image"
+                                                                style="font-size:0"><a target="_blank"><img
+                                                                            class="adapt-img"
+                                                                            src="https://tlr.stripocdn.email/content/guids/CABINET_8ba9362bd94f8450b9cc99d201c33cda/images/60441575463377280.png"
+                                                                            alt style="display: block;" width="600"></a>
+                                                            </td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -959,7 +1018,8 @@ END OF IMPORTANT
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="esd-structure es-p10t es-p20r es-p20l" align="left" esd-general-paddings-checked="true">
+                                    <td class="esd-structure es-p10t es-p20r es-p20l" align="left"
+                                        esd-general-paddings-checked="true">
                                         <table width="100%" cellspacing="0" cellpadding="0">
                                             <tbody>
                                             <tr>
@@ -967,14 +1027,37 @@ END OF IMPORTANT
                                                     <table width="100%" cellspacing="0" cellpadding="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td class="esd-block-social es-p15b" align="center" style="font-size:0">
-                                                                <table class="es-table-not-adapt es-social" cellspacing="0" cellpadding="0">
+                                                            <td class="esd-block-social es-p15b" align="center"
+                                                                style="font-size:0">
+                                                                <table class="es-table-not-adapt es-social"
+                                                                       cellspacing="0" cellpadding="0">
                                                                     <tbody>
                                                                     <tr>
-                                                                        <td class="es-p10r" valign="top" align="center"><a target="_blank" href><img title="Facebook" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-white/facebook-circle-white.png" alt="Fb" width="32" height="32"></a></td>
-                                                                        <td class="es-p10r" valign="top" align="center"><a target="_blank" href><img title="Twitter" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-white/twitter-circle-white.png" alt="Tw" width="32" height="32"></a></td>
-                                                                        <td class="es-p10r" valign="top" align="center"><a target="_blank" href><img title="Instagram" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-white/instagram-circle-white.png" alt="Inst" width="32" height="32"></a></td>
-                                                                        <td valign="top" align="center"><a target="_blank" href><img title="Youtube" src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-white/youtube-circle-white.png" alt="Yt" width="32" height="32"></a></td>
+                                                                        <td class="es-p10r" valign="top" align="center">
+                                                                            <a target="_blank" href><img
+                                                                                        title="Facebook"
+                                                                                        src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-white/facebook-circle-white.png"
+                                                                                        alt="Fb" width="32" height="32"></a>
+                                                                        </td>
+                                                                        <td class="es-p10r" valign="top" align="center">
+                                                                            <a target="_blank" href><img title="Twitter"
+                                                                                                         src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-white/twitter-circle-white.png"
+                                                                                                         alt="Tw"
+                                                                                                         width="32"
+                                                                                                         height="32"></a>
+                                                                        </td>
+                                                                        <td class="es-p10r" valign="top" align="center">
+                                                                            <a target="_blank" href><img
+                                                                                        title="Instagram"
+                                                                                        src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-white/instagram-circle-white.png"
+                                                                                        alt="Inst" width="32"
+                                                                                        height="32"></a></td>
+                                                                        <td valign="top" align="center"><a
+                                                                                    target="_blank" href><img
+                                                                                        title="Youtube"
+                                                                                        src="https://tlr.stripocdn.email/content/assets/img/social-icons/circle-white/youtube-circle-white.png"
+                                                                                        alt="Yt" width="32" height="32"></a>
+                                                                        </td>
                                                                     </tr>
                                                                     </tbody>
                                                                 </table>
@@ -982,8 +1065,14 @@ END OF IMPORTANT
                                                         </tr>
                                                         <tr>
                                                             <td class="esd-block-text" align="center">
-                                                                <p style="font-size: 12px; line-height: 150%;">You are receiving this email because you have visited our site or asked us about regular newsletter. Make sure our messages get to your Inbox (and not your bulk or junk folders).</p>
-                                                                <p>Vector graphics designed by <a target="_blank" href="http://www.freepik.com/">Freepik</a>.</p>
+                                                                <p style="font-size: 12px; line-height: 150%;">You are
+                                                                    receiving this email because you have visited our
+                                                                    site or asked us about regular newsletter. Make sure
+                                                                    our messages get to your Inbox (and not your bulk or
+                                                                    junk folders).</p>
+                                                                <p>Vector graphics designed by <a target="_blank"
+                                                                                                  href="http://www.freepik.com/">Freepik</a>.
+                                                                </p>
                                                             </td>
                                                         </tr>
                                                         </tbody>
@@ -995,8 +1084,12 @@ END OF IMPORTANT
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="esd-structure es-p20t es-p10b es-p20r es-p20l" align="left" esd-general-paddings-checked="true">
-                                        <!--[if mso]><table width="560" cellpadding="0" cellspacing="0"><tr><td width="270" valign="top"><![endif]-->
+                                    <td class="esd-structure es-p20t es-p10b es-p20r es-p20l" align="left"
+                                        esd-general-paddings-checked="true">
+                                        <!--[if mso]>
+                                        <table width="560" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td width="270" valign="top"><![endif]-->
                                         <table class="es-left" cellspacing="0" cellpadding="0" align="left">
                                             <tbody>
                                             <tr>
@@ -1004,7 +1097,9 @@ END OF IMPORTANT
                                                     <table width="100%" cellspacing="0" cellpadding="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td align="left" class="esd-block-text es-m-txt-c"><a class="unsubscribe" target="_blank" href>Unsubscribe</a></td>
+                                                            <td align="left" class="esd-block-text es-m-txt-c"><a
+                                                                        class="unsubscribe" target="_blank" href>Unsubscribe</a>
+                                                            </td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -1012,7 +1107,9 @@ END OF IMPORTANT
                                             </tr>
                                             </tbody>
                                         </table>
-                                        <!--[if mso]></td><td width="20"></td><td width="270" valign="top"><![endif]-->
+                                        <!--[if mso]></td>
+                                        <td width="20"></td>
+                                        <td width="270" valign="top"><![endif]-->
                                         <table class="es-right" cellspacing="0" cellpadding="0" align="right">
                                             <tbody>
                                             <tr>
@@ -1043,7 +1140,8 @@ END OF IMPORTANT
                     <tbody>
                     <tr>
                         <td class="esd-stripe" align="center" bgcolor="#1b142d" style="background-color: #1b142d;">
-                            <table bgcolor="transparent" class="es-content-body" align="center" cellpadding="0" cellspacing="0" width="600" style="background-color: transparent;">
+                            <table bgcolor="transparent" class="es-content-body" align="center" cellpadding="0"
+                                   cellspacing="0" width="600" style="background-color: transparent;">
                                 <tbody>
                                 <tr>
                                     <td class="esd-structure es-p30t es-p30b es-p20r es-p20l" align="left">
@@ -1054,7 +1152,11 @@ END OF IMPORTANT
                                                     <table width="100%" cellspacing="0" cellpadding="0">
                                                         <tbody>
                                                         <tr>
-                                                            <td class="esd-block-image es-infoblock made_with" align="center" style="font-size:0"><a target="_blank" href="https://viewstripo.email/?utm_source=templates&utm_medium=email&utm_campaign=gifts_&_flowershand-made&utm_content=christmas_presents"><img src="https://tlr.stripocdn.email/content/guids/CABINET_9df86e5b6c53dd0319931e2447ed854b/images/64951510234941531.png" alt width="125"></a></td>
+                                                            <td class="esd-block-image es-infoblock made_with"
+                                                                align="center" style="font-size:0"><a target="_blank"
+                                                                                                      href="https://viewstripo.email/?utm_source=templates&utm_medium=email&utm_campaign=gifts_&_flowershand-made&utm_content=christmas_presents"><img
+                                                                            src="https://tlr.stripocdn.email/content/guids/CABINET_9df86e5b6c53dd0319931e2447ed854b/images/64951510234941531.png"
+                                                                            alt width="125"></a></td>
                                                         </tr>
                                                         </tbody>
                                                     </table>

@@ -1,7 +1,6 @@
 package com.codecrafter.WebAppManagerRoomGymBE.configsecurity.security;
 
 
-
 import com.codecrafter.WebAppManagerRoomGymBE.configsecurity.jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +28,7 @@ public class WebSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomUserDetailService customUserDetailService;
 
-     @Bean
+    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -37,7 +36,7 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain appSecurityFilterChain(HttpSecurity http) throws Exception {
 
-       http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http
                 // Mở CORS (xóa cors().disable())
@@ -58,7 +57,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/user/login").permitAll()
                         .requestMatchers("/member/login").permitAll()
                         .requestMatchers("/auth/login").permitAll()
-                        .requestMatchers("/user/register").hasAnyAuthority("ROLE_Admin","ROLE_Staff")
+                        .requestMatchers("/user/register").hasAnyAuthority("ROLE_Admin", "ROLE_Staff")
                         .requestMatchers("/api-public/lichsutapluyen/**").permitAll()
                         .requestMatchers("/api/doanh-thu").hasAuthority("ROLE_Admin")
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
@@ -82,6 +81,7 @@ public class WebSecurityConfig {
             }
         };
     }
+
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         var builder = http.getSharedObject(AuthenticationManagerBuilder.class);

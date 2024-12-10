@@ -1,4 +1,5 @@
 package com.codecrafter.WebAppManagerRoomGymBE.api;
+
 import com.codecrafter.WebAppManagerRoomGymBE.constant.common.BasicApiConstant;
 import com.codecrafter.WebAppManagerRoomGymBE.data.dto.ThanhVienDTO;
 import com.codecrafter.WebAppManagerRoomGymBE.data.entity.ThanhVienE;
@@ -21,7 +22,7 @@ public class GenerateQrCodeAPI {
     private final QrCodeService qrCodeService;
 
     @PostMapping("/generateQRCode")
-    public ResponseObject<?> GenerateQrCode(@RequestBody ThanhVienE thanhVienE){
+    public ResponseObject<?> GenerateQrCode(@RequestBody ThanhVienE thanhVienE) {
         var result = new ResponseObject<>();
         try {
             result.setData(qrCodeService.GenerateQrCode(thanhVienE));
@@ -35,17 +36,17 @@ public class GenerateQrCodeAPI {
     }
 
     @PostMapping("/importFileEncodeQR")
-    public ResponseObject<?> readFromImageQR(@RequestParam("file") MultipartFile file){
+    public ResponseObject<?> readFromImageQR(@RequestParam("file") MultipartFile file) {
         var result = new ResponseObject<>();
         try {
             result.setData(qrCodeService.readQRCode(file));
             result.setStatus(BasicApiConstant.SUCCEED.getStatus());
             result.setMessages("call api read from image QR");
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("fail when call api import file read from image QR");
             result.setStatus(BasicApiConstant.FAILED.getStatus());
         }
-        return  result;
+        return result;
     }
 
 }

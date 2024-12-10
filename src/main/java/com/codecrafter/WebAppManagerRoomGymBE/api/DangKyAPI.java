@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DangKyAPI {
 
-    private final   DangKyService dangKyService;
+    private final DangKyService dangKyService;
 
     // Register with discount code
     @PostMapping("/with-discount")
@@ -26,12 +26,11 @@ public class DangKyAPI {
             @RequestParam(required = false) Integer maLopHoc,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date ngayKichHoat,
             @RequestParam boolean trangThaiDangKy) {
-        
+
         DangKyE registration = dangKyService.registerWithDiscountOrWithOutDiscount(maThanhVien, maGoiUuDai, maLopHoc, ngayKichHoat, trangThaiDangKy);
         return ResponseEntity.ok(registration);
     }
 
-    
 
     @GetMapping("/search")
     public List<DangKyE> searchDangKy(

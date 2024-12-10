@@ -126,5 +126,18 @@ public class ThanhVienAPI {
                     .body("Không tìm thấy thành viên với ID: " + maThanhVien);
         }
     }
+    @PostMapping("/export")
+    public ResponseEntity<String> exportCustomer(
+            @RequestParam String name,
+            @RequestParam int phone,
+            @RequestParam String email
+    ) {
+        try {
+            thanhVienService.exportToExcel(name, phone, email);
+            return ResponseEntity.ok("Thêm khách hàng vào Excel thành công!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Lỗi: " + e.getMessage());
+        }
+    }
 
 }

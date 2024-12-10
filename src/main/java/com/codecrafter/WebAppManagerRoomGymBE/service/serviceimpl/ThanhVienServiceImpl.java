@@ -7,6 +7,11 @@ import com.codecrafter.WebAppManagerRoomGymBE.repository.DangKyRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.NguoiDungRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.repository.ThanhVienRepo;
 import com.codecrafter.WebAppManagerRoomGymBE.service.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.util.Optional;
 
 import static com.codecrafter.WebAppManagerRoomGymBE.utils.getCurrentUser.getCurrentUserId;
@@ -33,6 +39,8 @@ public class ThanhVienServiceImpl implements ThanhVienService {
     private QrCodeService qrCodeService;
     @Autowired
     private DangKyRepo dangKyRepo;
+
+    private static final String FILE_PATH = "KhachHang.xlsx";
 
 
     @Override
@@ -90,16 +98,6 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         return Optional.of(savedThanhVien);
     }
 
-
-
-    //    @Override
-//    public Optional<ThanhVienE> login(ThanhVienDTO memberDTO) {
-//        Optional<ThanhVienE> member = thanhVienRepository.findByTenThanhVien(memberDTO.getTenThanhVien());
-//        if (member.isPresent() && passwordEncoder.matches(memberDTO.getMatKhauNguoiDung(), member.get().getMatKhauNguoiDung())) {
-//            return member; // Nếu thành viên tồn tại và mật khẩu khớp, trả về đối tượng thành viên
-//        }
-//        return Optional.empty(); // Nếu không, trả về Optional.empty()
-//    }
     @Override
     public Optional<ThanhVienE> login(ThanhVienDTO memberDTO) {
         Optional<ThanhVienE> member = thanhVienRepository.findByTenThanhVien(memberDTO.getTenThanhVien());
@@ -124,5 +122,54 @@ public class ThanhVienServiceImpl implements ThanhVienService {
         return thanhVienRepository.findAll(pageable);
     }
 
+    public void exportToExcel(String name, int phone, String email) throws IOException {
+        File existingFile = new File(FILE_PATH);
+        Workbook workbook;
+        Sheet sheet;
+
+        // Kiểm tra file đã tồn tại chưa
+        if (existingFile.exists()) {
+            // Mở file Excel đã tồn tại
+            try (FileInputStream inputStream = new FileInputStream(existingFile)) {
+                workbook = new XSSFWorkbook(inputStream);
+                sheet = workbook.getSheetAt(0); // Lấy sheet đầu tiên
+
+                // Tìm dòng cuối cùng để thêm dữ liệu mới
+                int lastRowNum = sheet.getLastRowNum();
+                Row newRow = sheet.createRow(lastRowNum + 1);
+
+                newRow.createCell(0).setCellValue(name);
+                newRow.createCell(1).setCellValue(phone);
+                newRow.createCell(2).setCellValue(email);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            // Nếu file chưa tồn tại, tạo mới
+            workbook = new XSSFWorkbook();
+            sheet = workbook.createSheet("Danh Sách Khách Hàng");
+
+            // Tạo header
+            Row headerRow = sheet.createRow(0);
+            String[] columns = {"Tên", "Số Điện Thoại", "Email"};
+            for (int i = 0; i < columns.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(columns[i]);
+            }
+
+            // Thêm dữ liệu đầu tiên
+            Row firstRow = sheet.createRow(1);
+            firstRow.createCell(0).setCellValue(name);
+            firstRow.createCell(1).setCellValue(phone);
+            firstRow.createCell(2).setCellValue(email);
+        }
+
+        // Ghi dữ liệu và đóng file
+        try (FileOutputStream outputStream = new FileOutputStream(FILE_PATH)) {
+            workbook.write(outputStream);
+        }
+
+        workbook.close();
+    }
 
 }

@@ -250,6 +250,11 @@ public class NguoiDungAPI {
             return ResponseEntity.status(404).body("Không tìm thấy id!.");
         }
     }
+    @GetMapping("/getAll")
+    public ResponseEntity<List<NguoiDungE>> getAllNguoiDung() {
+        List<NguoiDungE> nguoiDungList = nguoiDungService.getAllNguoiDung();
+        return ResponseEntity.ok(nguoiDungList);
+    }
 
 
 }
